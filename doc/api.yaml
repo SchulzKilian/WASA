@@ -1,0 +1,458 @@
+openapi: 3.0.0
+info:
+  title: WASAPhoto API
+  version: 1.0.0
+  description: WASAPhoto API for various photo-related operations.
+paths:
+  /login:
+    post:
+      summary: Simplified Login
+      description: |
+        The login endpoint accepts a username and logs in the user if the username already exists or registers and logs in the user if it's a new username.
+      operationId: doLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses:
+        '200':
+          description: User authenticated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+        '400':
+          description: Bad Request. Invalid username format or missing username.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /setMyUserName:
+    post:
+      summary: Set My User Name
+      description: |
+        Sets the username for the currently authenticated user.
+      operationId: setMyUserName
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newUsername:
+                  type: string
+      responses:
+        '200':
+          description: Username updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /uploadPhoto:
+    post:
+      summary: Upload Photo
+      description: |
+        Allows the authenticated user to upload a photo.
+      operationId: uploadPhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photo:
+                  type: string (base64 encoded)
+      responses:
+        '200':
+          description: Photo uploaded successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  photoId:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /followUser:
+    post:
+      summary: Follow User
+      description: |
+        Allows the authenticated user to follow another user.
+      operationId: followUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: User followed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /unfollowUser:
+    post:
+      summary: Unfollow User
+      description: |
+        Allows the authenticated user to unfollow another user.
+      operationId: unfollowUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: User unfollowed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /banUser:
+    post:
+      summary: Ban User
+      description: |
+        Allows the authenticated user to ban another user.
+      operationId: banUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: User banned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /unbanUser:
+    post:
+      summary: Unban User
+      description: |
+        Allows the authenticated user to unban another user.
+      operationId: unbanUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: User unbanned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /getUserProfile:
+    get:
+      summary: Get User Profile
+      description: |
+        Allows the authenticated user to get the profile of another user.
+      operationId: getUserProfile
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User profile retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userProfile:
+                    type: object
+                    # Define user profile properties here
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /getMyStream:
+    get:
+      summary: Get My Stream
+      description: |
+        Allows the authenticated user to retrieve their stream.
+      operationId: getMyStream
+      responses:
+        '200':
+          description: User stream retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userStream:
+                    type: array
+                    # Define stream item properties here
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /likePhoto:
+    post:
+      summary: Like Photo
+      description: |
+        Allows the authenticated user to like a photo.
+      operationId: likePhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photoId:
+                  type: string
+      responses:
+        '200':
+          description: Photo liked successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /unlikePhoto:
+    post:
+      summary: Unlike Photo
+      description: |
+        Allows the authenticated user to unlike a photo.
+      operationId: unlikePhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photoId:
+                  type: string
+      responses:
+        '200':
+          description: Photo unliked successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /commentPhoto:
+    post:
+      summary: Comment on Photo
+      description: |
+        Allows the authenticated user to comment on a photo.
+      operationId: commentPhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photoId:
+                  type: string
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Comment added to the photo successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /uncommentPhoto:
+    post:
+      summary: Remove Comment from Photo
+      description: |
+        Allows the authenticated user to remove their comment from a photo.
+      operationId: uncommentPhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photoId:
+                  type: string
+                commentId:
+                  type: string
+      responses:
+        '200':
+          description: Comment removed from the photo successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /deletePhoto:
+    delete:
+      summary: Delete Photo
+      description: |
+        Allows the authenticated user to delete their own photo.
+      operationId: deletePhoto
+      parameters:
+        - name: photoId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Photo deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
