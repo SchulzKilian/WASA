@@ -330,20 +330,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 
   /unlikePhoto:
-    post:
+    delete:
       summary: Unlike Photo
       description: |
         Allows the authenticated user to unlike a photo.
       operationId: unlikePhoto
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                photoId:
-                  type: string
+      
       responses:
         '200':
           description: Photo unliked successfully.
@@ -396,22 +388,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 
   /uncommentPhoto:
-    post:
+    delete:
       summary: Remove Comment from Photo
       description: |
         Allows the authenticated user to remove their comment from a photo.
       operationId: uncommentPhoto
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                photoId:
-                  type: string
-                commentId:
-                  type: string
+
       responses:
         '200':
           description: Comment removed from the photo successfully.
