@@ -264,37 +264,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-      /getMyStream:
-      get:
-        summary: Get My Stream
-        description: |
-          Allows the authenticated user to retrieve their stream.
-        operationId: getMyStream
-        responses:
-          '200':
-            description: User stream retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    userStream:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          streamItemProperty1:
-                            type: string
-                            # Define properties of a stream item as needed
-                          streamItemProperty2:
-                            type: integer
-                            # Define more properties as needed
-          '401':
-            description: Unauthorized. User authentication failed.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+  /getMyStream:
+    get:
+      summary: Get My Stream
+      description: |
+        Allows the authenticated user to retrieve their stream.
+      operationId: getMyStream
+      responses:
+        '200':
+          description: User stream retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userStream:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        streamItemProperty1:
+                          type: string
+                          # Define properties of a stream item as needed
+                        streamItemProperty2:
+                          type: integer
+                          # Define more properties as needed
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 
   /likePhoto:
