@@ -6,11 +6,9 @@ info:
 paths:
   /login:
     post:
-      summary: Simplified Login
-      description: |
-        The login endpoint accepts a username and logs in the user if the username already exists or registers and logs in the user if it's a new username.
-      operationId: doLogin
+      summary: Login with Bearer Authentication
       requestBody:
+        description: User credentials
         required: true
         content:
           application/json:
@@ -19,28 +17,20 @@ paths:
               properties:
                 username:
                   type: string
+                password:
+                  type: string
       responses:
         '200':
-          description: User authenticated successfully.
+          description: Successful login
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  userId:
+                  token:
                     type: string
-        '400':
-          description: Bad Request. Invalid username format or missing username.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/UnauthorizedError'
 
   /setMyUserName:
     post:
@@ -90,7 +80,7 @@ paths:
                 photo:
                   type: string
       responses:
-        '200':
+        '201':
           description: Photo uploaded successfully.
           content:
             application/json:
@@ -447,3 +437,12 @@ components:
       properties:
         error:
           type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+security:
+  - bearerAuth: []
