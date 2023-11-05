@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: WASAPhoto API
   version: 1.0.0
-  description: WASAPhoto API for various photo-related operations.
+  description: WASAPhoto API for our uni course on web and software architecture
 paths:
   /login:
     post:
