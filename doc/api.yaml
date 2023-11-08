@@ -2,13 +2,19 @@ openapi: 3.0.0
 info:
   title: WASAPhoto API
   version: 1.0.0
-  description: WASAPhoto API for our uni course on web and software architecture
+  description: WASAPhoto API for our university course on web and software architecture
+tags:
+  - name: login
+  - name: user
+  - name: comment
+  - name: like
+  - name: photo
 paths:
   /session:
     post:
-      tags: ["login"]
+      tags: [login]
       summary: Logs in the user
-      description: |-
+      description: |
         If the user does not exist, it will be created,
         and an identifier is returned.
         If the user exists, the user identifier is returned.
@@ -22,10 +28,9 @@ paths:
               properties:
                 name:
                   type: string
-                  example: Maria
-                  pattern: 'ˆ.*?$'
+                  description: User's name
                   minLength: 3
-                  maxLength: 16
+                  maxLength: 50
         required: true
       responses:
         '201':
@@ -37,10 +42,12 @@ paths:
                 properties:
                   identifier:
                     type: string
-                    example: "abcdef012345"
+                    minLength: 10
+                    maxLength: 20
 
   /user:
     post:
+      tags: [user]
       summary: Create User
       description: Create a new user.
       operationId: createUser
@@ -53,17 +60,30 @@ paths:
               properties:
                 username:
                   type: string
+                  description: User's username
+                  minLength: 4
+                  maxLength: 30
                 password:
                   type: string
+                  description: User's password
+                  minLength: 8
+                  maxLength: 50
                 email:
                   type: string
+                  description: User's email
+                  minLength: 5
+                  maxLength: 100
                 birthday:
                   type: string
+                  description: User's birthday
                 security_question:
                   type: string
+                  description: User's security question
+                  minLength: 10
+                  maxLength: 150
                 matricola:
                   type: integer
-                
+
       responses:
         '201':
           description: User created successfully.
@@ -74,6 +94,9 @@ paths:
                 properties:
                   userId:
                     type: string
+                    minLength: 10
+                    maxLength: 20
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -83,6 +106,7 @@ paths:
 
   /user/{userId}:
     get:
+      tags: [user]
       summary: Get User Profile
       description: Get the profile of a user.
       operationId: getUserProfile
@@ -92,9 +116,12 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 10
+            maxLength: 20
+
       responses:
         '200':
-          description: User profile retrieved successfully.
+          description: User profile retrieved successfully
           content:
             application/json:
               schema:
@@ -102,7 +129,8 @@ paths:
                 properties:
                   userProfile:
                     type: object
-                    # Define user profile properties here
+                    description: User's profile
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -124,10 +152,17 @@ paths:
               properties:
                 photoId:
                   type: string
+                  description: Photo ID
+                  minLength: 10
+                  maxLength: 20
                 comment:
                   type: string
+                  description: User's comment
+                  minLength: 1
+                  maxLength: 500
+
       responses:
-        '200':
+        '201':
           description: Comment added to the photo successfully.
           content:
             application/json:
@@ -136,6 +171,9 @@ paths:
                 properties:
                   message:
                     type: string
+                    minLength: 1
+                    maxLength: 200
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -154,6 +192,9 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 10
+            maxLength: 20
+
       responses:
         '200':
           description: Comment removed from the photo successfully.
@@ -164,6 +205,9 @@ paths:
                 properties:
                   message:
                     type: string
+                    minLength: 1
+                    maxLength: 200
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -185,8 +229,12 @@ paths:
               properties:
                 photoId:
                   type: string
+                  description: Photo ID
+                  minLength: 10
+                  maxLength: 20
+
       responses:
-        '200':
+        '201':
           description: Photo liked successfully.
           content:
             application/json:
@@ -195,6 +243,9 @@ paths:
                 properties:
                   message:
                     type: string
+                    minLength: 1
+                    maxLength: 200
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -213,6 +264,9 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 10
+            maxLength: 20
+
       responses:
         '200':
           description: Photo unliked successfully.
@@ -223,6 +277,9 @@ paths:
                 properties:
                   message:
                     type: string
+                    minLength: 1
+                    maxLength: 200
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -244,6 +301,10 @@ paths:
               properties:
                 photo:
                   type: string
+                  description: Base64-encoded image data
+                  minLength: 50
+                  maxLength: 500000
+
       responses:
         '201':
           description: Photo uploaded successfully.
@@ -254,6 +315,9 @@ paths:
                 properties:
                   photoId:
                     type: string
+                    minLength: 10
+                    maxLength: 20
+
         '401':
           description: Unauthorized. User authentication failed.
           content:
@@ -261,33 +325,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photo/{photoId}:
-    delete:
-      summary: Delete Photo
-      description: Delete a photo.
-      operationId: deletePhoto
-      parameters:
-        - name: photoId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Photo deleted successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:
@@ -295,6 +332,8 @@ components:
       properties:
         error:
           type: string
+          minLength: 1
+          maxLength: 200
 
   responses:
     UnauthorizedError:
