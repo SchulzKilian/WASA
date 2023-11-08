@@ -9,6 +9,11 @@ tags:
   - name: comment
   - name: like
   - name: photo
+  
+security:
+  - BearerAuth: []
+  
+  
 paths:
   /session:
     post:
@@ -325,6 +330,223 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /unfollowUser:
+    post:
+      summary: Unfollow User
+      description: Unfollow a user.
+      operationId: unfollowUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to unfollow
+                  minLength: 10
+                  maxLength: 20
+
+      responses:
+        '200':
+          description: User unfollowed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /banUser:
+    post:
+      summary: Ban User
+      description: Ban a user.
+      operationId: banUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to ban
+                  minLength: 10
+                  maxLength: 20
+
+      responses:
+        '200':
+          description: User banned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /unbanUser:
+    post:
+      summary: Unban User
+      description: Unban a user.
+      operationId: unbanUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to unban
+                  minLength: 10
+                  maxLength: 20
+
+      responses:
+        '200':
+          description: User unbanned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /getMyStream:
+    get:
+      summary: Get My Stream
+      description: Retrieve the user's stream.
+      operationId: getMyStream
+
+      responses:
+        '200':
+          description: User's stream retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stream:
+                    type: array
+                    items:
+                      type: object
+                      description: Stream item
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /setMyUserName:
+    put:
+      summary: Set My User Name
+      description: Set the user's username.
+      operationId: setMyUserName
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: New username
+                  minLength: 4
+                  maxLength: 30
+
+      responses:
+        '200':
+          description: User's username updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /followUser:
+    post:
+      summary: Follow User
+      description: Follow a user.
+      operationId: followUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to follow
+                  minLength: 10
+                  maxLength: 20
+
+      responses:
+        '200':
+          description: User followed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -335,6 +557,8 @@ components:
           minLength: 1
           maxLength: 200
 
-  responses:
-    UnauthorizedError:
-      description: Access token is missing or invalid
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
