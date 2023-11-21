@@ -80,6 +80,8 @@ paths:
                   maxLength: 100
                 birthday:
                   type: string
+                  minLength: 7
+                  maxLength: 10
                   description: User's birthday
                 security_question:
                   type: string
@@ -147,6 +149,7 @@ paths:
     
   /user/{userId}/ban:
     post:
+      tags: [user]
       summary: Ban User
       description: Ban a user.
       operationId: banUser
@@ -193,6 +196,7 @@ paths:
                 
   /user/{userId}/stream:
     get:
+      tags: [user]
       summary: Get My Stream
       description: Retrieve the user's stream.
       parameters:
@@ -230,6 +234,7 @@ paths:
                 $ref: '#/components/schemas/Error'             
   /user/{userId}/name:
     put:
+      tags: [user]
       summary: Set My User Name
       description: Set the user's username.
       operationId: setMyUserName
