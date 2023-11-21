@@ -142,6 +142,198 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
+                
+    
+  /user/{userId}/ban:
+    post:
+      summary: Ban User
+      description: Ban a user.
+      operationId: banUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to ban
+                  minLength: 10
+                  maxLength: 20
+  
+      responses:
+        '200':
+          description: User banned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+  
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+                
+                
+  
+  /user/{userId}/unban:
+    post:
+      summary: Unban User
+      description: Unban a user.
+      operationId: unbanUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+      requestBody:
+        required: true
+        content:
+      
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to unban
+                  minLength: 10
+                  maxLength: 20
+  
+      responses:
+        '200':
+          description: User unbanned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+  
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+                
+                
+  /user/{userId}/follow:
+    post:
+      summary: Follow User
+      description: Follow a user.
+      operationId: followUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to follow
+                  minLength: 10
+                  maxLength: 20
+
+      responses:
+        '200':
+          description: User followed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/{userId}/unfollow:
+    post:
+      summary: Unfollow User
+      description: Unfollow a user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+      operationId: unfollowUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: User ID to unfollow
+                  minLength: 10
+                  maxLength: 20
+
+      responses:
+        '200':
+          description: User unfollowed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /comment:
     post:
@@ -160,11 +352,6 @@ paths:
                   description: Photo ID
                   minLength: 10
                   maxLength: 20
-                comment:
-                  type: string
-                  description: User's comment
-                  minLength: 1
-                  maxLength: 500
 
       responses:
         '201':
@@ -330,27 +517,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /unfollowUser:
-    post:
-      summary: Unfollow User
-      description: Unfollow a user.
-      operationId: unfollowUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  type: string
-                  description: User ID to unfollow
-                  minLength: 10
-                  maxLength: 20
+  /photo/{photoId}:
+    delete:
+      summary: Delete Photo
+      description: Delete a photo.
+      operationId: deletePhoto
+      parameters:
+        - name: photoId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
 
       responses:
         '200':
-          description: User unfollowed successfully.
+          description: Photo deleted successfully.
           content:
             application/json:
               schema:
@@ -368,82 +551,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /banUser:
-    post:
-      summary: Ban User
-      description: Ban a user.
-      operationId: banUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  type: string
-                  description: User ID to ban
-                  minLength: 10
-                  maxLength: 20
 
-      responses:
-        '200':
-          description: User banned successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /unbanUser:
-    post:
-      summary: Unban User
-      description: Unban a user.
-      operationId: unbanUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  type: string
-                  description: User ID to unban
-                  minLength: 10
-                  maxLength: 20
-
-      responses:
-        '200':
-          description: User unbanned successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
+    
   /getMyStream:
     get:
       summary: Get My Stream
@@ -509,43 +618,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /followUser:
-    post:
-      summary: Follow User
-      description: Follow a user.
-      operationId: followUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  type: string
-                  description: User ID to follow
-                  minLength: 10
-                  maxLength: 20
 
-      responses:
-        '200':
-          description: User followed successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
 
 components:
   schemas:
@@ -556,6 +629,8 @@ components:
           type: string
           minLength: 1
           maxLength: 200
+
+
 
   securitySchemes:
     BearerAuth:
