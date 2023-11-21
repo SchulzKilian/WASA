@@ -191,8 +191,88 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
-                
-                
+  /user/{userId}/stream:
+    get:
+      summary: Get My Stream
+      description: Retrieve the user's stream.
+      parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: string
+              minLength: 10
+              maxLength: 20
+      operationId: getMyStream
+      
+  
+      responses:
+        '200':
+          description: User's stream retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stream:
+                    type: array
+                    minItems: 0
+                    maxItems: 100
+                    items:
+                      type: object
+                      description: Stream item
+  
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'             
+  /user/{userId}/name:
+    put:
+      summary: Set My User Name
+      description: Set the user's username.
+      operationId: setMyUserName
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: New username
+                  minLength: 4
+                  maxLength: 30
+
+      responses:
+        '200':
+          description: User's username updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'            
   
   /user/{userId}/unban:
     post:
@@ -553,70 +633,9 @@ paths:
 
 
     
-  /getMyStream:
-    get:
-      summary: Get My Stream
-      description: Retrieve the user's stream.
-      operationId: getMyStream
 
-      responses:
-        '200':
-          description: User's stream retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  stream:
-                    type: array
-                    items:
-                      type: object
-                      description: Stream item
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /setMyUserName:
-    put:
-      summary: Set My User Name
-      description: Set the user's username.
-      operationId: setMyUserName
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  description: New username
-                  minLength: 4
-                  maxLength: 30
-
-      responses:
-        '200':
-          description: User's username updated successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+  
 
 
 
