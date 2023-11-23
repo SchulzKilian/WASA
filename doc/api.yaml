@@ -243,6 +243,8 @@ paths:
                           type: string
                           description: Description of item property
                           pattern: "^[a-zA-Z0-9_]+$"
+                          minLength: 10
+                          maxLength: 100
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -302,6 +304,7 @@ paths:
   
   /user/{userId}/unban:
     post:
+      tags: [user]
       summary: Unban User
       description: Unban a user.
       operationId: unbanUser
@@ -354,6 +357,7 @@ paths:
                 
   /user/{userId}/follow:
     post:
+      tags: [user]
       summary: Follow User
       description: Follow a user.
       operationId: followUser
@@ -403,6 +407,7 @@ paths:
 
   /user/{userId}/unfollow:
     post:
+      tags: [user]
       summary: Unfollow User
       description: Unfollow a user.
       parameters:
@@ -452,6 +457,7 @@ paths:
 
   /comment:
     post:
+      tags: [comment]
       summary: Comment on Photo
       description: Comment on a photo.
       operationId: commentPhoto
@@ -492,6 +498,7 @@ paths:
 
   /comment/{commentId}:
     delete:
+      tags: [comment]
       summary: Remove Comment from Photo
       description: Remove a comment from a photo.
       operationId: uncommentPhoto
@@ -528,6 +535,7 @@ paths:
 
   /like:
     post:
+      tags: [like, photo]
       summary: Like Photo
       description: Like a photo.
       operationId: likePhoto
@@ -571,6 +579,7 @@ paths:
 
   /like/{likeId}:
     delete:
+      tags: [like]
       summary: Unlike Photo
       description: Unlike a photo.
       operationId: unlikePhoto
@@ -580,7 +589,9 @@ paths:
           required: true
           schema:
             type: string
-            pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
+            pattern: '^[a-zA-Z0-9]{10,20}$' 
+            minLength: 10
+            maxLength: 100 # Pattern added
       responses:
         '200':
           description: Photo unliked successfully.
@@ -603,6 +614,7 @@ paths:
 
   /photo:
     post:
+      tags: [photo]
       summary: Upload Photo
       description: Upload a photo.
       operationId: uploadPhoto
@@ -629,6 +641,8 @@ paths:
                   photoId:
                     type: string
                     pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
+                    minLength: 1000
+                    maxLength: 10000
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -639,6 +653,7 @@ paths:
 
   /photo/{photoId}:
     delete:
+      tags: [photo]
       summary: Delete Photo
       description: Delete a photo.
       operationId: deletePhoto
@@ -649,6 +664,8 @@ paths:
           schema:
             type: string
             pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
+            minLength: 100
+            maxLength: 1000
       responses:
         '200':
           description: Photo deleted successfully.
