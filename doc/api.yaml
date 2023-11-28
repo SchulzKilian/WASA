@@ -39,7 +39,7 @@ paths:
                   pattern: "^[a-zA-Z0-9_]+$"  # Add a pattern for every string property
         required: true
       responses:
-        '201':
+        '200':
           description: User log-in action successful
           content:
             application/json:
@@ -476,7 +476,7 @@ paths:
                   pattern: "^[a-zA-Z0-9_]+$"
 
       responses:
-        '201':
+        '200':
           description: Comment added to the photo successfully.
           content:
             application/json:
@@ -554,7 +554,7 @@ paths:
                   pattern: "^[a-zA-Z0-9_]+$"
 
       responses:
-        '201':
+        '200':
           description: Photo liked successfully.
           content:
             application/json:
@@ -633,7 +633,7 @@ paths:
                   maxLength: 500000
                   pattern: '^[a-zA-Z0-9]{10,20}$'
       responses:
-        '201':
+        '200':
           description: Photo uploaded successfully.
           content:
             application/json:
