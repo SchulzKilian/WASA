@@ -37,6 +37,9 @@ paths:
                   minLength: 3
                   maxLength: 50
                   pattern: "^[a-zA-Z0-9_]+$"  # Add a pattern for every string property
+              description: General user object
+                  
+          
         required: true
       responses:
         '200':
@@ -45,12 +48,16 @@ paths:
             application/json:
               schema:
                 type: object
+                description: The overall user object
                 properties:
                   identifier:
                     type: string
+                    description: A unique token for the user
                     minLength: 10
                     maxLength: 20
                     pattern: "^[a-zA-Z0-9_]+$"  # Add a pattern for every string property
+                    
+                
 
   /user:
     post:
@@ -97,6 +104,7 @@ paths:
                   pattern: "^[a-zA-Z0-9_]+$"
                 matricola:
                   type: integer
+              description: An entire user as an object
 
       responses:
         '201':
@@ -119,7 +127,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /user/{userId}:
+  /users/{userId}:
     get:
       tags: [user]
       summary: Get User Profile
@@ -134,6 +142,7 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: A unique user identifier
 
       responses:
         '200':
@@ -146,6 +155,7 @@ paths:
                   userProfile:
                     type: object
                     description: User's profile
+                description: Exact response with the full user profile
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -156,7 +166,7 @@ paths:
                 
                 
     
-  /user/{userId}/ban:
+  /users/{userId}/ban:
     post:
       tags: [user]
       summary: Ban User
@@ -171,6 +181,7 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique user identifier
       requestBody:
         required: true
         content:
@@ -184,7 +195,7 @@ paths:
                   minLength: 10
                   maxLength: 20
                   pattern: "^[a-zA-Z0-9_]+$"
-  
+              description: The user
       responses:
         '200':
           description: User banned successfully.
@@ -198,6 +209,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: Returing a message about what user is banned
+                description: The output for banning a user
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -206,7 +219,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
-  /user/{userId}/stream:
+  /users/{userId}/stream:
     get:
       tags: [user]
       summary: Get My Stream
@@ -220,6 +233,7 @@ paths:
               minLength: 10
               maxLength: 20
               pattern: "^[a-zA-Z0-9_]+$"
+              description: unique user identifier
       operationId: getMyStream
       
   
@@ -235,6 +249,7 @@ paths:
                     type: array
                     minItems: 0
                     maxItems: 100
+                    description: all the stuff user needs for his for you page
                     items:
                       type: object
                       description: Stream item
@@ -245,6 +260,7 @@ paths:
                           pattern: "^[a-zA-Z0-9_]+$"
                           minLength: 10
                           maxLength: 100
+                description: The entire stream with info for the user
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -252,7 +268,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'             
-  /user/{userId}/name:
+  /users/{userId}/name:
     put:
       tags: [user]
       summary: Set My User Name
@@ -267,6 +283,7 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique user identifier
       requestBody:
         required: true
         content:
@@ -280,6 +297,7 @@ paths:
                   minLength: 4
                   maxLength: 30
                   pattern: "^[a-zA-Z0-9_]+$"
+              description: Returning the user schema
 
       responses:
         '200':
@@ -293,7 +311,9 @@ paths:
                     type: string
                     minLength: 1
                     maxLength: 200
+                    description: telling the user it worked
                     pattern: "^[a-zA-Z0-9_]+$"
+                description: how the user looks
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -317,6 +337,7 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique user identifier
       requestBody:
         required: true
         content:
@@ -331,6 +352,7 @@ paths:
                   minLength: 10
                   maxLength: 20
                   pattern: "^[a-zA-Z0-9_]+$"
+              description: the entire user
   
       responses:
         '200':
@@ -345,6 +367,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: telling the user it worked
+                description: the response for unbanning a user
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -370,6 +394,8 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique identifier
+          description: the id of the user
       requestBody:
         required: true
         content:
@@ -383,6 +409,7 @@ paths:
                   minLength: 10
                   maxLength: 20
                   pattern: "^[a-zA-Z0-9_]+$"
+              description: follow confirmation
 
       responses:
         '200':
@@ -397,6 +424,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: the success message
+                description: The general response to following
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -419,6 +448,8 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique identifier
+          
       operationId: unfollowUser
       requestBody:
         required: true
@@ -433,6 +464,7 @@ paths:
                   minLength: 10
                   maxLength: 20
                   pattern: "^[a-zA-Z0-9_]+$"
+              description: response to unfollowing
 
       responses:
         '200':
@@ -447,6 +479,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: unfollow message
+                description: The response to unfollowing
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -455,11 +489,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /comment:
+  /comments/{userId}:
     post:
       tags: [comment]
       summary: Comment on Photo
       description: Comment on a photo.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+            pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique user identifier
       operationId: commentPhoto
       requestBody:
         required: true
@@ -470,10 +514,11 @@ paths:
               properties:
                 photoId:
                   type: string
-                  description: Photo ID
                   minLength: 10
                   maxLength: 20
                   pattern: "^[a-zA-Z0-9_]+$"
+                  description: an identifier for which photo to comment on
+              description: the comment response
 
       responses:
         '200':
@@ -488,6 +533,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: the message
+                description: the object returned
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -496,7 +543,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /comment/{commentId}:
+  /comments/{commentId}:
     delete:
       tags: [comment]
       summary: Remove Comment from Photo
@@ -511,6 +558,7 @@ paths:
             minLength: 10
             maxLength: 20
             pattern: "^[a-zA-Z0-9_]+$"
+            description: The comment ID
 
       responses:
         '200':
@@ -525,6 +573,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: Telling the user you removed the comment
+                description: The entire response
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -533,12 +583,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /like:
+  /likes/{userId}:
     post:
       tags: [like, photo]
       summary: Like Photo
       description: Like a photo.
       operationId: likePhoto
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+            pattern: "^[a-zA-Z0-9_]+$"
+            description: a unique user id
       requestBody:
         required: true
         content:
@@ -566,6 +626,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: "^[a-zA-Z0-9_]+$"
+                    description: telling the user he liked
+                description: the entire response
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -577,7 +639,7 @@ paths:
 
      
 
-  /like/{likeId}:
+  /likes/{likeId}:
     delete:
       tags: [like]
       summary: Unlike Photo
@@ -592,6 +654,7 @@ paths:
             pattern: '^[a-zA-Z0-9]{10,20}$' 
             minLength: 10
             maxLength: 100 # Pattern added
+            description: unique like id
       responses:
         '200':
           description: Photo unliked successfully.
@@ -605,6 +668,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: '^[a-zA-Z0-9]{10,20}$'
+                    description: saying you unliked correctly
+                description: response to unlikig
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -613,12 +678,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photo:
+  /photos/{userId}:
     post:
       tags: [photo]
       summary: Upload Photo
       description: Upload a photo.
       operationId: uploadPhoto
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 20
+            pattern: "^[a-zA-Z0-9_]+$"
+            description: Uique user ID
       requestBody:
         required: true
         content:
@@ -632,6 +707,7 @@ paths:
                   minLength: 50
                   maxLength: 500000
                   pattern: '^[a-zA-Z0-9]{10,20}$'
+              description: response to uploading a photo
       responses:
         '200':
           description: Photo uploaded successfully.
@@ -645,6 +721,9 @@ paths:
                     pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
                     minLength: 1000
                     maxLength: 10000
+                    description: unique photo ID
+                description: The response to uploading a photo succesfuly
+                
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -653,7 +732,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photo/{photoId}:
+  /photos/{photoId}:
     delete:
       tags: [photo]
       summary: Delete Photo
@@ -668,6 +747,7 @@ paths:
             pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
             minLength: 100
             maxLength: 1000
+            description: Unique photo ID
       responses:
         '200':
           description: Photo deleted successfully.
@@ -681,6 +761,8 @@ paths:
                     minLength: 1
                     maxLength: 200
                     pattern: '^[a-zA-Z0-9]{10,20}$'
+                    description: You uploaded succesfully
+                description: Response to upload succesfully
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -699,6 +781,8 @@ components:
           minLength: 1
           maxLength: 200
           pattern: '^[a-zA-Z0-9]{10,20}$'
+          description: Describes the more specific error I am putting out
+      description: The overall error object
 
   securitySchemes:
     BearerAuth:
