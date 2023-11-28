@@ -604,6 +604,7 @@ paths:
                     type: string
                     minLength: 1
                     maxLength: 200
+                    pattern: '^[a-zA-Z0-9]{10,20}$'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -630,6 +631,7 @@ paths:
                   description: Base64-encoded image data
                   minLength: 50
                   maxLength: 500000
+                  pattern: '^[a-zA-Z0-9]{10,20}$'
       responses:
         '201':
           description: Photo uploaded successfully.
@@ -678,6 +680,7 @@ paths:
                     type: string
                     minLength: 1
                     maxLength: 200
+                    pattern: '^[a-zA-Z0-9]{10,20}$'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -695,6 +698,7 @@ components:
           type: string
           minLength: 1
           maxLength: 200
+          pattern: '^[a-zA-Z0-9]{10,20}$'
 
   securitySchemes:
     BearerAuth:
