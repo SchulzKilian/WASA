@@ -492,13 +492,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /{userId}/comments/:
+  /photos/{photoId}/comments/:
     post:
       tags: [comment]
       summary: Comment on Photo
       description: Comment on a photo.
       parameters:
-        - name: userId
+        - name: photoId
           in: path
           required: true
           schema:
@@ -586,7 +586,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /{userId}/likes/:
+  /likes/{userId}/:
     post:
       tags: [like, photo]
       summary: Like Photo
