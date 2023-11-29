@@ -682,7 +682,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photos/{userId}:
+  users/{userId}/photos/:
     post:
       tags: [photo]
       summary: Upload Photo
