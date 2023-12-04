@@ -59,7 +59,7 @@ paths:
                     
                 
 
-  /user:
+  /users/:
     post:
       tags: [user]
       summary: Create User
@@ -200,7 +200,7 @@ paths:
                   pattern: "^[a-zA-Z0-9_]+$"
               description: The user
       responses:
-        '200':
+        '201':
           description: User banned successfully.
           content:
             application/json:
@@ -325,7 +325,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'            
   
-  /user/{userId}/unban:
+  /users/{userId}/unban:
     post:
       tags: [user]
       summary: Unban User
@@ -382,7 +382,7 @@ paths:
                 
                 
                 
-  /user/{userId}/follow:
+  /users/{userId}/follow:
     post:
       tags: [user]
       summary: Follow User
@@ -415,7 +415,7 @@ paths:
               description: follow confirmation
 
       responses:
-        '200':
+        '201':
           description: User followed successfully.
           content:
             application/json:
@@ -437,7 +437,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /user/{userId}/unfollow:
+  /users/{userId}/unfollow:
     post:
       tags: [user]
       summary: Unfollow User
@@ -586,7 +586,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  photos/{photoId}/likes/:
+  /photos/{photoId}/likes/:
     post:
       tags: [like, photo]
       summary: Like Photo
@@ -618,7 +618,7 @@ paths:
               description: Return message of liking
 
       responses:
-        '200':
+        '201':
           description: Photo liked successfully.
           content:
             application/json:
@@ -682,7 +682,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  users/{userId}/photos/:
+  /users/{userId}/photos/:
     post:
       tags: [photo]
       summary: Upload Photo
