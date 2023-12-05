@@ -586,7 +586,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photos/{photoId}/likes/:
+  /photos/{photoId}/like:
     post:
       tags: [like, photo]
       summary: Like Photo
@@ -736,7 +736,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photos/{photoId}:
+  /photos/{photoId}/delete:
     delete:
       tags: [photo]
       summary: Delete Photo
