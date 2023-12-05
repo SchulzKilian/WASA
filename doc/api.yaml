@@ -47,15 +47,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                description: The overall user object
-                properties:
-                  identifier:
-                    type: string
-                    description: A unique token for the user
-                    minLength: 10
-                    maxLength: 20
-                    pattern: "^[a-zA-Z0-9_]+$"  # Add a pattern for every string property
+                $ref: '#/components/schemas/User' # Add a pattern for every string property
                     
                 
 
@@ -70,42 +62,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  description: User's username
-                  minLength: 4
-                  maxLength: 30
-                  pattern: "^[a-zA-Z0-9_]+$"
-                password:
-                  type: string
-                  description: User's password
-                  minLength: 8
-                  maxLength: 50
-                  pattern: "^[a-zA-Z0-9_]+$"
-                email:
-                  type: string
-                  description: User's email
-                  minLength: 5
-                  maxLength: 100
-                  pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"  # Add email pattern
-                birthday:
-                  type: string
-                  minLength: 7
-                  maxLength: 10
-                  description: User's birthday
-                  pattern: "^d{4}-d{2}-d{2}$"  # Add birthday pattern
-                security_question:
-                  type: string
-                  description: User's security question
-                  minLength: 10
-                  maxLength: 150
-                  pattern: "^[a-zA-Z0-9_]+$"
-                matricola:
-                  type: integer
-                  description: the students enrolment code
-              description: An entire user as an object
+              $ref: '#/components/schemas/User'
 
       responses:
         '201':
@@ -113,15 +70,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  userId:
-                    type: string
-                    minLength: 10
-                    maxLength: 20
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: A unique user difentifier
-                description: response to creating
+                $ref: '#/components/schemas/User'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -153,12 +102,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  userProfile:
-                    type: object
-                    description: User's profile
-                description: Exact response with the full user profile
+                $ref: '#/components/schemas/User'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -303,20 +247,12 @@ paths:
               description: Returning the user schema
 
       responses:
-        '200':
+        '201':
           description: User's username updated successfully.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    description: telling the user it worked
-                    pattern: "^[a-zA-Z0-9_]+$"
-                description: how the user looks
+                $ref: '#/components/schemas/User'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -723,8 +659,8 @@ paths:
                   photoId:
                     type: string
                     pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
-                    minLength: 1000
-                    maxLength: 10000
+                    minLength: 10
+                    maxLength: 10
                     description: unique photo ID
                 description: The response to uploading a photo succesfuly
                 
@@ -787,6 +723,49 @@ components:
           pattern: '^[a-zA-Z0-9]{10,20}$'
           description: Describes the more specific error I am putting out
       description: The overall error object
+      
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          minLength: 10
+          maxLength: 20
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: A unique user identifier
+        username:
+          type: string
+          minLength: 4
+          maxLength: 30
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: User's username
+        password:
+          type: string
+          minLength: 8
+          maxLength: 50
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: User's password
+        email:
+          type: string
+          minLength: 5
+          maxLength: 100
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+          description: User's email
+        birthday:
+          type: string
+          minLength: 7
+          maxLength: 10
+          pattern: "^d{4}-d{2}-d{2}$"
+          description: User's birthday
+        security_question:
+          type: string
+          minLength: 10
+          maxLength: 150
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: User's security question
+        matricola:
+          type: integer
+          description: the student's enrolment code
 
   securitySchemes:
     BearerAuth:
