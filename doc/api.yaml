@@ -90,11 +90,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: A unique user identifier
+            $ref: '#/components/schemas/User/properties/userId'
 
       responses:
         '200':
@@ -124,11 +120,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique user identifier
+            $ref: '#/components/schemas/User/properties/userId'
       requestBody:
         required: true
         content:
@@ -137,12 +129,8 @@ paths:
               type: object
               properties:
                 userId:
-                  type: string
-                  description: User ID to ban
-                  minLength: 10
-                  maxLength: 20
-                  pattern: "^[a-zA-Z0-9_]+$"
-              description: The user
+                  $ref: '#/components/schemas/User/properties/userId'
+              description: the user id of the user banning
       responses:
         '201':
           description: User banned successfully.
@@ -176,11 +164,7 @@ paths:
             in: path
             required: true
             schema:
-              type: string
-              minLength: 10
-              maxLength: 20
-              pattern: "^[a-zA-Z0-9_]+$"
-              description: unique user identifier
+              $ref: '#/components/schemas/User/properties/userId'
       operationId: getMyStream
       
   
@@ -226,25 +210,13 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique user identifier
+            $ref: '#/components/schemas/User/properties/userId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  description: New username
-                  minLength: 4
-                  maxLength: 30
-                  pattern: "^[a-zA-Z0-9_]+$"
-              description: Returning the user schema
+              $ref: '#/components/schemas/User'
 
       responses:
         '201':
@@ -272,26 +244,14 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique user identifier
+            $ref: '#/components/schemas/User/properties/userId'
       requestBody:
         required: true
         content:
       
           application/json:
             schema:
-              type: object
-              properties:
-                userId:
-                  type: string
-                  description: User ID to unban
-                  minLength: 10
-                  maxLength: 20
-                  pattern: "^[a-zA-Z0-9_]+$"
-              description: the entire user
+              $ref: '#/components/schemas/User'
   
       responses:
         '200':
@@ -329,11 +289,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique identifier
+            $ref: '#/components/schemas/User/properties/userId'
           description: the id of the user
       requestBody:
         required: true
@@ -343,11 +299,7 @@ paths:
               type: object
               properties:
                 userId:
-                  type: string
-                  description: User ID to follow
-                  minLength: 10
-                  maxLength: 20
-                  pattern: "^[a-zA-Z0-9_]+$"
+                  $ref: '#/components/schemas/User/properties/userId'
               description: follow confirmation
 
       responses:
@@ -383,11 +335,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique identifier
+            $ref: '#/components/schemas/User/properties/userId'
           
       operationId: unfollowUser
       requestBody:
@@ -398,12 +346,7 @@ paths:
               type: object
               properties:
                 userId:
-                  type: string
-                  description: User ID to unfollow
-                  minLength: 10
-                  maxLength: 20
-                  pattern: "^[a-zA-Z0-9_]+$"
-              description: response to unfollowing
+                  $ref: '#/components/schemas/User/properties/userId'
 
       responses:
         '200':
@@ -438,11 +381,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique user identifier
+            $ref: '#/components/schemas/Photo/properties/photoId'
       operationId: commentPhoto
       requestBody:
         required: true
@@ -452,11 +391,7 @@ paths:
               type: object
               properties:
                 photoId:
-                  type: string
-                  minLength: 10
-                  maxLength: 20
-                  pattern: "^[a-zA-Z0-9_]+$"
-                  description: an identifier for which photo to comment on
+                  $ref: '#/components/schemas/Photo/properties/photoId'
               description: the comment response
 
       responses:
@@ -533,11 +468,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: a unique user id
+            $ref: '#/components/schemas/Photo/properties/photoId'
       requestBody:
         required: true
         content:
@@ -546,11 +477,7 @@ paths:
               type: object
               properties:
                 userID:
-                  type: string
-                  description: User ID
-                  minLength: 10
-                  maxLength: 20
-                  pattern: "^[a-zA-Z0-9_]+$"
+                  $ref: '#/components/schemas/User/properties/userId'
               description: Return message of liking
 
       responses:
@@ -609,7 +536,7 @@ paths:
                     maxLength: 200
                     pattern: '^[a-zA-Z0-9]{10,20}$'
                     description: saying you unliked correctly
-                description: response to unlikig
+                description: response to unliking
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -629,11 +556,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            minLength: 10
-            maxLength: 20
-            pattern: "^[a-zA-Z0-9_]+$"
-            description: Unique user ID
+            $ref: '#/components/schemas/User/properties/userId'
       requestBody:
         required: true
         content:
@@ -657,11 +580,7 @@ paths:
                 type: object
                 properties:
                   photoId:
-                    type: string
-                    pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
-                    minLength: 10
-                    maxLength: 10
-                    description: unique photo ID
+                    $ref: '#/components/schemas/Photo/properties/photoId'
                 description: The response to uploading a photo succesfuly
                 
 
@@ -683,11 +602,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            pattern: '^[a-zA-Z0-9]{10,20}$'  # Pattern added
-            minLength: 100
-            maxLength: 1000
-            description: Unique photo ID
+            $ref: '#/components/schemas/Photo/properties/photoId'
       responses:
         '200':
           description: Photo deleted successfully.
@@ -766,6 +681,27 @@ components:
         matricola:
           type: integer
           description: the student's enrolment code
+          
+    Photo:
+      type: object
+      properties:
+        photoId:
+          type: string
+          minLength: 10
+          maxLength: 20
+          pattern: '^[a-zA-Z0-9_]+$'
+          description: A unique photo identifier
+        imageData:
+          type: string
+          description: Base64-encoded image data
+          minLength: 50
+          maxLength: 500000
+          pattern: '^[a-zA-Z0-9]{10,20}$'
+          example: 'base64encodedimagedata'
+      required:
+        - imageData
+          
+          
 
   securitySchemes:
     BearerAuth:
