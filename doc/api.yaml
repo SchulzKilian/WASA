@@ -698,8 +698,8 @@ components:
           description: Base64-encoded image data
           minLength: 50
           maxLength: 500000
-          pattern: '^[a-zA-Z0-9]{10,20}$'
-          example: 'base64encodedimagedata'
+          pattern: '^[0-1]+$'
+          example: '00010101010011111010001001010100010101010100100101010101010001000101010100011110101010101010001010110010101010100101001010101010101010101010010010101010101010101010'
       required:
         - imageData
       description: the photo object
