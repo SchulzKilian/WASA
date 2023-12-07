@@ -347,6 +347,7 @@ paths:
               properties:
                 userId:
                   $ref: '#/components/schemas/User/properties/userId'
+              description: the json request to unfollow a user
 
       responses:
         '200':
@@ -681,6 +682,7 @@ components:
         matricola:
           type: integer
           description: the student's enrolment code
+      description: the entire user with all its attributes
           
     Photo:
       type: object
@@ -700,6 +702,7 @@ components:
           example: 'base64encodedimagedata'
       required:
         - imageData
+      description: the photo object
           
           
 
