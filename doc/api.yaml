@@ -42,7 +42,7 @@ paths:
           
         required: true
       responses:
-        '200':
+        '201':
           description: User log-in action successful
           content:
             application/json:
@@ -109,7 +109,7 @@ paths:
                 
                 
     
-  /users/{userId}/ban:
+  /users/{userId}/banned/:
     post:
       tags: [user]
       summary: Ban User
@@ -146,6 +146,41 @@ paths:
                     pattern: "^[a-zA-Z0-9_]+$"
                     description: Returing a message about what user is banned
                 description: The output for banning a user
+  
+        '401':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+    delete:
+      tags: [user]
+      summary: Unban User
+      description: Unban a user.
+      operationId: unbanUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/userId'
+  
+      responses:
+        '200':
+          description: User unbanned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    maxLength: 200
+                    pattern: "^[a-zA-Z0-9_]+$"
+                    description: telling the user it worked
+                description: the response for unbanning a user
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -233,52 +268,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'            
   
-  /users/{userId}/unban:
-    post:
-      tags: [user]
-      summary: Unban User
-      description: Unban a user.
-      operationId: unbanUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/userId'
-      requestBody:
-        required: true
-        content:
-      
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-  
-      responses:
-        '200':
-          description: User unbanned successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: telling the user it worked
-                description: the response for unbanning a user
-  
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+
+    
                 
                 
                 
-  /users/{userId}/follow:
+  /users/{userId}/followers/:
     post:
       tags: [user]
       summary: Follow User
@@ -324,9 +319,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-  /users/{userId}/unfollow:
-    post:
+    delete:
       tags: [user]
       summary: Unfollow User
       description: Unfollow a user.
@@ -338,17 +331,6 @@ paths:
             $ref: '#/components/schemas/userId'
           
       operationId: unfollowUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  $ref: '#/components/schemas/userId'
-              description: the json request to unfollow a user
-
       responses:
         '200':
           description: User unfollowed successfully.
