@@ -90,7 +90,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
 
       responses:
         '200':
@@ -120,7 +120,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
       requestBody:
         required: true
         content:
@@ -129,7 +129,7 @@ paths:
               type: object
               properties:
                 userId:
-                  $ref: '#/components/schemas/User/properties/userId'
+                  $ref: '#/components/schemas/userId'
               description: the user id of the user banning
       responses:
         '201':
@@ -164,7 +164,7 @@ paths:
             in: path
             required: true
             schema:
-              $ref: '#/components/schemas/User/properties/userId'
+              $ref: '#/components/schemas/userId'
       operationId: getMyStream
       
   
@@ -210,7 +210,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
       requestBody:
         required: true
         content:
@@ -244,7 +244,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
       requestBody:
         required: true
         content:
@@ -289,7 +289,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
           description: the id of the user
       requestBody:
         required: true
@@ -299,7 +299,7 @@ paths:
               type: object
               properties:
                 userId:
-                  $ref: '#/components/schemas/User/properties/userId'
+                  $ref: '#/components/schemas/userId'
               description: follow confirmation
 
       responses:
@@ -335,7 +335,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
           
       operationId: unfollowUser
       requestBody:
@@ -346,7 +346,7 @@ paths:
               type: object
               properties:
                 userId:
-                  $ref: '#/components/schemas/User/properties/userId'
+                  $ref: '#/components/schemas/userId'
               description: the json request to unfollow a user
 
       responses:
@@ -382,7 +382,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/Photo/properties/photoId'
+            $ref: '#/components/schemas/photoId'
       operationId: commentPhoto
       requestBody:
         required: true
@@ -392,7 +392,7 @@ paths:
               type: object
               properties:
                 photoId:
-                  $ref: '#/components/schemas/Photo/properties/photoId'
+                  $ref: '#/components/schemas/photoId'
               description: the comment response
 
       responses:
@@ -469,7 +469,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/Photo/properties/photoId'
+            $ref: '#/components/schemas/photoId'
       requestBody:
         required: true
         content:
@@ -478,7 +478,7 @@ paths:
               type: object
               properties:
                 userID:
-                  $ref: '#/components/schemas/User/properties/userId'
+                  $ref: '#/components/schemas/userId'
               description: Return message of liking
 
       responses:
@@ -557,7 +557,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/User/properties/userId'
+            $ref: '#/components/schemas/userId'
       requestBody:
         required: true
         content:
@@ -581,7 +581,7 @@ paths:
                 type: object
                 properties:
                   photoId:
-                    $ref: '#/components/schemas/Photo/properties/photoId'
+                    $ref: '#/components/schemas/photoId'
                 description: The response to uploading a photo succesfuly
                 
 
@@ -603,7 +603,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/Photo/properties/photoId'
+            $ref: '#/components/schemas/photoId'
       responses:
         '200':
           description: Photo deleted successfully.
@@ -699,10 +699,27 @@ components:
           minLength: 50
           maxLength: 500000
           pattern: '^[0-1]+$'
-          example: '00010101010011111010001001010100010101010100100101010101010001000101010100011110101010101010001010110010101010100101001010101010101010101010010010101010101010101010'
+          example: '00010101010011111010001001010100010101010100100101010101010001000101010100011110101010101010001010110010101010100101001010101010101010101010010010101010101010101011100001010101101010101110101010111001010111000010101010001011010101110'
       required:
         - imageData
       description: the photo object
+      
+    photoId:
+      type: string
+      minLength: 10
+      maxLength: 20
+      pattern: '^[a-zA-Z0-9_]+$'
+      description: A unique photo identifier
+      
+    userId:
+          type: string
+          minLength: 10
+          maxLength: 20
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: A unique user identifier
+      
+    
+      
           
           
 
