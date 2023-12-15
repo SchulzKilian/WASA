@@ -366,16 +366,6 @@ paths:
           schema:
             $ref: '#/components/schemas/photoId'
       operationId: commentPhoto
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                photoId:
-                  $ref: '#/components/schemas/photoId'
-              description: the comment response
 
       responses:
         '201':
@@ -452,16 +442,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/photoId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userID:
-                  $ref: '#/components/schemas/userId'
-              description: Return message of liking
+
 
       responses:
         '201':
@@ -545,15 +526,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                photo:
-                  type: string
-                  description: Base64-encoded image data
-                  minLength: 50
-                  maxLength: 500000
-                  pattern: '^[a-zA-Z0-9]{10,20}$'
-              description: response to uploading a photo
+              $ref: '#/components/schemas/Photo'
       responses:
         '201':
           description: Photo uploaded successfully.
