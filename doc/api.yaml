@@ -547,7 +547,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /photos/{photoId}/delete:
+  /photos/{photoId}:
     delete:
       tags: [photo]
       summary: Delete Photo
