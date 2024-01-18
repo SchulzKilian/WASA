@@ -110,17 +110,17 @@ paths:
                 
     
   /users/{userId}/banned/:
-    post:
-      tags: [user]
-      summary: Ban User
-      description: Ban a user.
-      operationId: banUser
-      parameters:
+    parameters:
         - name: userId
           in: path
           required: true
           schema:
             $ref: '#/components/schemas/userId'
+    post:
+      tags: [user]
+      summary: Ban User
+      description: Ban a user.
+      operationId: banUser
       requestBody:
         required: true
         content:
@@ -159,12 +159,6 @@ paths:
       summary: Unban User
       description: Unban a user.
       operationId: unbanUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/userId'
   
       responses:
         '200':
@@ -274,18 +268,19 @@ paths:
                 
                 
   /users/{userId}/followers/:
+    parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              $ref: '#/components/schemas/userId'
+            description: the id of the user
     post:
       tags: [user]
       summary: Follow User
       description: Follow a user.
       operationId: followUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/userId'
-          description: the id of the user
+      
       requestBody:
         required: true
         content:
@@ -323,13 +318,6 @@ paths:
       tags: [user]
       summary: Unfollow User
       description: Unfollow a user.
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/userId'
-          
       operationId: unfollowUser
       responses:
         '200':
