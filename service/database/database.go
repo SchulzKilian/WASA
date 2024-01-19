@@ -1,33 +1,3 @@
-/*
-Package database is the middleware between the app database and the code. All data (de)serialization (save/load) from a
-persistent database are handled here. Database specific logic should never escape this package.
-
-To use this package you need to apply migrations to the database if needed/wanted, connect to it (using the database
-data source name from config), and then initialize an instance of AppDatabase from the DB connection.
-
-For example, this code adds a parameter in `webapi` executable for the database data source name (add it to the
-main.WebAPIConfiguration structure):
-
-	DB struct {
-		Filename string `conf:""`
-	}
-
-This is an example on how to migrate the DB and connect to it:
-
-	// Start Database
-	logger.Println("initializing database support")
-	db, err := sql.Open("sqlite3", "./foo.db")
-	if err != nil {
-		logger.WithError(err).Error("error opening SQLite DB")
-		return fmt.Errorf("opening SQLite: %w", err)
-	}
-	defer func() {
-		logger.Debug("database stopping")
-		_ = db.Close()
-	}()
-
-Then you can initialize the AppDatabase and pass it to the api package.
-*/
 package database
 
 import (
@@ -36,41 +6,161 @@ import (
 	"fmt"
 )
 
+// Error represents the error object in the database
+type Error struct {
+    Error string `json:"error" db:"error"`
+}
+
+// User represents the user object in the database
+type User struct {
+    UserID            string `json:"userId" db:"user_id"`
+    Username          string `json:"username" db:"username"`
+    Password          string `json:"password" db:"password"`
+    Email             string `json:"email" db:"email"`
+    Birthday          string `json:"birthday" db:"birthday"`
+    SecurityQuestion  string `json:"security_question" db:"security_question"`
+    Matricola         int    `json:"matricola" db:"matricola"`
+}
+
+// Photo represents the photo object in the database
+type Photo struct {
+    PhotoID   string `json:"photoId" db:"photo_id"`
+    ImageData string `json:"imageData" db:"image_data"`
+}
+
 // AppDatabase is the high level interface for the DB
 type AppDatabase interface {
-	GetName() (string, error)
-	SetName(name string) error
+    GetName() (string, error)
+    SetName(name string) error
 
-	Ping() error
+    Ping() error
+
+    // Example methods for user operations
+    GetUser(id string) (*User, error)
+    AddUser(user *User) error
+
+    // Add similar methods for Error and Photo
 }
 
 type appdbimpl struct {
-	c *sql.DB
+    c *sql.DB
 }
 
 // New returns a new instance of AppDatabase based on the SQLite connection `db`.
-// `db` is required - an error will be returned if `db` is `nil`.
 func New(db *sql.DB) (AppDatabase, error) {
-	if db == nil {
-		return nil, errors.New("database is required when building a AppDatabase")
-	}
+    // existing implementation...
 
-	// Check if table exists. If not, the database is empty, and we need to create the structure
-	var tableName string
-	err := db.QueryRow(`SELECT name FROM sqlite_master WHERE type='table' AND name='example_table';`).Scan(&tableName)
-	if errors.Is(err, sql.ErrNoRows) {
-		sqlStmt := `CREATE TABLE example_table (id INTEGER NOT NULL PRIMARY KEY, name TEXT);`
-		_, err = db.Exec(sqlStmt)
-		if err != nil {
-			return nil, fmt.Errorf("error creating database structure: %w", err)
-		}
-	}
+    // Additional logic for creating tables for User, Error, Photo, etc.
+    // Example:
+    // _, err := db.Exec(`CREATE TABLE IF NOT EXISTS users (...);`)
+    // Handle errors and similar for other entities
 
-	return &appdbimpl{
-		c: db,
-	}, nil
+    return &appdbimpl{
+        c: db,
+    }, nil
 }
 
 func (db *appdbimpl) Ping() error {
-	return db.c.Ping()
+    return db.c.Ping()
 }
+
+// GetUser retrieves a user by ID
+func (db *appdbimpl) GetUser(id string) (*User, error) {
+    // Implement the SQL query to retrieve the user
+    // Example: db.c.QueryRow("SELECT ... FROM users WHERE id = ?", id)
+    // Scan the result into a User struct and return it
+    return nil, errors.New("not implemented")
+}
+
+// AddUser adds a new user to the database
+func (db *appdbimpl) AddUser(user *User) error {
+    // Implement the SQL command to insert a new user
+    // Example: _, err := db.c.Exec("INSERT INTO users (...) VALUES (...)", ...)
+    // Handle the error and return
+    return errors.New("not implemented")
+}
+
+// Add similar methods for Error and Photo
+package database
+
+import (
+	"database/sql"
+	"errors"
+	"fmt"
+)
+
+// Error represents the error object in the database
+type Error struct {
+    Error string `json:"error" db:"error"`
+}
+
+// User represents the user object in the database
+type User struct {
+    UserID            string `json:"userId" db:"user_id"`
+    Username          string `json:"username" db:"username"`
+    Password          string `json:"password" db:"password"`
+    Email             string `json:"email" db:"email"`
+    Birthday          string `json:"birthday" db:"birthday"`
+    SecurityQuestion  string `json:"security_question" db:"security_question"`
+    Matricola         int    `json:"matricola" db:"matricola"`
+}
+
+// Photo represents the photo object in the database
+type Photo struct {
+    PhotoID   string `json:"photoId" db:"photo_id"`
+    ImageData string `json:"imageData" db:"image_data"`
+}
+
+// AppDatabase is the high level interface for the DB
+type AppDatabase interface {
+    GetName() (string, error)
+    SetName(name string) error
+
+    Ping() error
+
+    // Example methods for user operations
+    GetUser(id string) (*User, error)
+    AddUser(user *User) error
+
+    // Add similar methods for Error and Photo
+}
+
+type appdbimpl struct {
+    c *sql.DB
+}
+
+// New returns a new instance of AppDatabase based on the SQLite connection `db`.
+func New(db *sql.DB) (AppDatabase, error) {
+    // existing implementation...
+
+    // Additional logic for creating tables for User, Error, Photo, etc.
+    // Example:
+    // _, err := db.Exec(`CREATE TABLE IF NOT EXISTS users (...);`)
+    // Handle errors and similar for other entities
+
+    return &appdbimpl{
+        c: db,
+    }, nil
+}
+
+func (db *appdbimpl) Ping() error {
+    return db.c.Ping()
+}
+
+// GetUser retrieves a user by ID
+func (db *appdbimpl) GetUser(id string) (*User, error) {
+    // Implement the SQL query to retrieve the user
+    // Example: db.c.QueryRow("SELECT ... FROM users WHERE id = ?", id)
+    // Scan the result into a User struct and return it
+    return nil, errors.New("not implemented")
+}
+
+// AddUser adds a new user to the database
+func (db *appdbimpl) AddUser(user *User) error {
+    // Implement the SQL command to insert a new user
+    // Example: _, err := db.c.Exec("INSERT INTO users (...) VALUES (...)", ...)
+    // Handle the error and return
+    return errors.New("not implemented")
+}
+
+// Add similar methods for Error and Photo
