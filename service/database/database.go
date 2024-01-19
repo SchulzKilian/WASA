@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
-	"fmt"
+
 )
 
 // Error represents the error object in the database
