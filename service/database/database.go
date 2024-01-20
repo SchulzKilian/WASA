@@ -48,17 +48,43 @@ type appdbimpl struct {
 
 // New returns a new instance of AppDatabase based on the SQLite connection `db`.
 func New(db *sql.DB) (AppDatabase, error) {
-    // existing implementation...
+    // Create Error table
+    _, err := db.Exec(`CREATE TABLE IF NOT EXISTS errors (
+        error TEXT
+    );`)
+    if err != nil {
+        return nil, err
+    }
 
-    // Additional logic for creating tables for User, Error, Photo, etc.
-    // Example:
-    // _, err := db.Exec(`CREATE TABLE IF NOT EXISTS users (...);`)
-    // Handle errors and similar for other entities
+    // Create User table
+    _, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
+        user_id TEXT PRIMARY KEY,
+        username TEXT,
+        password TEXT,
+        email TEXT,
+        birthday TEXT,
+        security_question TEXT,
+        matricola INTEGER
+    );`)
+    if err != nil {
+        return nil, err
+    }
 
+    // Create Photo table
+    _, err = db.Exec(`CREATE TABLE IF NOT EXISTS photos (
+        photo_id TEXT PRIMARY KEY,
+        image_data TEXT
+    );`)
+    if err != nil {
+        return nil, err
+    }
+
+    // Continue with any additional setup
     return &appdbimpl{
         c: db,
     }, nil
 }
+
 
 func (db *appdbimpl) Ping() error {
     return db.c.Ping()
@@ -74,10 +100,9 @@ func (db *appdbimpl) GetUser(id string) (*User, error) {
 
 // AddUser adds a new user to the database
 func (db *appdbimpl) AddUser(user *User) error {
-    // Implement the SQL command to insert a new user
-    // Example: _, err := db.c.Exec("INSERT INTO users (...) VALUES (...)", ...)
-    // Handle the error and return
-    return errors.New("not implemented")
+    _, err := db.c.Exec("INSERT INTO users (user_id, username, password, email, birthday, security_question, matricola) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        user.UserID, user.Username, user.Password, user.Email, user.Birthday, user.SecurityQuestion, user.Matricola)
+    return err
 }
 
 // Add similar methods for Error and Photo
