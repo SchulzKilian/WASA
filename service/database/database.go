@@ -4,6 +4,7 @@ import (
 	"database/sql"
     "crypto/rand"
     "encoding/base64"
+    "time"
 )
 
 // Error represents the error object in the database
@@ -24,14 +25,34 @@ type User struct {
 
 // Photo represents the photo object in the database
 type Photo struct {
+    Username  string `json:"username" db:"username"`
     PhotoID   string `json:"photoId" db:"photo_id"`
-    ImageData string `json:"imageData" db:"image_data"`
+    ImageData []byte `json:"imageData" db:"image_data"`
+    Timestamp time.Time `json:"timestamp" db:"timestamp"`
+}
+
+type Like struct {
+    Liker   string `json:"liker" db:"liker"`
+    PhotoID string `json:"photoId" db:"photo_id"`
+}
+
+type Follow struct {
+    Follower   string `json:"follower" db:"follower"`
+    Followed string `json:"followed" db:"followed"`
 }
 
 type Ban struct {
     Banner   string `json:"banner" db:"banner"`
     Banned string `json:"banned" db:"banned"`
 }
+
+type UserDetails struct {
+    Photos        []Photo
+    PhotosCount   int
+    Followers     int
+    Following     int
+}
+
 
 // AppDatabase is the high level interface for the DB
 type AppDatabase interface {
@@ -40,6 +61,7 @@ type AppDatabase interface {
     SetName(name string, token string) error
     DoesUserExist(username string) (bool, error, string)
     Ping() error
+    GetUserDetails(username string) (*UserDetails, error)
 
     // Example methods for user operations
     AddUser(user *User) (error, string)
@@ -60,8 +82,24 @@ func New(db *sql.DB) (AppDatabase, error) {
     if err != nil {
         return nil, err
     }
+    //Create the table follow
+    _, err = db.Exec(`CREATE TABLE IF NOT EXISTS follow (
+        follower TEXT,
+        followed TEXT
+    );`)
 
+    if err != nil{
+        return nil, err
+    }
+    _, err = db.Exec(`CREATE TABLE IF NOT EXISTS likes (
+        liker TEXT,
+        photo_id TEXT
+    );`)
 
+    if err != nil{
+        return nil, err
+    }
+    //create the ban table
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS bans (
         banner TEXT PRIMARY KEY,
         banned TEXT
@@ -88,8 +126,10 @@ func New(db *sql.DB) (AppDatabase, error) {
     
     // Create Photo table
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS photos (
+        username TEXT,
         photo_id TEXT PRIMARY KEY,
-        image_data TEXT
+        image_data BLOB,
+        timestamp TIMESTAMP
     );`)
     if err != nil {
         return nil, err

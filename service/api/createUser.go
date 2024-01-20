@@ -24,6 +24,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
+    r.Body.Close()
 
     // Call AddUser method of the database object
 	ctx.Logger.Info("Made it to the adduser call")

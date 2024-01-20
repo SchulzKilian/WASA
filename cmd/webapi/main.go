@@ -59,6 +59,7 @@ func main() {
 // * waits for any termination event: SIGTERM signal (UNIX), non-recoverable server error, etc.
 // * closes the principal web server
 func run() error {
+	
 	rand.Seed(globaltime.Now().UnixNano())
 	// Load Configuration and defaults
 	cfg, err := loadConfiguration()
@@ -68,7 +69,7 @@ func run() error {
 		}
 		return err
 	}
-
+	resetdatabase := true
 	// Init logging
 	logger := logrus.New()
 	logger.SetOutput(os.Stdout)
@@ -82,6 +83,10 @@ func run() error {
 
 	// Start Database
 	logger.Println("initializing database support")
+	if _, err := os.Stat(cfg.DB.Filename); err == nil {
+		if resetdatabase{
+        os.Remove(cfg.DB.Filename)}
+    }
 	dbconn, err := sql.Open("sqlite3", cfg.DB.Filename)
 	if err != nil {
 		logger.WithError(err).Error("error opening SQLite DB")

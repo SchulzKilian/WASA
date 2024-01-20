@@ -1,5 +1,8 @@
 package database
 
+
+import "errors"
+
 // GetName is an example that shows you how to query data
 func (db *appdbimpl) GetName() (string, error) {
 	var name string
@@ -27,4 +30,57 @@ func (db *appdbimpl) GetUser(userID string) (*User, error) {
 
     // Return the user object if found
     return &user, nil
+}
+func (db *appdbimpl) GetUserDetails(username string) (*UserDetails, error) {
+    if username == "" {
+        return nil, errors.New("username is empty")
+    }
+    photosQuery := `SELECT photo_id, image_data FROM photos WHERE username = ? ORDER BY timestamp DESC`
+    rows, err := db.c.Query(photosQuery, username)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var photos []Photo
+    for rows.Next() {
+        var photo Photo
+        if err := rows.Scan(&photo.PhotoID, &photo.ImageData); err != nil {
+            return nil, err
+        }
+        photos = append(photos, photo)
+    }
+
+    // Get count of photos
+    photosCountQuery := `SELECT COUNT(*) FROM photos WHERE username = ?`
+    var photosCount int
+    err = db.c.QueryRow(photosCountQuery, username).Scan(&photosCount)
+    if err != nil {
+        return nil, err
+    }
+
+    // Get count of followers
+    followersQuery := `SELECT COUNT(*) FROM follow WHERE followed = ?`
+    var followersCount int
+    err = db.c.QueryRow(followersQuery, username).Scan(&followersCount)
+    if err != nil {
+        return nil, err
+    }
+
+    // Get count of following
+    followingQuery := `SELECT COUNT(*) FROM follow WHERE follower = ?`
+    var followingCount int
+    err = db.c.QueryRow(followingQuery, username).Scan(&followingCount)
+    if err != nil {
+        return nil, err
+    }
+
+    userDetails := &UserDetails{
+        Photos:      photos,
+        PhotosCount: photosCount,
+        Followers:   followersCount,
+        Following:   followingCount,
+    }
+
+    return userDetails, nil
 }
