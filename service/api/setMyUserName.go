@@ -10,5 +10,24 @@ import (
 func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     // Placeholder logic
     ctx.Logger.Info("myApiHandler called") // Example logging
-    fmt.Fprintf(w, "This is a placeholder for myApiHandler")
+    
+    name := ps.ByName("name")
+    if ctx.User != nil {
+        err := ctx.Database.SetName(name, ctx.User.UserID)
+        if err != nil {
+            http.Error(w, err.Error(), http.StatusInternalServerError)
+            return
+        }
+
+    }else
+    {
+        http.Error(w, "please log in first",http.StatusBadRequest)
+        return
+    }
+    err := ctx.Database.SetName(name,ctx.User.UserID)
+    if err != nil {
+        http.Error(w,  "error changing the name in the database",http.StatusInternalServerError)
+        return
+    }
+    fmt.Fprintf(w, "Successfully changed your name.")
 }

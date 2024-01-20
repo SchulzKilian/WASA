@@ -31,7 +31,7 @@ func (rt *_router) Handler() http.Handler {
 	rt.router.GET("/users/:userId", rt.wrap(getUserProfile))
 	rt.router.POST("/users/:userId/ban", rt.wrap(banUser))
 	rt.router.GET("/users/:userId/stream", rt.wrap(getMyStream))
-	rt.router.PUT("/users/:userId/name", rt.wrap(setMyUserName))
+	rt.router.PATCH("/users/:name", rt.wrap(setMyUserName))
 	rt.router.POST("/users/:userId/unban", rt.wrap(unbanUser))
 	rt.router.POST("/users/:userId/follow", rt.wrap(followUser))
 	rt.router.POST("/users/:userId/unfollow", rt.wrap(unfollowUser))

@@ -23,11 +23,11 @@ func (rt *_router) wrap(fn httpRouterHandler) func(http.ResponseWriter, *http.Re
 		}
 		authHeader := r.Header.Get("Authorization")
 		user, err := rt.db.GetUser(authHeader)
-		userr := *user
+
 		var ctx = reqcontext.RequestContext{
 			ReqUUID: reqUUID,
 			Database: rt.db,
-			User: userr,
+			User: user,
 		}
 		
 		// Create a request-specific logger

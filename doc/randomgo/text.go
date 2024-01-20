@@ -13,6 +13,6 @@ func main() {
 
 }
 
-func evenRandomNumber(w http.ResponseWriter,r *http.Request){
+/*func evenRandomNumber(w http.ResponseWriter,r *http.Request){
 	w.Header().Set("Content-type","text")
-}
+}*/
