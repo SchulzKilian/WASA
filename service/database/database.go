@@ -36,6 +36,12 @@ type Like struct {
     PhotoID string `json:"photoId" db:"photo_id"`
 }
 
+type Comment struct {
+    Content string `json:"content" db:"content"`
+    Commenter   string `json:"commenter" db:"commenter"`
+    PhotoID string `json:"photoId" db:"photo_id"`
+}
+
 type Follow struct {
     Follower   string `json:"follower" db:"follower"`
     Followed string `json:"followed" db:"followed"`
@@ -85,7 +91,8 @@ func New(db *sql.DB) (AppDatabase, error) {
     //Create the table follow
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS follow (
         follower TEXT,
-        followed TEXT
+        followed TEXT,
+        PRIMARY KEY (follower, followed)
     );`)
 
     if err != nil{
@@ -93,6 +100,17 @@ func New(db *sql.DB) (AppDatabase, error) {
     }
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS likes (
         liker TEXT,
+        photo_id TEXT,
+        PRIMARY KEY (liker, photo_id)
+    );`)
+
+    if err != nil{
+        return nil, err
+    }
+    _, err = db.Exec(`CREATE TABLE IF NOT EXISTS comments (
+        comment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        content TEXT,
+        commenter TEXT,
         photo_id TEXT
     );`)
 
