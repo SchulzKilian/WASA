@@ -2,8 +2,8 @@ package database
 
 import (
 	"database/sql"
-	"errors"
-
+    "crypto/rand"
+    "encoding/base64"
 )
 
 // Error represents the error object in the database
@@ -28,16 +28,21 @@ type Photo struct {
     ImageData string `json:"imageData" db:"image_data"`
 }
 
+type Ban struct {
+    Banner   string `json:"banner" db:"banner"`
+    Banned string `json:"banned" db:"banned"`
+}
+
 // AppDatabase is the high level interface for the DB
 type AppDatabase interface {
     GetName() (string, error)
-    SetName(name string) error
-
+    GetUser(userID string) (*User, error)
+    SetName(name string, token string) error
+    DoesUserExist(username string) (bool, error, string)
     Ping() error
 
     // Example methods for user operations
-    GetUser(id string) (*User, error)
-    AddUser(user *User) error
+    AddUser(user *User) (error, string)
 
     // Add similar methods for Error and Photo
 }
@@ -56,10 +61,20 @@ func New(db *sql.DB) (AppDatabase, error) {
         return nil, err
     }
 
+
+    _, err = db.Exec(`CREATE TABLE IF NOT EXISTS bans (
+        banner TEXT PRIMARY KEY,
+        banned TEXT
+    );`)
+
+    if err != nil{
+        return nil, err
+    }
+
     // Create User table
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
-        user_id TEXT PRIMARY KEY,
-        username TEXT,
+        user_id TEXT UNIQUE,
+        username TEXT PRIMARY KEY,
         password TEXT,
         email TEXT,
         birthday TEXT,
@@ -69,7 +84,8 @@ func New(db *sql.DB) (AppDatabase, error) {
     if err != nil {
         return nil, err
     }
-
+    
+    
     // Create Photo table
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS photos (
         photo_id TEXT PRIMARY KEY,
@@ -91,18 +107,45 @@ func (db *appdbimpl) Ping() error {
 }
 
 // GetUser retrieves a user by ID
-func (db *appdbimpl) GetUser(id string) (*User, error) {
-    // Implement the SQL query to retrieve the user
-    // Example: db.c.QueryRow("SELECT ... FROM users WHERE id = ?", id)
-    // Scan the result into a User struct and return it
-    return nil, errors.New("not implemented")
-}
+
 
 // AddUser adds a new user to the database
-func (db *appdbimpl) AddUser(user *User) error {
-    _, err := db.c.Exec("INSERT INTO users (user_id, username, password, email, birthday, security_question, matricola) VALUES (?, ?, ?, ?, ?, ?, ?)",
+func (db *appdbimpl) AddUser(user *User) (error, string) {
+    var err error
+    user.UserID, err = generateRandomString(10)
+    if err != nil {
+        return err, ""
+    }
+    _, err = db.c.Exec("INSERT INTO users (user_id, username, password, email, birthday, security_question, matricola) VALUES (?, ?, ?, ?, ?, ?, ?)",
         user.UserID, user.Username, user.Password, user.Email, user.Birthday, user.SecurityQuestion, user.Matricola)
-    return err
+    return err, user.UserID
 }
 
-// Add similar methods for Error and Photo
+func (db *appdbimpl) DoesUserExist(username string) (bool, error, string) {
+    var userID string
+    query := "SELECT user_id FROM users WHERE username = ? LIMIT 1"
+    
+    err := db.c.QueryRow(query, username).Scan(&userID)
+    if err != nil {
+        if err == sql.ErrNoRows {
+            return false, nil, ""
+        }
+        return false, err, ""
+    }
+
+
+    return true, nil, userID
+}
+
+
+
+
+func generateRandomString(n int) (string, error) {
+    b := make([]byte, n)
+    _, err := rand.Read(b)
+    if err != nil {
+        return "", err
+    }
+
+    return base64.URLEncoding.EncodeToString(b)[:n], nil
+}

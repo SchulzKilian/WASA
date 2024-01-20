@@ -28,7 +28,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
     // Call AddUser method of the database object
 	ctx.Logger.Info("Made it to the adduser call")
 
-    err = db.AddUser(&user)
+    err, token := db.AddUser(&user)
 
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -36,5 +36,5 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
     }
 
     ctx.Logger.Info("User created successfully")
-    fmt.Fprintf(w, "User created successfully")
+    fmt.Fprintf(w, token)
 }

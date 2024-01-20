@@ -21,11 +21,15 @@ func (rt *_router) wrap(fn httpRouterHandler) func(http.ResponseWriter, *http.Re
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		authHeader := r.Header.Get("Authorization")
+		user, err := rt.db.GetUser(authHeader)
+		userr := *user
 		var ctx = reqcontext.RequestContext{
 			ReqUUID: reqUUID,
 			Database: rt.db,
+			User: userr,
 		}
-
+		
 		// Create a request-specific logger
 		ctx.Logger = rt.baseLogger.WithFields(logrus.Fields{
 			"reqid":     ctx.ReqUUID.String(),

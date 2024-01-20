@@ -19,4 +19,5 @@ type RequestContext struct {
 	Database database.AppDatabase
 	// Logger is a custom field logger for the request
 	Logger logrus.FieldLogger
+	User database.User
 }
