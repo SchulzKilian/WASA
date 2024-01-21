@@ -10,6 +10,10 @@ import (
 
 func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     db := ctx.Database
+    if ctx.User == nil{
+        http.Error(w, "You have to be logged in to get a stream", http.StatusForbidden)
+        return
+    }
     tooutput, err := db.GetFollowedUsersPhotos(ctx.User.Username)
     if err != nil{
         http.Error(w,err.Error(),http.StatusBadRequest)

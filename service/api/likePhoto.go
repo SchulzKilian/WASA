@@ -9,6 +9,7 @@ import (
 
 func likePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     // Placeholder logic
+
     ctx.Logger.Info("myApiHandler called") // Example logging
     fmt.Fprintf(w, "This is a placeholder for myApiHandler")
 }
