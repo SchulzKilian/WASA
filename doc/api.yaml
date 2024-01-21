@@ -576,34 +576,26 @@ components:
           maxLength: 30
           pattern: "^[a-zA-Z0-9_]+$"
           description: User's username
-        password:
-          type: string
-          minLength: 8
-          maxLength: 50
-          pattern: "^[a-zA-Z0-9_]+$"
-          description: User's password
-        email:
-          type: string
-          minLength: 5
-          maxLength: 100
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
-          description: User's email
-        birthday:
-          type: string
-          minLength: 7
-          maxLength: 10
-          pattern: "^d{4}-d{2}-d{2}$"
-          description: User's birthday
-        security_question:
-          type: string
-          minLength: 10
-          maxLength: 150
-          pattern: "^[a-zA-Z0-9_]+$"
-          description: User's security question
-        matricola:
+        Following:
           type: integer
-          description: the student's enrolment code
-      description: the entire user with all its attributes
+          minimum: 0
+          maximum: 1000000
+          description: The number of followers the user has
+        Followers:
+          type: integer
+          minimum: 0
+          description: The number of people the user is following
+        PhotosCount:
+          type: integer
+          minimum: 0
+          maximum: 1000000
+          description: The number of images the user has posted
+        Photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+          description: List of photos posted by the user
+      description: The entire user with all its attributes
           
     Photo:
       type: object
