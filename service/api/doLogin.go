@@ -11,7 +11,7 @@ import (
 
 func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     var requestData map[string]string
-
+    ctx.Logger.Info("test")
     // Decode the JSON body into the map
     err := json.NewDecoder(r.Body).Decode(&requestData)
     if err != nil {

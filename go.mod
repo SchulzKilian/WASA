@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/ardanlabs/conf v1.5.0
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/gorilla/handlers v1.5.1
+	github.com/gorilla/handlers v1.5.2
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/mattn/go-sqlite3 v1.14.17
@@ -16,7 +16,7 @@ require (
 
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
-	github.com/felixge/httpsnoop v1.0.3 // indirect
+	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/google/uuid v1.5.0 // indirect
 	github.com/kr/pretty v0.1.0 // indirect

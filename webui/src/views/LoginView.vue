@@ -7,6 +7,8 @@
 
 <script>
 import axios from 'axios';
+import api from "@/services/axios"; 
+import router from '@/router';
 export default {
   data() {
     return {
@@ -16,9 +18,11 @@ export default {
 methods: {
   async login() {
     try {
-      const response = await axios.post('/session', { username: this.username });
+      const response = await api.post('/session', { name: this.username });
+      console.log(response.data)
       axios.defaults.headers.common['Authorization'] = response.data;
-      // Handle the response, such as saving the token
+      this.$router.push('/stream');
+
     } catch (error) {
       console.error("Login failed:", error);
     }
