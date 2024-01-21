@@ -1,14 +1,34 @@
 package api
 
 import (
-    "fmt"
     "net/http"
+    "encoding/json"
     "github.com/julienschmidt/httprouter"
+    "git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/database"
     "git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/api/reqcontext" // replace with your actual package import path
 )
 
 func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
-    // Placeholder logic
-    ctx.Logger.Info("myApiHandler called") // Example logging
-    fmt.Fprintf(w, "This is a placeholder for myApiHandler")
+    commenter := ctx.User.Username
+    photoid := ps.ByName("photoId")
+    var comment database.Comment
+    err := json.NewDecoder(r.Body).Decode(&comment)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+
+    // Assign commenter and photoId to the comment struct
+    comment.Commenter = commenter
+    comment.PhotoID = photoid
+
+    // Process the comment (e.g., store in database)
+    err = ctx.Database.AddComment(comment)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("Successfully commented the image"))
+
 }

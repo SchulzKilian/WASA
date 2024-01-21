@@ -82,7 +82,7 @@ type AppDatabase interface {
     AddPhoto(photo Photo) error
     DeletePhoto(photo_id int) error
     AddComment(comment Comment) error
-    DeleteComment(commentID string) error
+    DeleteComment(commentID, commenter string) error
     AddLike(liker, photoID string) error
     DeleteLike(liker, photoID string) error
     AddBan(banner, banned string) error
