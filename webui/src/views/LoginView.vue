@@ -17,8 +17,7 @@ methods: {
   async login() {
     try {
       const response = await axios.post('/session', { username: this.username });
-      axios.defaults.headers.common['Authorization']       axios.defaults.headers.common['Authorization'] = response.data;
-= response.data;
+      axios.defaults.headers.common['Authorization'] = response.data;
       // Handle the response, such as saving the token
     } catch (error) {
       console.error("Login failed:", error);
