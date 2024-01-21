@@ -600,13 +600,18 @@ components:
     Photo:
       type: object
       properties:
-        photoId:
+        username:
           type: string
           minLength: 10
           maxLength: 20
           pattern: '^[a-zA-Z0-9_]+$'
+          description: A unique username of the poster
+        photo_id:
+          type: integer
+          minimum: 0
+          maximum: 100000
           description: A unique photo identifier
-        imageData:
+        image_data:
           type: string
           description: Base64-encoded image data
           minLength: 50
@@ -617,7 +622,7 @@ components:
         - imageData
       description: the photo object
       
-    photoId:
+    photo_id:
       type: string
       minLength: 10
       maxLength: 20
