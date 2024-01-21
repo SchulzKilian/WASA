@@ -79,33 +79,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /users/{username}:
-    get:
-      tags: [user]
-      summary: Get User Profile
-      description: Get the profile of a user.
-      operationId: getUserProfile
-      parameters:
-        - name: username
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/username'
-
-      responses:
-        '200':
-          description: User profile retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
                 
                 
     
@@ -183,17 +156,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
-  /users/{username}/stream:
+  /users/stream:
     get:
       tags: [user]
       summary: Get My Stream
       description: Retrieve the user's stream.
-      parameters:
-          - name: username
-            in: path
-            required: true
-            schema:
-              $ref: '#/components/schemas/username'
       operationId: getMyStream
       
   
@@ -207,29 +174,21 @@ paths:
                 properties:
                   stream:
                     type: array
+                    items:
+                      $ref: '#/components/schemas/Photo'
                     minItems: 0
                     maxItems: 100
-                    description: all the stuff user needs for his for you page
-                    items:
-                      type: object
-                      description: Stream item
-                      properties:
-                        itemProperty:
-                          type: string
-                          description: Description of item property
-                          pattern: "^[a-zA-Z0-9_]+$"
-                          minLength: 10
-                          maxLength: 100
-                description: The entire stream with info for the user
-  
-        '401':
+                    description: a photo object in the users stream
+                description: The entire stream of photos
+
+        '403':
           description: Unauthorized. User authentication failed.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'             
-  /users/{username}/name:
-    put:
+  /users/{username}:
+    patch:
       tags: [user]
       summary: Set My User Name
       description: Set the user's username.
@@ -262,7 +221,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'            
   
+    get:
+      tags: [user]
+      summary: Get User Profile
+      description: Get the profile of a user.
+      operationId: getUserProfile
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/username'
 
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '403':
+          description: Unauthorized. User authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     
                 
                 

@@ -26,21 +26,21 @@ func NewRouter() *_router {
 // Handler returns an instance of httprouter.Router that handles APIs registered here
 func (rt *_router) Handler() http.Handler {
 	// Register routes
-	rt.router.POST("/session", rt.wrap(doLogin))
-	rt.router.POST("/users/", rt.wrap(createUser))
-	rt.router.GET("/users/:name", rt.wrap(getUserProfile))
+	rt.router.POST("/session", rt.wrap(doLogin))  // works
+	rt.router.POST("/users/", rt.wrap(createUser))   // works
+	rt.router.GET("/users/:name", rt.wrap(getUserProfile))   // works
 	rt.router.POST("/users/:name/ban", rt.wrap(banUser))
-	rt.router.GET("/users/:name/stream", rt.wrap(getMyStream))
-	rt.router.PATCH("/users/:name", rt.wrap(setMyUserName))
+	rt.router.GET("/users/stream", rt.wrap(getMyStream))
+	rt.router.PATCH("/users/:name", rt.wrap(setMyUserName)) // works
 	rt.router.POST("/users/:name/unban", rt.wrap(unbanUser))
-	rt.router.POST("/users/:name/followers/", rt.wrap(followUser))
-	rt.router.DELETE("/users/:name/followers/", rt.wrap(unfollowUser))
+	rt.router.POST("/users/:name/followers/", rt.wrap(followUser))  // works
+	rt.router.DELETE("/users/:name/followers/", rt.wrap(unfollowUser)) // works
 	rt.router.POST("/photos/:photoId/comments/", rt.wrap(commentPhoto))
 	rt.router.DELETE("/comments/:commentId", rt.wrap(uncommentPhoto))
 	rt.router.POST("/photos/:photoId/likes/", rt.wrap(likePhoto))
 	rt.router.DELETE("/likes/:likeId", rt.wrap(unlikePhoto))
-	rt.router.POST("/users/:name/photos/", rt.wrap(uploadPhoto))
-	rt.router.DELETE("/photos/:photoId", rt.wrap(deletePhoto))
+	rt.router.POST("/users/:name/photos/", rt.wrap(uploadPhoto))   // works
+	rt.router.DELETE("/photos/:photoId", rt.wrap(deletePhoto))  // works
 
 	rt.router.GET("/liveness", rt.liveness)
 
