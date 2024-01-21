@@ -2,24 +2,29 @@ package api
 
 import (
     "fmt"
-    "io"
     "net/http"
+    "encoding/json"
     "github.com/julienschmidt/httprouter"
     "git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/api/reqcontext"
     "git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/database" // replace with your actual package import path
 )
 
 func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
-    // Placeholder logic
-    bodyBytes, err := io.ReadAll(r.Body)
+    var requestData map[string]string
+
+    // Decode the JSON body into the map
+    err := json.NewDecoder(r.Body).Decode(&requestData)
     if err != nil {
-        http.Error(w, "Error reading request body", http.StatusInternalServerError)
+        http.Error(w, "Invalid request body", http.StatusBadRequest)
         return
     }
     defer r.Body.Close()
 
-    // Convert body bytes to string
-    username := string(bodyBytes)
+    username, ok := requestData["name"]
+    if !ok {
+        http.Error(w, "Name field is required", http.StatusBadRequest)
+        return
+    }
     ctx.Logger.Info(username)
     db := ctx.Database
     userexists, err, token := db.DoesUserExist(username)

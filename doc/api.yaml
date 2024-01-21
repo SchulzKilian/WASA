@@ -156,7 +156,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
-  /users/stream:
+  /stream:
     get:
       tags: [user]
       summary: Get My Stream
