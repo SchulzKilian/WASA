@@ -79,18 +79,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /users/{userId}:
+  /users/{username}:
     get:
       tags: [user]
       summary: Get User Profile
       description: Get the profile of a user.
       operationId: getUserProfile
       parameters:
-        - name: userId
+        - name: username
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/userId'
+            $ref: '#/components/schemas/username'
 
       responses:
         '200':
@@ -109,13 +109,13 @@ paths:
                 
                 
     
-  /users/{userId}/banned/:
+  /users/{username}/banned/:
     parameters:
-        - name: userId
+        - name: username
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/userId'
+            $ref: '#/components/schemas/username'
     post:
       tags: [user]
       summary: Ban User
@@ -128,9 +128,9 @@ paths:
             schema:
               type: object
               properties:
-                userId:
-                  $ref: '#/components/schemas/userId'
-              description: the user id of the user banning
+                username:
+                  $ref: '#/components/schemas/username'
+              description: the user id of the banned user
       responses:
         '201':
           description: User banned successfully.
@@ -183,17 +183,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
-  /users/{userId}/stream:
+  /users/{username}/stream:
     get:
       tags: [user]
       summary: Get My Stream
       description: Retrieve the user's stream.
       parameters:
-          - name: userId
+          - name: username
             in: path
             required: true
             schema:
-              $ref: '#/components/schemas/userId'
+              $ref: '#/components/schemas/username'
       operationId: getMyStream
       
   
@@ -228,18 +228,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'             
-  /users/{userId}/name:
+  /users/{username}/name:
     put:
       tags: [user]
       summary: Set My User Name
       description: Set the user's username.
       operationId: setMyUserName
       parameters:
-        - name: userId
+        - name: username
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/userId'
+            $ref: '#/components/schemas/username'
       requestBody:
         required: true
         content:
@@ -267,13 +267,13 @@ paths:
                 
                 
                 
-  /users/{userId}/followers/:
+  /users/{username}/followers/:
     parameters:
-          - name: userId
+          - name: username
             in: path
             required: true
             schema:
-              $ref: '#/components/schemas/userId'
+              $ref: '#/components/schemas/username'
             description: the id of the user
     post:
       tags: [user]
@@ -288,8 +288,8 @@ paths:
             schema:
               type: object
               properties:
-                userId:
-                  $ref: '#/components/schemas/userId'
+                username:
+                  $ref: '#/components/schemas/username'
               description: follow confirmation
 
       responses:
@@ -497,18 +497,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /users/{userId}/photos/:
+  /users/{username}/photos/:
     post:
       tags: [photo]
       summary: Upload Photo
       description: Upload a photo.
       operationId: uploadPhoto
       parameters:
-        - name: userId
+        - name: username
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/userId'
+            $ref: '#/components/schemas/username'
       requestBody:
         required: true
         content:
@@ -586,12 +586,6 @@ components:
     User:
       type: object
       properties:
-        userId:
-          type: string
-          minLength: 10
-          maxLength: 20
-          pattern: "^[a-zA-Z0-9_]+$"
-          description: A unique user identifier
         username:
           type: string
           minLength: 4
@@ -654,7 +648,7 @@ components:
       pattern: '^[a-zA-Z0-9_]+$'
       description: A unique photo identifier
       
-    userId:
+    username:
           type: string
           minLength: 10
           maxLength: 20
