@@ -89,6 +89,7 @@ type AppDatabase interface {
     DeleteBan(banner, banned string) error
     AddUser(user *User) (error, string)
     GetFollowedUsersPhotos(username string) ([]PhotoDetails, error)
+    AmIBanned(banner, banned string) (bool, error)
     
 
 }

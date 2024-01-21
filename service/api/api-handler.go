@@ -5,6 +5,7 @@ import (
 	"github.com/julienschmidt/httprouter" // Import the router package you are using
 	"github.com/sirupsen/logrus"
 	"git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/database"
+
 )
 
 type _router struct {
@@ -30,15 +31,15 @@ func (rt *_router) Handler() http.Handler {
 	rt.router.POST("/users/", rt.wrap(createUser))   // works
 	rt.router.GET("/users/:name", rt.wrap(getUserProfile))   // works
 	rt.router.POST("/users/:name/banned/", rt.wrap(banUser)) // works
-	rt.router.GET("/stream", rt.wrap(getMyStream))
+	rt.router.GET("/stream", rt.wrap(getMyStream)) // works
 	rt.router.PATCH("/users/:name", rt.wrap(setMyUserName)) // works
 	rt.router.DELETE("/users/:name/banned/", rt.wrap(unbanUser)) //works
 	rt.router.POST("/users/:name/followers/", rt.wrap(followUser))  // works
 	rt.router.DELETE("/users/:name/followers/", rt.wrap(unfollowUser)) // works
-	rt.router.POST("/photos/:photoId/comments/", rt.wrap(commentPhoto))
-	rt.router.DELETE("/comments/:commentId", rt.wrap(uncommentPhoto))
-	rt.router.POST("/photos/:photoId/likes/", rt.wrap(likePhoto))
-	rt.router.DELETE("/likes/:likeId", rt.wrap(unlikePhoto))
+	rt.router.POST("/photos/:photoId/comments/", rt.wrap(commentPhoto)) // works
+	rt.router.DELETE("/comments/:commentId", rt.wrap(uncommentPhoto)) // works
+	rt.router.POST("/photos/:photoId/likes/", rt.wrap(likePhoto)) // works
+	rt.router.DELETE("/likes/:likeId", rt.wrap(unlikePhoto)) // works
 	rt.router.POST("/users/:name/photos/", rt.wrap(uploadPhoto))   // works
 	rt.router.DELETE("/photos/:photoId", rt.wrap(deletePhoto))  // works
 	rt.router.GET("/liveness", rt.wrap(rt.liveness))
