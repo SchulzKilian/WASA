@@ -20,6 +20,7 @@ methods: {
     try {
       const response = await api.post('/session', { name: this.username });
       console.log(response.data)
+      localStorage.setItem("token", response.data);
       axios.defaults.headers.common['Authorization'] = response.data;
       this.$router.push('/stream');
 
