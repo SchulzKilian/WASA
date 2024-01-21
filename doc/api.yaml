@@ -338,7 +338,11 @@ paths:
           schema:
             $ref: '#/components/schemas/photo_id'
       operationId: commentPhoto
-
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
       responses:
         '201':
           description: Comment added to the photo successfully.
@@ -566,7 +570,34 @@ components:
           pattern: '^[a-zA-Z0-9]{10,20}$'
           description: Describes the more specific error I am putting out
       description: The overall error object
-      
+    Comment:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 200
+          pattern: '^[a-zA-Z0-9]{10,20}$'
+          description: COntent of the comment
+        commenter:
+          type: string
+          minLength: 1
+          maxLength: 200
+          pattern: '^[a-zA-Z0-9]{10,20}$'
+          description: username of the commenter
+        photoId:
+          type: integer
+          minimum: 0
+          maximum: 1000000
+          description: the photo id of the photo the comment is intended for
+        commentId:  
+          type: string
+          minLength: 10
+          maxLength: 20
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: The comment ID
+      description: The overall comment object     
+    
     User:
       type: object
       properties:
