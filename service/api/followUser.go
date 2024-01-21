@@ -1,7 +1,6 @@
 package api
 
 import (
-    "fmt"
     "net/http"
     "github.com/julienschmidt/httprouter"
     "git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/api/reqcontext" // replace with your actual package import path
@@ -10,5 +9,15 @@ import (
 func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     // Placeholder logic
     ctx.Logger.Info("myApiHandler called") // Example logging
-    fmt.Fprintf(w, "This is a placeholder for myApiHandler")
+    username := ctx.User.Username
+    tofollow := ps.ByName("name")
+    db := ctx.Database
+    err := db.AddFollow(username,tofollow)
+    if err !=nil{
+        http.Error(w,"Error following the user",http.StatusBadRequest)
+        ctx.Logger.Info(err)
+        return
+    }
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("Successfully followed the user"))
 }

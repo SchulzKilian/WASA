@@ -66,13 +66,21 @@ type AppDatabase interface {
     GetUser(userID string) (*User, error)
     SetName(name string, token string) error
     DoesUserExist(username string) (bool, error, string)
+    AddFollow(follower, followed string) error
+    DeleteFollow(follower, followed string) error
     Ping() error
     GetUserDetails(username string) (*UserDetails, error)
     AddPhoto(photo Photo) error
-    // Example methods for user operations
-    AddUser(user *User) (error, string)
     DeletePhoto(photo_id int) error
-    // Add similar methods for Error and Photo
+    AddComment(comment Comment) error
+    DeleteComment(commentID string) error
+    AddLike(liker, photoID string) error
+    DeleteLike(liker, photoID string) error
+    AddBan(banner, banned string) error
+    DeleteBan(banner, banned string) error
+    AddUser(user *User) (error, string)
+    
+
 }
 
 type appdbimpl struct {
