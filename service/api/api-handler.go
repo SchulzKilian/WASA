@@ -29,10 +29,10 @@ func (rt *_router) Handler() http.Handler {
 	rt.router.POST("/session", rt.wrap(doLogin))  // works
 	rt.router.POST("/users/", rt.wrap(createUser))   // works
 	rt.router.GET("/users/:name", rt.wrap(getUserProfile))   // works
-	rt.router.POST("/users/:name/banned/", rt.wrap(banUser)) 
+	rt.router.POST("/users/:name/banned/", rt.wrap(banUser)) // works
 	rt.router.GET("/stream", rt.wrap(getMyStream))
 	rt.router.PATCH("/users/:name", rt.wrap(setMyUserName)) // works
-	rt.router.DELETE("/users/:name/banned/", rt.wrap(unbanUser))
+	rt.router.DELETE("/users/:name/banned/", rt.wrap(unbanUser)) //works
 	rt.router.POST("/users/:name/followers/", rt.wrap(followUser))  // works
 	rt.router.DELETE("/users/:name/followers/", rt.wrap(unfollowUser)) // works
 	rt.router.POST("/photos/:photoId/comments/", rt.wrap(commentPhoto))
@@ -41,7 +41,7 @@ func (rt *_router) Handler() http.Handler {
 	rt.router.DELETE("/likes/:likeId", rt.wrap(unlikePhoto))
 	rt.router.POST("/users/:name/photos/", rt.wrap(uploadPhoto))   // works
 	rt.router.DELETE("/photos/:photoId", rt.wrap(deletePhoto))  // works
-	rt.router.GET("/liveness", rt.liveness)
+	rt.router.GET("/liveness", rt.wrap(rt.liveness))
 
 	return rt.router
 }

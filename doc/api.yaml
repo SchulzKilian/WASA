@@ -175,10 +175,10 @@ paths:
                   stream:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Photo'
+                      $ref: '#/components/schemas/PhotoDetails'
                     minItems: 0
                     maxItems: 100
-                    description: a photo object in the users stream
+                    description: a photo detail object in the users stream
                 description: The entire stream of photos
 
         '403':
@@ -611,6 +611,10 @@ components:
           minimum: 0
           maximum: 100000
           description: A unique photo identifier
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the photo was posted
         image_data:
           type: string
           description: Base64-encoded image data
@@ -628,6 +632,7 @@ components:
       maxLength: 20
       pattern: '^[a-zA-Z0-9_]+$'
       description: A unique photo identifier
+
       
     username:
           type: string
@@ -635,6 +640,30 @@ components:
           maxLength: 20
           pattern: "^[a-zA-Z0-9_]+$"
           description: A unique user identifier
+    PhotoDetails:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the user who posted the photo
+        photoId:
+          type: string
+          description: Unique identifier of the photo
+        imageData:
+          type: string
+          format: byte
+          description: Base64-encoded image data
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the photo was uploaded
+        likesCount:
+          type: integer
+          description: Number of likes on the photo
+        commentsCount:
+          type: integer
+          description: Number of comments on the photo
+      description: An information schema about a photo which doesnt have to be stored
       
     
       

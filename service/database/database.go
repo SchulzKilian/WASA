@@ -31,6 +31,15 @@ type Photo struct {
     Timestamp time.Time `json:"timestamp" db:"timestamp"`
 }
 
+type PhotoDetails struct {
+    Username      string    `json:"username"`
+    PhotoID       string    `json:"photoId"`
+    ImageData     []byte    `json:"imageData"`
+    Timestamp     time.Time `json:"timestamp"`
+    LikesCount    int       `json:"likesCount"`
+    CommentsCount int       `json:"commentsCount"`
+}
+
 type Like struct {
     Liker   string `json:"liker" db:"liker"`
     PhotoID string `json:"photoId" db:"photo_id"`
@@ -79,6 +88,7 @@ type AppDatabase interface {
     AddBan(banner, banned string) error
     DeleteBan(banner, banned string) error
     AddUser(user *User) (error, string)
+    GetFollowedUsersPhotos(username string) ([]PhotoDetails, error)
     
 
 }
@@ -214,4 +224,41 @@ func generateRandomString(n int) (string, error) {
     }
 
     return base64.URLEncoding.EncodeToString(b)[:n], nil
+}
+
+
+
+func (db *appdbimpl) GetFollowedUsersPhotos(username string) ([]PhotoDetails, error) {
+    var photos []PhotoDetails
+
+    // SQL query to retrieve photos, along with likes and comments count
+    query := `SELECT p.username, p.photo_id, p.image_data, p.timestamp, 
+                     COUNT(DISTINCT l.liker) AS likes_count, 
+                     COUNT(DISTINCT c.comment_id) AS comments_count 
+              FROM photos p
+              LEFT JOIN likes l ON p.photo_id = l.photo_id
+              LEFT JOIN comments c ON p.photo_id = c.photo_id
+              JOIN follow f ON p.username = f.followed
+              WHERE f.follower = ?
+              GROUP BY p.photo_id`
+
+    rows, err := db.c.Query(query, username)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        var photo PhotoDetails
+        err := rows.Scan(&photo.Username, &photo.PhotoID, &photo.ImageData, &photo.Timestamp, &photo.LikesCount, &photo.CommentsCount)
+        if err != nil {
+            return nil, err
+        }
+        photos = append(photos, photo)
+    }
+    if err := rows.Err(); err != nil {
+        return nil, err
+    }
+
+    return photos, nil
 }
