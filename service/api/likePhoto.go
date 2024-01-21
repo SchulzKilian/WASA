@@ -1,15 +1,24 @@
 package api
 
 import (
-    "fmt"
     "net/http"
     "github.com/julienschmidt/httprouter"
     "git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/api/reqcontext" // replace with your actual package import path
 )
 
 func likePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
-    // Placeholder logic
+    if ctx.User == nil{
+        http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+        return
+    }
+    photoid := ps.ByName("photoId")
+    err := ctx.Database.AddLike(ctx.User.Username,photoid)
+    if err != nil{
+        http.Error(w,"something went wrong with you trying to like a photo", http.StatusBadRequest)
+        return
+    }
 
-    ctx.Logger.Info("myApiHandler called") // Example logging
-    fmt.Fprintf(w, "This is a placeholder for myApiHandler")
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("Successfully liked the image"))
+
 }
