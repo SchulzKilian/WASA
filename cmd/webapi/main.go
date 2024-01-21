@@ -69,7 +69,7 @@ func run() error {
 		}
 		return err
 	}
-	resetdatabase := true
+	resetdatabase := false
 	// Init logging
 	logger := logrus.New()
 	logger.SetOutput(os.Stdout)

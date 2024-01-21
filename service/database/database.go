@@ -68,10 +68,10 @@ type AppDatabase interface {
     DoesUserExist(username string) (bool, error, string)
     Ping() error
     GetUserDetails(username string) (*UserDetails, error)
-
+    AddPhoto(photo Photo) error
     // Example methods for user operations
     AddUser(user *User) (error, string)
-
+    DeletePhoto(photo_id int) error
     // Add similar methods for Error and Photo
 }
 
@@ -145,7 +145,7 @@ func New(db *sql.DB) (AppDatabase, error) {
     // Create Photo table
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS photos (
         username TEXT,
-        photo_id TEXT PRIMARY KEY,
+        photo_id INTEGER PRIMARY KEY AUTOINCREMENT,
         image_data BLOB,
         timestamp TIMESTAMP
     );`)
