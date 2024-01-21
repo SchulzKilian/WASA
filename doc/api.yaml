@@ -336,7 +336,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/photoId'
+            $ref: '#/components/schemas/photo_id'
       operationId: commentPhoto
 
       responses:
@@ -413,7 +413,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/photoId'
+            $ref: '#/components/schemas/photo_id'
 
 
       responses:
@@ -508,7 +508,7 @@ paths:
                 type: object
                 properties:
                   photoId:
-                    $ref: '#/components/schemas/photoId'
+                    $ref: '#/components/schemas/photo_id'
                 description: The response to uploading a photo succesfuly
                 
 
@@ -530,7 +530,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/photoId'
+            $ref: '#/components/schemas/photo_id'
       responses:
         '200':
           description: Photo deleted successfully.
@@ -621,7 +621,7 @@ components:
       required:
         - imageData
       description: the photo object
-      
+    
     photo_id:
       type: string
       minLength: 10
