@@ -15,16 +15,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      searchUsername: '',
-      userProfile: null // This will hold the user profile data
-    }
-  },
-  methods: {
-    searchProfile() {
-      // Fetch user profile based on searchUsername and set to userProfile
+ data() {
+  return {
+    username: '', // Username to search
+    userProfile: null
+  };
+},
+methods: {
+  async fetchUserProfile() {
+    try {
+      const response = await axios.get(`/users/${this.username}`);
+      this.userProfile = response.data;
+    } catch (error) {
+      console.error("Failed to fetch user profile:", error);
     }
   }
+}
 }
 </script>

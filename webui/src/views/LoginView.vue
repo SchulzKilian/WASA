@@ -12,12 +12,16 @@ export default {
       username: ''
     }
   },
-  methods: {
-    login() {
-      // Call login function from your backend with this.username
-      // Redirect to stream view on successful login
-      this.$router.push('/stream');
+methods: {
+  async login() {
+    try {
+      const response = await axios.post('/session', { username: this.username });
+      axios.defaults.headers.common['Authorization'] = response.data;
+      // Handle the response, such as saving the token
+    } catch (error) {
+      console.error("Login failed:", error);
     }
   }
+}
 }
 </script>
