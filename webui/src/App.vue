@@ -1,9 +1,4 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-<script>
-export default {}
-</script>
+
 
 <template>
 
@@ -13,7 +8,7 @@ export default {}
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</header>
-
+	<input type="file" ref="fileInput" hidden @change="uploadImage" accept="image/*" />
 	<div class="container-fluid">
 		<div class="row">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -29,15 +24,15 @@ export default {}
 							</RouterLink>
 						</li>
 						<li class="nav-item">
-							<RouterLink to="/link1" class="nav-link">
+							<RouterLink to="/stream" class="nav-link">
 								<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#layout"/></svg>
-								Menu item 1
+								My stream
 							</RouterLink>
 						</li>
 						<li class="nav-item">
-							<RouterLink to="/link2" class="nav-link">
+							<RouterLink to="/profile" class="nav-link">
 								<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#key"/></svg>
-								Menu item 2
+								A users profile
 							</RouterLink>
 						</li>
 					</ul>
@@ -46,13 +41,14 @@ export default {}
 						<span>Secondary menu</span>
 					</h6>
 					<ul class="nav flex-column">
+						<!-- Other menu items -->
 						<li class="nav-item">
-							<RouterLink :to="'/some/' + 'variable_here' + '/path'" class="nav-link">
-								<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#file-text"/></svg>
-								Item 1
-							</RouterLink>
+						<a class="nav-link" href="#" @click="triggerFileInput">
+							<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#file-text"/></svg>
+							Upload Photo
+						</a>
 						</li>
-					</ul>
+          			</ul>
 				</div>
 			</nav>
 
@@ -63,5 +59,38 @@ export default {}
 	</div>
 </template>
 
-<style>
-</style>
+  
+  <script setup>
+  import { RouterLink, RouterView } from 'vue-router'
+  </script>
+  
+  <script>
+import api from "@/services/axios"; // Import api from axios services
+
+export default {
+  methods: {
+    triggerFileInput() {
+      this.$refs.fileInput.click();
+    },
+    async uploadImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        try {
+          const response = await api.post('/photos/', formData);
+          console.log(response.data);
+          // Handle the response, e.g., showing a success message
+        } catch (error) {
+          console.error('Error uploading image:', error);
+          // Handle the error, e.g., showing an error message
+        }
+      }
+    }
+  }
+}
+</script>
+  <style>
+  </style>
+

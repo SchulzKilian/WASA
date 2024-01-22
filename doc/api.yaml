@@ -485,18 +485,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /users/{username}/photos/:
+  /photos/:
     post:
       tags: [photo]
       summary: Upload Photo
       description: Upload a photo.
       operationId: uploadPhoto
-      parameters:
-        - name: username
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/username'
       requestBody:
         required: true
         content:
