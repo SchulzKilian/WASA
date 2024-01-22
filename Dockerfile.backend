@@ -16,7 +16,7 @@ COPY . .
 # Build the Go app
 RUN go build -o webapi ./cmd/webapi/
 
-# Expose port 9090 to the outside world
+# Expose port 3000 to the outside world
 EXPOSE 3000
 
 # Command to run the executable
