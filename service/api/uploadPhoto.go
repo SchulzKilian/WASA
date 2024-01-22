@@ -12,6 +12,10 @@ import (
 
 func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     // Extract username from context
+    if ctx.User == nil{
+        http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+        return
+    }
     username := ctx.User.Username
     ctx.Logger.Info("Called successfully")
     // Read image data from the request body

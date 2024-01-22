@@ -9,6 +9,10 @@ import (
 
 func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
     // Placeholder logic
+    if ctx.User == nil{
+        http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+        return
+    }
     photo_id := ps.ByName("photoId")
     ctx.Logger.Info(photo_id)
     db := ctx.Database
