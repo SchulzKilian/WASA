@@ -80,6 +80,7 @@ func (db *appdbimpl) GetUserDetails(username string) (*UserDetails, error) {
         PhotosCount: photosCount,
         Followers:   followersCount,
         Following:   followingCount,
+        
     }
 
     return userDetails, nil
