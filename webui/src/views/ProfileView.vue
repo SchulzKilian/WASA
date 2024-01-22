@@ -11,6 +11,12 @@
       <p>Following: {{ userProfile.Following }}</p>
       <p>Posts: {{ userProfile.PhotosCount }}</p>
     </div>
+    <div v-if="userProfile">
+      <!-- Existing code... -->
+      <button v-if="!isOwnProfile" @click="toggleFollow">
+        {{ isFollowing ? 'Unfollow' : 'Follow' }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -25,6 +31,45 @@ export default {
     };
   },
   methods: {
+
+    async toggleFollow() {
+      if (this.isFollowing) {
+        await this.unfollowUser();
+      } else {
+        await this.followUser();
+      }
+    },
+    async followUser() {
+      // Implement the API call to follow the user
+      try {
+        await api.post(`/follow/${this.userProfile.UserID}`, {}, {
+          headers: { Authorization: localStorage.getItem("token") }
+        });
+        // Update the current user's following list
+        this.currentUser.Following.push(this.userProfile.UserID);
+      } catch (error) {
+        console.error("Failed to follow user:", error);
+      }
+    },
+    async unfollowUser() {
+      // Implement the API call to unfollow the user
+      try {
+        await api.post(`/unfollow/${this.userProfile.UserID}`, {}, {
+          headers: { Authorization: localStorage.getItem("token") }
+        });
+        // Update the current user's following list
+        const index = this.currentUser.Following.indexOf(this.userProfile.UserID);
+        if (index > -1) {
+          this.currentUser.Following.splice(index, 1);
+        }
+      } catch (error) {
+        console.error("Failed to unfollow user:", error);
+      }
+    }
+      ,
+    
+  
+
     async fetchUserProfile() {
   try {
     const response = await api.get(`/users/${this.username}`, {
@@ -32,7 +77,7 @@ export default {
     });
 
     // Check if the response contains 'photos' and it is an array
-    const photos = response.data.photos && Array.isArray(response.data.Photos)
+    const photos = response.data.Photos && Array.isArray(response.data.Photos)
       ? response.data.Photos.map(photo => ({
           ...photo,
           ImageData: this.arrayBufferToBase64(photo.ImageData)
@@ -58,4 +103,6 @@ arrayBufferToBase64(buffer) {
     }
   }
 }
+
+
 </script>
