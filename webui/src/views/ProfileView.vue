@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import api from "@/services/axios"; 
 export default {
  data() {
   return {
@@ -24,7 +25,7 @@ export default {
 methods: {
   async fetchUserProfile() {
     try {
-      const response = await axios.get(`/users/${this.username}`);
+      const response = await api.get(`/users/${this.username}`);
       this.userProfile = response.data;
     } catch (error) {
       console.error("Failed to fetch user profile:", error);

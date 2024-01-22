@@ -79,7 +79,9 @@ export default {
         formData.append('image', file);
 
         try {
-          const response = await api.post('/photos/', formData);
+          const response = await api.post('/photos/', formData, {headers: {
+                        Authorization: localStorage.getItem("token")}
+                    });
           console.log(response.data);
           // Handle the response, e.g., showing a success message
         } catch (error) {
