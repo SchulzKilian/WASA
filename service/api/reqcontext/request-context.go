@@ -7,17 +7,17 @@ Each value here should be assumed valid only per request only, with some excepti
 package reqcontext
 
 import (
+	"git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/database"
 	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
-	"git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/database"
 )
 
 // RequestContext is the context of the request, for request-dependent parameters
 type RequestContext struct {
 	// ReqUUID is the request unique ID
-	ReqUUID uuid.UUID
+	ReqUUID  uuid.UUID
 	Database database.AppDatabase
 	// Logger is a custom field logger for the request
 	Logger logrus.FieldLogger
-	User *database.User
+	User   *database.User
 }

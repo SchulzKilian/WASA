@@ -1,9 +1,9 @@
 package api
 
 import (
+	"git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/api/reqcontext"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
-	"git.sapienzaapps.it/fantasticcoffee/fantastic-coffee-decaffeinated/service/api/reqcontext"
 )
 
 // liveness is an HTTP handler that checks the API server status. If the server cannot serve requests (e.g., some

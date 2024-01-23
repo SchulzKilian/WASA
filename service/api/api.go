@@ -84,4 +84,3 @@ func New(cfg Config) (Router, error) {
 		db:         cfg.Database,
 	}, nil
 }
-
