@@ -783,7 +783,7 @@ func NewDoLoginRequestWithBody(server string, contentType string, body io.Reader
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/session")
+	operationPath := "/session"
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}

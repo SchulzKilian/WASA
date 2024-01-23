@@ -111,7 +111,7 @@ type Error struct {
 func (e *Error) Error() string {
 	str := fmt.Sprintf("%d %s: %s", e.StatusCode, e.ProblemType, e.Detail)
 	if len(e.Subproblems) > 0 {
-		str += fmt.Sprintf("; subproblems:")
+		str += "; subproblems:"
 		for _, sp := range e.Subproblems {
 			str += fmt.Sprintf("\n\t%s", sp)
 		}
