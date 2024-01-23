@@ -107,7 +107,7 @@ func New(db *sql.DB) (AppDatabase, error) {
     if err != nil {
         return nil, err
     }
-    //Create the table follow
+    // Create the table follow
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS follow (
         follower TEXT,
         followed TEXT,
@@ -136,7 +136,7 @@ func New(db *sql.DB) (AppDatabase, error) {
     if err != nil{
         return nil, err
     }
-    //create the ban table
+    // create the ban table
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS bans (
         banner TEXT PRIMARY KEY,
         banned TEXT

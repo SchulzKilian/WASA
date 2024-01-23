@@ -386,8 +386,8 @@ type Winsize struct {
 type W_Mnth struct {
 	Hid   [4]byte
 	Size  int32
-	Cur1  int32 //32bit pointer
-	Cur2  int32 //^
+	Cur1  int32 // 32bit pointer
+	Cur2  int32 // ^
 	Devno uint32
 	_     [4]byte
 }
