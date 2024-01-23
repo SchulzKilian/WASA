@@ -31,5 +31,12 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 
     // Write the JSON response
     w.WriteHeader(http.StatusOK)
-    w.Write(jsonResponse)    
+    _, err = w.Write(jsonResponse)  
+    if err != nil {
+
+        http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+        return
+    }
+    
+
 }

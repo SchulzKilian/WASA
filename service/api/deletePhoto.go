@@ -31,6 +31,16 @@ func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 
     // If no error, send a success response
     w.WriteHeader(http.StatusOK)
-    w.Write([]byte("Photo deleted successfully"))
+    msg := []byte("Successfully deleted the image")
+    n, err := w.Write(msg)
+    if err != nil {
+
+        http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+        return
+    }
+
+    if n != len(msg) {
+        http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+    }
 
 }

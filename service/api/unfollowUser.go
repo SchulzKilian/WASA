@@ -18,5 +18,11 @@ func unfollowUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
         return
     }
     w.WriteHeader(http.StatusOK)
-    w.Write([]byte("Successfully unfollowed the user"))
+    _, err = w.Write([]byte("Successfully unfollowed the user"))
+    if err != nil {
+
+        http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+        return
+    }
+
 }

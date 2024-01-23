@@ -23,5 +23,15 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
         return
     }
     w.WriteHeader(http.StatusOK)
-    w.Write([]byte("Successfully followed the user"))
+    msg := []byte("Successfully followed the user")
+    n, err := w.Write(msg)
+    if err != nil {
+
+        http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+        return
+    }
+
+    if n != len(msg) {
+        http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+    }
 }

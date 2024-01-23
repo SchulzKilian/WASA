@@ -19,6 +19,6 @@ func unlikePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
         return
     }
     w.WriteHeader(http.StatusOK)
-    w.Write([]byte("Successfully unliked the image"))
+    _, err = w.Write([]byte("Successfully unliked the image"))
 
 }
