@@ -50,6 +50,9 @@ func (db *appdbimpl) GetUserDetails(username string) (*UserDetails, error) {
         }
         photos = append(photos, photo)
     }
+    if err := rows.Err(); err != nil {
+        return nil, err
+    }
 
     // Get count of photos
     photosCountQuery := `SELECT COUNT(*) FROM photos WHERE username = ?`
