@@ -21,7 +21,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 	r.Body.Close()
@@ -35,7 +35,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	ctx.Logger.Info("User created successfully")
 	fmt.Fprint(w, token)
 }

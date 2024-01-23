@@ -15,7 +15,7 @@ func unlikePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	photoid := ps.ByName("photoId")
 	err := ctx.Database.DeleteLike(ctx.User.Username, photoid)
 	if err != nil {
-		http.Error(w, "something went wrong with you trying to remove a like", http.StatusBadRequest)
+		http.Error(w, "something went wrong with you trying to remove a like", http.StatusUnauthorized)
 		return
 	}
 	w.WriteHeader(http.StatusOK)

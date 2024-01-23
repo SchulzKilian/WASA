@@ -18,7 +18,7 @@ func unbanUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx
 	db := ctx.Database
 	err := db.DeleteBan(username, tounban)
 	if err != nil {
-		http.Error(w, "Error unbanning the user", http.StatusBadRequest)
+		http.Error(w, "Error unbanning the user", http.StatusUnauthorized)
 		return
 	}
 	w.WriteHeader(http.StatusOK)

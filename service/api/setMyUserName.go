@@ -20,7 +20,7 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 		}
 
 	} else {
-		http.Error(w, "please log in first", http.StatusBadRequest)
+		http.Error(w, "please log in first", http.StatusUnauthorized)
 		return
 	}
 	err := ctx.Database.SetName(name, ctx.User.UserID)

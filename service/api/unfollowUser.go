@@ -14,7 +14,7 @@ func unfollowUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	db := ctx.Database
 	err := db.DeleteFollow(username, tofollow)
 	if err != nil {
-		http.Error(w, "Error unfollowing the user", http.StatusBadRequest)
+		http.Error(w, "Error unfollowing the user", http.StatusUnauthorized)
 		return
 	}
 	w.WriteHeader(http.StatusOK)

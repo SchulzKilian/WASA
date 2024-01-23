@@ -27,7 +27,7 @@ func getUserProfile(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	ctx.Logger.Info("Right before get User details")
 	details, err := db.GetUserDetails(name)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusForbidden)
 		return
 	}
 	ctx.Logger.Info("Right after get User details")

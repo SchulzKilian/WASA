@@ -14,11 +14,11 @@ func likePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx
 	photoid := ps.ByName("photoId")
 	err := ctx.Database.AddLike(ctx.User.Username, photoid)
 	if err != nil {
-		http.Error(w, "something went wrong with you trying to like a photo", http.StatusBadRequest)
+		http.Error(w, "something went wrong with you trying to like a photo", http.StatusUnauthorized)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	_, err = w.Write([]byte("Successfully liked the image"))
 	if err != nil {
 

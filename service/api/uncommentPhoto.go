@@ -12,7 +12,7 @@ func uncommentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	id := ps.ByName("commentId")
 	err := ctx.Database.DeleteComment(id, ctx.User.Username)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusForbidden)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 	w.WriteHeader(http.StatusOK)

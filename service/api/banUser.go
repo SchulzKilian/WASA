@@ -18,7 +18,7 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	db := ctx.Database
 	err := db.AddBan(username, toban)
 	if err != nil {
-		http.Error(w, "Error banning the user", http.StatusBadRequest)
+		http.Error(w, "Error banning the user", http.StatusUnauthorized)
 		ctx.Logger.Info(err)
 		return
 	}

@@ -19,7 +19,7 @@ func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	photoid, err := strconv.Atoi(photo_id)
 	if err != nil {
 		// If an error occurs, send a 404 Not Found error
-		http.Error(w, "Type mismatch", http.StatusBadRequest)
+		http.Error(w, "Type mismatch", http.StatusUnauthorized)
 		return
 	}
 	err = db.DeletePhoto(photoid)
