@@ -619,6 +619,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Photo'
+          minItems: 0
+          maxItems: 100
           description: List of photos posted by the user
       description: The entire user with all its attributes
           
@@ -640,6 +642,8 @@ components:
           type: string
           format: date-time
           description: Timestamp when the photo was posted
+          minLength: 3
+          maxLength: 10
         image_data:
           type: string
           description: Base64-encoded image data
@@ -671,17 +675,25 @@ components:
         username:
           type: string
           description: Username of the user who posted the photo
+          minLength: 10
+          maxLength: 20
         photoId:
           type: string
           description: Unique identifier of the photo
+          minLength: 10
+          maxLength: 20
         imageData:
           type: string
           format: byte
           description: Base64-encoded image data
+          minLength: 10
+          maxLength: 20
         timestamp:
           type: string
           format: date-time
           description: Timestamp when the photo was uploaded
+          minLength: 10
+          maxLength: 20
         likesCount:
           type: integer
           description: Number of likes on the photo
