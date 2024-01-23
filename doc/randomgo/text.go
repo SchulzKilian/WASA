@@ -5,11 +5,10 @@ import (
 )
 
 func main() {
-	i := 5
-	
-	http.ListenAndServe(":8090",nil)
-
-
+    err := http.ListenAndServe(":8090", nil)
+    if err != nil {
+        log.Fatalf("Failed to start server: %v", err)
+    }
 }
 
 /*func evenRandomNumber(w http.ResponseWriter,r *http.Request){
