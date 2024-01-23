@@ -179,10 +179,10 @@ func (db *appdbimpl) Ping() error {
 	return db.c.Ping()
 }
 func (db *appdbimpl) Close() error {
-    if db.c != nil {
-        return db.c.Close()
-    }
-    return nil
+	if db.c != nil {
+		return db.c.Close()
+	}
+	return nil
 }
 
 // GetUser retrieves a user by ID
