@@ -12,7 +12,7 @@ lerna-debug.log*
 /dist-ssr
 coverage
 *.local
-
+webapi
 /cypress/videos/
 /cypress/screenshots/
 
