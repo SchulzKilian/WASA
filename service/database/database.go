@@ -89,6 +89,7 @@ type AppDatabase interface {
 	AddUser(user *User) (error, string)
 	GetFollowedUsersPhotos(username string) ([]PhotoDetails, error)
 	AmIBanned(banner, banned string) (bool, error)
+	Close() error
 }
 
 type appdbimpl struct {
@@ -176,6 +177,12 @@ func New(db *sql.DB) (AppDatabase, error) {
 
 func (db *appdbimpl) Ping() error {
 	return db.c.Ping()
+}
+func (db *appdbimpl) Close() error {
+    if db.c != nil {
+        return db.c.Close()
+    }
+    return nil
 }
 
 // GetUser retrieves a user by ID

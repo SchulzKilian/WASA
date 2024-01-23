@@ -22,7 +22,7 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 		ctx.Logger.Info(err)
 		return
 	}
-	w.WriteHeader(http.StatusOK)
+
 	w.WriteHeader(http.StatusOK)
 	msg := []byte("Successfully banned the user")
 	n, err := w.Write(msg)
