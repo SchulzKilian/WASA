@@ -94,16 +94,6 @@ paths:
       summary: Ban User
       description: Ban a user.
       operationId: banUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  $ref: '#/components/schemas/username'
-              description: the user id of the banned user
       responses:
         '201':
           description: User banned successfully.
@@ -188,17 +178,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'             
   /users/{username}:
-    patch:
-      tags: [user]
-      summary: Set My User Name
-      description: Set the user's username.
-      operationId: setMyUserName
-      parameters:
+    parameters:
         - name: username
           in: path
           required: true
           schema:
             $ref: '#/components/schemas/username'
+    patch:
+      tags: [user]
+      summary: Set My User Name
+      description: Set the user's username.
+      operationId: setMyUserName
+      
       requestBody:
         required: true
         content:
@@ -226,13 +217,6 @@ paths:
       summary: Get User Profile
       description: Get the profile of a user.
       operationId: getUserProfile
-      parameters:
-        - name: username
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/username'
-
       responses:
         '200':
           description: User profile retrieved successfully
@@ -264,17 +248,6 @@ paths:
       summary: Follow User
       description: Follow a user.
       operationId: followUser
-      
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  $ref: '#/components/schemas/username'
-              description: follow confirmation
 
       responses:
         '201':
@@ -579,11 +552,12 @@ components:
           maxLength: 200
           pattern: '^[a-zA-Z0-9]{10,20}$'
           description: username of the commenter
-        photoId:
-          type: integer
-          minimum: 0
-          maximum: 1000000
-          description: the photo id of the photo the comment is intended for
+        photo_id:
+          type: string
+          minLength: 10
+          maxLength: 20
+          pattern: '^[a-zA-Z0-9_]+$'
+          description: A unique photo identifier
         commentId:  
           type: string
           minLength: 10
@@ -634,9 +608,10 @@ components:
           pattern: '^[a-zA-Z0-9_]+$'
           description: A unique username of the poster
         photo_id:
-          type: integer
-          minimum: 0
-          maximum: 100000
+          type: string
+          minLength: 10
+          maxLength: 20
+          pattern: '^[a-zA-Z0-9_]+$'
           description: A unique photo identifier
         timestamp:
           type: string
@@ -652,7 +627,7 @@ components:
           pattern: '^[0-1]+$'
           example: '00010101010011111010001001010100010101010100100101010101010001000101010100011110101010101010001010110010101010100101001010101010101010101010010010101010101010101011100001010101101010101110101010111001010111000010101010001011010101110'
       required:
-        - imageData
+        - image_data
       description: the photo object
     
     photo_id:
@@ -677,11 +652,12 @@ components:
           description: Username of the user who posted the photo
           minLength: 10
           maxLength: 20
-        photoId:
+        photo_id:
           type: string
-          description: Unique identifier of the photo
           minLength: 10
           maxLength: 20
+          pattern: '^[a-zA-Z0-9_]+$'
+          description: A unique photo identifier
         imageData:
           type: string
           format: byte
