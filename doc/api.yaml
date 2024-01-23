@@ -104,7 +104,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
                 
@@ -125,7 +125,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
                 
@@ -157,7 +157,7 @@ paths:
         '403':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'             
   /users/{username}:
@@ -191,9 +191,9 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/Error'            
+                $ref: '#/components/schemas/Error'           
   
     get:
       tags: [user]
@@ -211,7 +211,7 @@ paths:
         '403':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
     
@@ -243,7 +243,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
     delete:
@@ -262,7 +262,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
 
@@ -294,7 +294,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
 
@@ -346,24 +346,16 @@ paths:
 
       responses:
         '201':
-          description: Photo liked successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: telling the user he liked
-                description: the entire response
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
 
@@ -397,7 +389,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
 
@@ -425,7 +417,7 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
 
@@ -452,22 +444,18 @@ paths:
         '401':
           description: Unauthorized. User authentication failed.
           content:
-            application/json:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
 
 components:
   schemas:
     Error:
-      type: object
-      properties:
-        error:
-          type: string
-          minLength: 1
-          maxLength: 200
-          pattern: '^[a-zA-Z0-9]{10,20}$'
-          description: Describes the more specific error I am putting out
-      description: The overall error object
+      type: string
+      minLength: 1
+      maxLength: 20
+      pattern: '^[a-zA-Z0-9]{10,20}$'
+      description: A message saying what didnt work out
     Success:
       type: string
       minLength: 1
