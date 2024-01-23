@@ -35,7 +35,7 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	}
 	ctx.Logger.Info("Logged user in") // Example logging
 	if userexists {
-		fmt.Fprintf(w, token)
+		fmt.Fprint(w, token)
 		return
 
 	}
@@ -56,7 +56,7 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 		}
 
 		ctx.Logger.Info("User created successfully")
-		fmt.Fprintf(w, token)
+		fmt.Fprint(w, token)
 		return
 	}
 

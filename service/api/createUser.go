@@ -37,5 +37,5 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	}
 
 	ctx.Logger.Info("User created successfully")
-	fmt.Fprintf(w, token)
+	fmt.Fprint(w, token)
 }

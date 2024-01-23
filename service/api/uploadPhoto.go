@@ -46,4 +46,8 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Respond with success message
 	w.WriteHeader(http.StatusOK)
 	_, err = w.Write([]byte("Photo uploaded successfully"))
+    if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
