@@ -29,6 +29,7 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 		return
 	}
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "text/plain")
 	msg := []byte("Successfully commented the image")
 	n, err := w.Write(msg)
 	if err != nil {

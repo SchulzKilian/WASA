@@ -29,5 +29,6 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 		return
 	}
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprintf(w, "Successfully changed your name.")
 }

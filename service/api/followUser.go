@@ -23,6 +23,7 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "text/plain")
 	msg := []byte("Successfully followed the user")
 	n, err := w.Write(msg)
 	if err != nil {

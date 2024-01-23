@@ -22,6 +22,7 @@ func unbanUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx
 		return
 	}
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "text/plain")
 	_, err = w.Write([]byte("Successfully unbanned the user"))
 	if err != nil {
 

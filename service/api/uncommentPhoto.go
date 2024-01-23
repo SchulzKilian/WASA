@@ -16,6 +16,7 @@ func uncommentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 		return
 	}
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "text/plain")
 	_, err = w.Write([]byte("Successfully uncommented the image"))
 	if err != nil {
 
