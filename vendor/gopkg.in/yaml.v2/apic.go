@@ -710,8 +710,8 @@ func yaml_event_delete(event *yaml_event_t) {
 // * Append a pair of a key and a value to a mapping node.
 // */
 //
-//YAML_DECLARE(int)
-//yaml_document_append_mapping_pair(document *yaml_document_t,
+// YAML_DECLARE(int)
+// yaml_document_append_mapping_pair(document *yaml_document_t,
 //        mapping int, key int, value int)
 //{
 //    struct {

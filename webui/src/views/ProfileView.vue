@@ -11,13 +11,11 @@
       <p>Following: {{ userProfile.Following }}</p>
       <p>Posts: {{ userProfile.PhotosCount }}</p>
     </div>
-    <div v-if="userProfile">
-      <!-- Existing code... -->
       <button v-if="!isOwnProfile" @click="toggleFollow">
         {{ isFollowing ? 'Unfollow' : 'Follow' }}
       </button>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -42,11 +40,10 @@ export default {
     async followUser() {
       // Implement the API call to follow the user
       try {
-        await api.post(`/follow/${this.userProfile.UserID}`, {}, {
+        await api.post(`/users/${this.username}/followers/`, {}, {
           headers: { Authorization: localStorage.getItem("token") }
         });
-        // Update the current user's following list
-        this.currentUser.Following.push(this.userProfile.UserID);
+
       } catch (error) {
         console.error("Failed to follow user:", error);
       }
@@ -54,14 +51,10 @@ export default {
     async unfollowUser() {
       // Implement the API call to unfollow the user
       try {
-        await api.post(`/unfollow/${this.userProfile.UserID}`, {}, {
+        await api.delete(`/users/${this.username}/followers/`, {}, {
           headers: { Authorization: localStorage.getItem("token") }
         });
-        // Update the current user's following list
-        const index = this.currentUser.Following.indexOf(this.userProfile.UserID);
-        if (index > -1) {
-          this.currentUser.Following.splice(index, 1);
-        }
+
       } catch (error) {
         console.error("Failed to unfollow user:", error);
       }
