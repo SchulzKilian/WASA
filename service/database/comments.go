@@ -27,7 +27,6 @@ func (db *appdbimpl) DeleteComment(commentID, commenter string) error {
 
 	err = db.c.QueryRow("SELECT commenter FROM comments WHERE comment_id = ?", id).Scan(&existingCommenter)
 	if err != nil {
-		return err
 		return errors.New("Comment does not exist")
 
 	}
