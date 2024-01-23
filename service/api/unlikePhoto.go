@@ -20,7 +20,7 @@ func unlikePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	}
 	w.WriteHeader(http.StatusOK)
 	_, err = w.Write([]byte("Successfully unliked the image"))
-    if err != nil {
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
