@@ -54,7 +54,7 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
+		w.WriteHeader(http.StatusCreated)
 		ctx.Logger.Info("User created successfully")
 		fmt.Fprint(w, token)
 		return

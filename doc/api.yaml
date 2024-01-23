@@ -43,12 +43,11 @@ paths:
         required: true
       responses:
         '201':
-          description: User log-in action successful
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/User' # Add a pattern for every string property
-                    
+                $ref: '#/components/schemas/Success'
                 
 
   /users/:
@@ -65,12 +64,12 @@ paths:
               $ref: '#/components/schemas/User'
 
       responses:
-        '201':
-          description: User created successfully.
+        '200':
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -95,20 +94,12 @@ paths:
       description: Ban a user.
       operationId: banUser
       responses:
-        '201':
-          description: User banned successfully.
+        '200':
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: Returing a message about what user is banned
-                description: The output for banning a user
+                $ref: '#/components/schemas/Success'
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -125,19 +116,11 @@ paths:
   
       responses:
         '200':
-          description: User unbanned successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: telling the user it worked
-                description: the response for unbanning a user
+                $ref: '#/components/schemas/Success'
   
         '401':
           description: Unauthorized. User authentication failed.
@@ -199,11 +182,11 @@ paths:
 
       responses:
         '201':
-          description: User's username updated successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -250,20 +233,12 @@ paths:
       operationId: followUser
 
       responses:
-        '201':
-          description: User followed successfully.
+        '200':
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: the success message
-                description: The general response to following
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -278,19 +253,11 @@ paths:
       operationId: unfollowUser
       responses:
         '200':
-          description: User unfollowed successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: unfollow message
-                description: The response to unfollowing
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -317,20 +284,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Comment'
       responses:
-        '201':
-          description: Comment added to the photo successfully.
+        '200':
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: the message
-                description: the object returned
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -358,19 +317,11 @@ paths:
 
       responses:
         '200':
-          description: Comment removed from the photo successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: "^[a-zA-Z0-9_]+$"
-                    description: Telling the user you removed the comment
-                description: The entire response
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -437,19 +388,11 @@ paths:
             description: unique like id
       responses:
         '200':
-          description: Photo unliked successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: '^[a-zA-Z0-9]{10,20}$'
-                    description: saying you unliked correctly
-                description: response to unliking
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -472,15 +415,11 @@ paths:
               $ref: '#/components/schemas/Photo'
       responses:
         '201':
-          description: Photo uploaded successfully.
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  photoId:
-                    $ref: '#/components/schemas/photo_id'
-                description: The response to uploading a photo succesfuly
+                $ref: '#/components/schemas/Success'
                 
 
         '401':
@@ -503,20 +442,12 @@ paths:
           schema:
             $ref: '#/components/schemas/photo_id'
       responses:
-        '200':
-          description: Photo deleted successfully.
+        '201':
+          description: action successful
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
-                    maxLength: 200
-                    pattern: '^[a-zA-Z0-9]{10,20}$'
-                    description: You uploaded succesfully
-                description: Response to upload succesfully
+                $ref: '#/components/schemas/Success'
 
         '401':
           description: Unauthorized. User authentication failed.
@@ -537,6 +468,12 @@ components:
           pattern: '^[a-zA-Z0-9]{10,20}$'
           description: Describes the more specific error I am putting out
       description: The overall error object
+    Success:
+      type: string
+      minLength: 1
+      maxLength: 20
+      pattern: '^[a-zA-Z0-9]{10,20}$'
+      description: A message saying everything worked out
     Comment:
       type: object
       properties:

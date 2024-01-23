@@ -35,7 +35,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.WriteHeader(http.StatusOK)
 	ctx.Logger.Info("User created successfully")
 	fmt.Fprint(w, token)
 }

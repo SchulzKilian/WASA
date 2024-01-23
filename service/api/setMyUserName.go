@@ -28,5 +28,6 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 		http.Error(w, "error changing the name in the database", http.StatusInternalServerError)
 		return
 	}
+	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Successfully changed your name.")
 }
