@@ -9,7 +9,9 @@
 import axios from 'axios';
 import api from "@/services/axios"; 
 import router from '@/router';
+
 export default {
+
   data() {
     return {
       username: ''
@@ -21,6 +23,7 @@ methods: {
       const response = await api.post('/session', { name: this.username });
       console.log(response.data)
       localStorage.setItem("token", response.data);
+      localStorage.setItem("username", this.username);
       axios.defaults.headers.common['Authorization'] = response.data;
       this.$router.push('/stream');
 

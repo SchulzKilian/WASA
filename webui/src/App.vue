@@ -3,7 +3,9 @@
 <template>
 
 	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#/">Example App</a>
+		<div :key="componentKey">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#/">WASA App</a>
+	</div>
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -60,39 +62,45 @@
 </template>
 
   
-  <script setup>
-  import { RouterLink, RouterView } from 'vue-router'
-  </script>
-  
-  <script>
-import api from "@/services/axios"; // Import api from axios services
+<script setup>
+import { ref, computed } from 'vue';
+import { RouterLink, RouterView } from 'vue-router';
+import api from "@/services/axios";
 
-export default {
-  methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
-    },
-    async uploadImage(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const formData = new FormData();
-        formData.append('image', file);
+// Computed property to get the username from local storage
 
-        try {
-          const response = await api.post('/photos/', formData, {headers: {
-                        Authorization: localStorage.getItem("token")}
-                    });
-          console.log(response.data);
-          // Handle the response, e.g., showing a success message
-        } catch (error) {
-          console.error('Error uploading image:', error);
-          // Handle the error, e.g., showing an error message
-        }
-      }
+
+// Ref for file input
+const fileInput = ref(null);
+
+// Method to trigger file input
+function triggerFileInput() {
+  fileInput.value.click();
+}
+
+
+
+// Async method to handle image upload
+async function uploadImage(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await api.post('/photos/', formData, {
+        headers: { Authorization: localStorage.getItem("token") }
+      });
+      console.log(response.data);
+      // Handle the response, e.g., showing a success message
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      // Handle the error, e.g., showing an error message
     }
   }
 }
 </script>
+
   <style>
   </style>
 

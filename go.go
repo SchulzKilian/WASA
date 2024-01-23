@@ -823,7 +823,7 @@ func NewCreateUserRequestWithBody(server string, contentType string, body io.Rea
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/users/")
+	operationPath := "/users/"
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
