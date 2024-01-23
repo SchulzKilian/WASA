@@ -28,6 +28,11 @@ export default {
       userProfile: null
     };
   },
+  computed: {
+    isOwnProfile() {
+      return this.username === localStorage.getItem("username");
+    }
+  },
   methods: {
 
     async toggleFollow() {
