@@ -29,7 +29,7 @@ func (db *appdbimpl) GetUser(userID string) (*User, error) {
 	// Return the user object if found
 	return &user, nil
 }
-func (db *appdbimpl) GetUserDetails(username string) (*UserDetails, error) {
+func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDetails, error) {
 	if username == "" {
 		return nil, errors.New("username is empty")
 	}
@@ -75,12 +75,19 @@ func (db *appdbimpl) GetUserDetails(username string) (*UserDetails, error) {
 	if err != nil {
 		return nil, err
 	}
+	isFollowingQuery := `SELECT EXISTS (SELECT 1 FROM follow WHERE follower = ? AND followed = ?)`
+	var isFollowing bool
+	err = db.c.QueryRow(isFollowingQuery, currentUsername, username).Scan(&isFollowing)
+	if err != nil {
+		return nil, err
+	}
 
 	userDetails := &UserDetails{
 		Photos:      photos,
 		PhotosCount: photosCount,
 		Followers:   followersCount,
 		Following:   followingCount,
+		isFollowing: isFollowing,
 	}
 
 	return userDetails, nil

@@ -3,29 +3,38 @@
     <input v-model="username" placeholder="Search Username" />
     <button @click="fetchUserProfile">Search</button>
     <div v-if="userProfile">
-      <div v-for="photo in userProfile.Photos" :key="photo.PhotoID">
-        <!-- Convert binary image data to a data URL for display -->
-        <img :src="`data:image/jpeg;base64,${arrayBufferToBase64(photo.imageData)}`" />
-      </div>
       <p>Followers: {{ userProfile.Followers }}</p>
       <p>Following: {{ userProfile.Following }}</p>
       <p>Posts: {{ userProfile.PhotosCount }}</p>
+      <div v-if="images.length">
+    <ImageComponent
+      v-for="image in images"
+      :key="image.photoId"
+      :photoDetails="image"
+    />
+  </div>
     </div>
-      <button v-if="!isOwnProfile" @click="toggleFollow">
-        {{ isFollowing ? 'Unfollow' : 'Follow' }}
+      <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
+        {{ userProfile.isFollowing ? 'Unfollow' : 'Follow' }}
       </button>
     </div>
 
 </template>
 
 <script>
+import ImageComponent from '@/webui/src/components/ImageComponent.vue'; 
 import api from "@/services/axios"; 
 
 export default {
+  components: {
+    ImageComponent
+  },
+
   data() {
     return {
       username: '', // Username to search
-      userProfile: null
+      userProfile: null,
+      images: []
     };
   },
   computed: {
@@ -36,11 +45,13 @@ export default {
   methods: {
 
     async toggleFollow() {
-      if (this.isFollowing) {
+      if (this.userProfile.isFollowing) {
         await this.unfollowUser();
+        
       } else {
         await this.followUser();
       }
+      this.userProfile.isFollowing= !this.userProfile.isFollowing
     },
     async followUser() {
       // Implement the API call to follow the user
@@ -75,7 +86,7 @@ export default {
     });
 
     // Check if the response contains 'photos' and it is an array
-    const photos = response.data.Photos && Array.isArray(response.data.Photos)
+    this.images = response.data.Photos && Array.isArray(response.data.Photos)
       ? response.data.Photos.map(photo => ({
           ...photo,
           ImageData: this.arrayBufferToBase64(photo.ImageData)
@@ -84,7 +95,7 @@ export default {
 
     this.userProfile = {
       ...response.data,
-      photos: photos
+      photos: this.images
     };
   } catch (error) {
     console.error("Failed to fetch user profile:", error);

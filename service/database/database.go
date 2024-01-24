@@ -66,6 +66,7 @@ type UserDetails struct {
 	PhotosCount int
 	Followers   int
 	Following   int
+	isFollowing bool `json:"isFollowing"`
 }
 
 // AppDatabase is the high level interface for the DB
@@ -77,7 +78,7 @@ type AppDatabase interface {
 	AddFollow(follower, followed string) error
 	DeleteFollow(follower, followed string) error
 	Ping() error
-	GetUserDetails(username string) (*UserDetails, error)
+	GetUserDetails(username, currentusername string) (*UserDetails, error)
 	AddPhoto(photo Photo) error
 	DeletePhoto(photo_id int) error
 	AddComment(comment Comment) error

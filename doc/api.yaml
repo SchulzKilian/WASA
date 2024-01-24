@@ -423,17 +423,17 @@ paths:
                 $ref: '#/components/schemas/Error'
 
   /photos/{photoId}/likes/:
-    post:
-      tags: [like, photo]
-      summary: Like Photo
-      description: Like a photo.
-      operationId: likePhoto
-      parameters:
+    parameters:
         - name: photoId
           in: path
           required: true
           schema:
             $ref: '#/components/schemas/photo_id'
+    post:
+      tags: [like, photo]
+      summary: Like Photo
+      description: Like a photo.
+      operationId: likePhoto
 
 
       responses:
@@ -458,26 +458,12 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
-
-
-     
-
-  /likes/{likeId}:
+                
     delete:
       tags: [like]
       summary: Unlike Photo
       description: Unlike a photo.
       operationId: unlikePhoto
-      parameters:
-        - name: likeId
-          in: path
-          required: true
-          schema:
-            type: string
-            pattern: '^[a-zA-Z0-9]{10,20}$' 
-            minLength: 10
-            maxLength: 100 # Pattern added
-            description: unique like id
       responses:
         '201':
           description: action successful
@@ -500,6 +486,10 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Error'
+
+
+
+    
 
   /photos/:
     post:
