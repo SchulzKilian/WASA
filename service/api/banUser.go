@@ -9,7 +9,7 @@ import (
 func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusUnauthorized)
+		http.Error(w, "You have to be logged in to ban", http.StatusUnauthorized)
 		return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
@@ -18,7 +18,7 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	db := ctx.Database
 	err := db.AddBan(username, toban)
 	if err != nil {
-		http.Error(w, "Error banning the user", http.StatusUnauthorized)
+		http.Error(w, "Error banning the user", http.StatusBadRequest)
 		ctx.Logger.Info(err)
 		return
 	}

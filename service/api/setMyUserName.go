@@ -15,7 +15,7 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 	if ctx.User != nil {
 		err := ctx.Database.SetName(name, ctx.User.UserID)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 

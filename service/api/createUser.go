@@ -21,7 +21,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	r.Body.Close()

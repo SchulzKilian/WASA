@@ -9,12 +9,16 @@ import (
 )
 
 func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
+	if ctx.User == nil {
+		http.Error(w, "You have to be logged in to comment", http.StatusUnauthorized)
+		return
+	}
 	commenter := ctx.User.Username
 	photoid := ps.ByName("photoId")
 	var comment database.Comment
 	err := json.NewDecoder(r.Body).Decode(&comment)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -25,7 +29,7 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	// Process the comment (e.g., store in database)
 	err = ctx.Database.AddComment(comment)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
@@ -33,7 +37,6 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	msg := []byte("Successfully commented the image")
 	n, err := w.Write(msg)
 	if err != nil {
-
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
@@ -46,7 +49,10 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 
 func getComments(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	photoid := ps.ByName("photoId")
-
+	if ctx.User == nil {
+		http.Error(w, "You have to be logged in to get comments", http.StatusUnauthorized)
+		return
+	}
 	// Check if ctx.Database is nil
 	if ctx.Database == nil {
 		http.Error(w, "Database connection is not initialized", http.StatusInternalServerError)
@@ -55,7 +61,7 @@ func getComments(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 
 	comments, err := ctx.Database.GetComments(photoid)
 	if err != nil {
-		http.Error(w, "Error finding comments: "+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Error finding comments: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 

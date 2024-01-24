@@ -9,13 +9,13 @@ import (
 func unlikePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to like", http.StatusUnauthorized)
 		return
 	}
 	photoid := ps.ByName("photoId")
 	err := ctx.Database.DeleteLike(ctx.User.Username, photoid)
 	if err != nil {
-		http.Error(w, "something went wrong with you trying to remove a like", http.StatusUnauthorized)
+		http.Error(w, "something went wrong with you trying to remove a like", http.StatusBadRequest)
 		return
 	}
 	w.WriteHeader(http.StatusOK)

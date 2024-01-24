@@ -10,18 +10,18 @@ import (
 func getUserProfile(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to view profiles", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to view profiles", http.StatusUnauthorized)
 		return
 	}
 	name := ps.ByName("name")
 	db := ctx.Database
 	banned, err := db.AmIBanned(name, ctx.User.Username)
 	if err != nil {
-		http.Error(w, "You have to be logged in to view this", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to view this", http.StatusUnauthorized)
 		return
 	}
 	if banned {
-		http.Error(w, "The user has banned you", http.StatusForbidden)
+		http.Error(w, "The user has banned you", http.StatusUnauthorized)
 		return
 	}
 	ctx.Logger.Info("Right before get User details")

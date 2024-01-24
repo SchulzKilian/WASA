@@ -10,7 +10,7 @@ import (
 func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to like", http.StatusUnauthorized)
 		return
 	}
 	photo_id := ps.ByName("photoId")
@@ -19,13 +19,13 @@ func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	photoid, err := strconv.Atoi(photo_id)
 	if err != nil {
 		// If an error occurs, send a 404 Not Found error
-		http.Error(w, "Type mismatch", http.StatusUnauthorized)
+		http.Error(w, "Type mismatch", http.StatusBadRequest)
 		return
 	}
 	err = db.DeletePhoto(photoid)
 	if err != nil {
 		// If an error occurs, send a 404 Not Found error
-		http.Error(w, "Photo not found", http.StatusNotFound)
+		http.Error(w, "Photo not found", http.StatusBadRequest)
 		return
 	}
 

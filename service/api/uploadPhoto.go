@@ -12,7 +12,7 @@ import (
 func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Extract username from context
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to upload", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to upload", http.StatusUnauthorized)
 		return
 	}
 	username := ctx.User.Username
@@ -36,7 +36,7 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Read the file data
 	ImageData, err := ioutil.ReadAll(file)
 	if err != nil {
-		http.Error(w, "Error reading image data", http.StatusInternalServerError)
+		http.Error(w, "Error reading image data", http.StatusBadRequest)
 		return
 	}
 	defer r.Body.Close()

@@ -9,7 +9,7 @@ import (
 func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to like", http.StatusUnauthorized)
 		return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
