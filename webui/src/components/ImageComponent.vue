@@ -5,6 +5,7 @@
         <p>{{ photoDetails.username }} - Likes: {{ photoDetails.LikesCount }}, Comments: {{ photoDetails.CommentsCount }}</p>
         <button @click="toggleLike">{{ liked ? 'Unlike' : 'Like' }}</button>
         <button @click="toggleComment">{{ commented ? 'Remove Comment' : 'Comment' }}</button>
+        <button v-if="isCurrentUser" @click="deletePhoto">Delete</button>
       </div>
     </div>
   </template>
@@ -29,7 +30,13 @@
         console.log(typeof this.photoDetails.imageData);
         return `data:image/jpeg;base64,${this.photoDetails.imageData}`;
         // return `data:image/jpeg;base64,${btoa(String.fromCharCode(...new Uint8Array(this.photoDetails.imageData)))}`;
-      }
+      },
+      isCurrentUser() {
+      const currentUsername = localStorage.getItem("username");
+      console.log(currentUsername)
+      console.log(this.photoDetails.username)
+      return this.photoDetails.username == currentUsername;
+    }
     },
     created() {
     if (this.photoDetails && this.photoDetails.liked !== undefined) {
@@ -37,6 +44,21 @@
     }
   },
     methods: {
+        async deletePhoto() {
+      try {
+        const url = `/photos/${this.photoDetails.photoId}`;
+        await api.delete(url, {
+          headers: {
+            Authorization: localStorage.getItem("token")
+          }
+        });
+        location.reload()
+        // Handle the UI update or redirection after successful deletion
+      } catch (error) {
+        console.error('Error deleting photo:', error);
+      }
+    },
+  
       async toggleLike() {
         try {
           const url = `/photos/${this.photoDetails.photoId}/likes/`;
@@ -75,7 +97,7 @@
         }
       }
     }
-  }
+}
   function base64ToUint8Array(base64) {
     var binaryString = window.atob(base64);
     var len = binaryString.length;
@@ -89,7 +111,7 @@
   
   <style>
   .image-container img {
-  width: 100%; /* or a specific pixel value */
+  width: 10%; /* or a specific pixel value */
   height: auto; /* maintain aspect ratio */
 }
 

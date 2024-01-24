@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
-        {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
-      </button>
+    <div class="info-container"></div>
     <input v-model="username" placeholder="Search Username" />
     <button @click="fetchUserProfile">Search</button>
     <div v-if="userProfile">
@@ -10,6 +8,12 @@
       <p>Following: {{ userProfile.Following }}</p>
       <p>Posts: {{ userProfile.PhotosCount }}</p>
       <div v-if="images.length">
+        <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
+        {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
+      </button>
+      <button v-if="userProfile && !isOwnProfile" @click="toggleBan">{{ banned ? 'Unban' : 'Ban' }}</button>
+      </div>
+      
     <ImageComponent
       v-for="image in images"
       :key="image.photoId"
@@ -18,7 +22,7 @@
   </div>
     </div>
       
-    </div>
+
 
 </template>
 
@@ -35,7 +39,8 @@ export default {
     return {
       username: '', // Username to search
       userProfile: null,
-      images: []
+      images: [],
+      banned: false 
     };
   },
   computed: {
@@ -44,6 +49,20 @@ export default {
     }
   },
   methods: {
+    async toggleBan() {
+    try {
+      const url = `/users/${this.username}/banned/`;
+      if (this.banned) {
+        await api.delete(url, { headers: { Authorization: localStorage.getItem("token") } });
+      } else {
+        await api.post(url, {}, { headers: { Authorization: localStorage.getItem("token") } });
+      }
+      this.banned = !this.banned; // Toggle the banned status
+    } catch (error) {
+      console.error('Error toggling ban:', error);
+    }
+  },
+
 
     async toggleFollow() {
       if (this.userProfile.IsFollowing) {
@@ -116,3 +135,9 @@ arrayBufferToBase64(buffer) {
 
 
 </script>
+
+<style>
+.info-container {
+  background-color: #d6b343; /* Adjust the color code to get the desired shade of yellow */
+}
+</style>

@@ -49,6 +49,7 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 		if err := rows.Scan(&photo.PhotoID, &imageData); err != nil {
 			return nil, err
 		}
+		photo.Username = username
 		photo.ImageData = base64.StdEncoding.EncodeToString(imageData)
 
 		// Query to count likes for the current photo
