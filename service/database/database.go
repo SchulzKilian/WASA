@@ -49,6 +49,7 @@ type Comment struct {
 	Content   string `json:"content" db:"content"`
 	Commenter string `json:"commenter" db:"commenter"`
 	PhotoID   string `json:"photoId" db:"photo_id"`
+	CommentID string `json:"commentId" db:"comment_id"`
 }
 
 type Follow struct {
@@ -83,6 +84,7 @@ type AppDatabase interface {
 	DeletePhoto(photo_id int) error
 	AddComment(comment Comment) error
 	DeleteComment(commentID, commenter string) error
+	GetComments(photoid string) ([]Comment, error)
 	AddLike(liker, photoID string) error
 	DeleteLike(liker, photoID string) error
 	AddBan(banner, banned string) error

@@ -39,3 +39,28 @@ func (db *appdbimpl) DeleteComment(commentID, commenter string) error {
 	_, err = db.c.Exec("DELETE FROM comments WHERE comment_id = ?", commentID)
 	return err
 }
+
+func (db *appdbimpl) GetComments(photoid string) ([]Comment, error) {
+
+	var comments []Comment
+	query := "SELECT content, comment_id, commenter, photo_id FROM comments WHERE photo_id = ?"
+	rows, err := db.c.Query(query, photoid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var comment Comment
+		if err := rows.Scan(&comment.Content, &comment.CommentID, &comment.Commenter, &comment.PhotoID); err != nil {
+			return nil, err
+		}
+		comments = append(comments, comment)
+	}
+
+	// Check for errors from iterating over rows
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return comments, nil
+}

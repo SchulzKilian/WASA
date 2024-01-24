@@ -43,3 +43,36 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	}
 
 }
+
+func getComments(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
+	photoid := ps.ByName("photoId")
+
+	// Check if ctx.Database is nil
+	if ctx.Database == nil {
+		http.Error(w, "Database connection is not initialized", http.StatusInternalServerError)
+		return
+	}
+
+	comments, err := ctx.Database.GetComments(photoid)
+	if err != nil {
+		http.Error(w, "Error finding comments: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// If comments is nil, initialize it as an empty slice
+	if comments == nil {
+		comments = []database.Comment{}
+	}
+
+	// Marshal the comments slice to JSON
+	jsonResponse, err := json.Marshal(comments)
+	if err != nil {
+		http.Error(w, "Error marshaling comments: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+}

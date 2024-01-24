@@ -4,25 +4,32 @@
       <div class="image-info">
         <p>{{ photoDetails.username }} - Likes: {{ photoDetails.LikesCount }}, Comments: {{ photoDetails.CommentsCount }}</p>
         <button @click="toggleLike">{{ liked ? 'Unlike' : 'Like' }}</button>
-        <button @click="toggleComment">{{ commented ? 'Remove Comment' : 'Comment' }}</button>
         <button v-if="isCurrentUser" @click="deletePhoto">Delete</button>
+        <button @click="toggleComments">Show Comments</button> 
+        <CommentComponent :photo-id="photoDetails.photoId" :show-popup="showPopup" />
+        
       </div>
     </div>
   </template>
   
   <script>
   import api from "@/services/axios"; 
+  import CommentComponent from '@/webui/src/components/CommentComponent.vue';
   export default {
     props: {
       photoDetails: {
         type: Object,
         required: true
-      }
+      }},
+    components: {
+        CommentComponent
     },
+    
     data() {
       return {
         liked: false,
-        commented: false
+        commented: false,
+        showPopup: false
       }
     },
     computed: {
@@ -44,6 +51,9 @@
     }
   },
     methods: {
+        toggleComments() {
+    this.showPopup = !this.showPopup;
+  },
         async deletePhoto() {
       try {
         const url = `/photos/${this.photoDetails.photoId}`;
@@ -79,23 +89,7 @@
         }
       },
 
-      async toggleComment() {
-        try {
-          const url = `/photos/${this.photoDetails.photoId}/comments/`;
-          if (this.commented) {
-            await api.delete(url,{},{headers: {
-                        Authorization: localStorage.getItem("token")}
-                    });
-          } else {
-            await api.post(url,{},{headers: {
-                        Authorization: localStorage.getItem("token")}
-                    });
-          }
-          this.commented = !this.commented;
-        } catch (error) {
-          console.error('Error toggling comment:', error);
-        }
-      }
+
     }
 }
   function base64ToUint8Array(base64) {

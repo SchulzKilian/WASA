@@ -36,6 +36,7 @@ func (rt *_router) Handler() http.Handler {
 	rt.router.POST("/users/:name/followers/", rt.wrap(followUser))      // works
 	rt.router.DELETE("/users/:name/followers/", rt.wrap(unfollowUser))  // works
 	rt.router.POST("/photos/:photoId/comments/", rt.wrap(commentPhoto)) // works
+	rt.router.GET("/photos/:photoId/comments/", rt.wrap(getComments))   // about to work
 	rt.router.DELETE("/comments/:commentId", rt.wrap(uncommentPhoto))   // works
 	rt.router.POST("/photos/:photoId/likes/", rt.wrap(likePhoto))       // works
 	rt.router.DELETE("/photos/:photoId/likes/", rt.wrap(unlikePhoto))   // works
