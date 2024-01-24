@@ -9,7 +9,7 @@ import (
 func unfollowUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusForbidden)
+		http.Error(w, "You have to be logged in to unfollow", http.StatusForbidden)
 		return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging

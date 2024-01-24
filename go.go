@@ -877,7 +877,7 @@ func NewGetUserProfileRequest(server string, userId UserId) (*http.Request, erro
 	return req, nil
 }
 
-// NewBanUserRequest calls the generic BanUser builder with application/json body
+// NewBanUserRequest calls the generic BanUser builder with an application/json body
 func NewBanUserRequest(server string, userId UserId, body BanUserJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)

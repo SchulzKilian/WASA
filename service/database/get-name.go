@@ -87,7 +87,7 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 		PhotosCount: photosCount,
 		Followers:   followersCount,
 		Following:   followingCount,
-		isFollowing: isFollowing,
+		IsFollowing: isFollowing,
 	}
 
 	return userDetails, nil

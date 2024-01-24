@@ -17,6 +17,8 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	tofollow := ps.ByName("name")
 	db := ctx.Database
 	err := db.AddFollow(username, tofollow)
+	ctx.Logger.Info(username)
+	ctx.Logger.Info(tofollow)
 	if err != nil {
 		http.Error(w, "Error following the user", http.StatusBadRequest)
 		ctx.Logger.Info(err)

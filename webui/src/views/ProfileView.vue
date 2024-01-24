@@ -15,7 +15,7 @@
   </div>
     </div>
       <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
-        {{ userProfile.isFollowing ? 'Unfollow' : 'Follow' }}
+        {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
       </button>
     </div>
 
@@ -45,16 +45,16 @@ export default {
   methods: {
 
     async toggleFollow() {
-      if (this.userProfile.isFollowing) {
+      if (this.userProfile.IsFollowing) {
         await this.unfollowUser();
         
       } else {
         await this.followUser();
       }
-      this.userProfile.isFollowing= !this.userProfile.isFollowing
+      this.userProfile.IsFollowing= !this.userProfile.IsFollowing
     },
     async followUser() {
-      // Implement the API call to follow the user
+      // the API call to follow the user
       try {
         await api.post(`/users/${this.username}/followers/`, {}, {
           headers: { Authorization: localStorage.getItem("token") }
@@ -65,9 +65,9 @@ export default {
       }
     },
     async unfollowUser() {
-      // Implement the API call to unfollow the user
+      // the API call to unfollow the user
       try {
-        await api.delete(`/users/${this.username}/followers/`, {}, {
+        await api.delete(`/users/${this.username}/followers/`, {
           headers: { Authorization: localStorage.getItem("token") }
         });
 

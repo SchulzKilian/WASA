@@ -66,7 +66,7 @@ type UserDetails struct {
 	PhotosCount int
 	Followers   int
 	Following   int
-	isFollowing bool `json:"isFollowing"`
+	IsFollowing bool `json:"IsFollowing"`
 }
 
 // AppDatabase is the high level interface for the DB
