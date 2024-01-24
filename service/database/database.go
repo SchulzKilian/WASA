@@ -34,7 +34,7 @@ type Photo struct {
 type PhotoDetails struct {
 	Username      string    `json:"username"`
 	PhotoID       string    `json:"photoId"`
-	ImageData     []byte    `json:"imageData"`
+	ImageData     string    `json:"imageData"`
 	Timestamp     time.Time `json:"timestamp"`
 	LikesCount    int       `json:"LikesCount"`
 	CommentsCount int       `json:"CommentsCount"`
@@ -228,7 +228,6 @@ func generateRandomString(n int) (string, error) {
 func (db *appdbimpl) GetFollowedUsersPhotos(username string) ([]PhotoDetails, error) {
 	var photos []PhotoDetails
 
-	// SQL query to retrieve photos, along with likes and comments count
 	query := `SELECT p.username, p.photo_id, p.image_data, p.timestamp, 
                      COUNT(DISTINCT l.liker) AS likes_count, 
                      COUNT(DISTINCT c.comment_id) AS comments_count 
@@ -247,10 +246,16 @@ func (db *appdbimpl) GetFollowedUsersPhotos(username string) ([]PhotoDetails, er
 
 	for rows.Next() {
 		var photo PhotoDetails
-		err := rows.Scan(&photo.Username, &photo.PhotoID, &photo.ImageData, &photo.Timestamp, &photo.LikesCount, &photo.CommentsCount)
+		var imageData []byte // Byte slice to hold the BLOB data
+
+		err := rows.Scan(&photo.Username, &photo.PhotoID, &imageData, &photo.Timestamp, &photo.LikesCount, &photo.CommentsCount)
 		if err != nil {
 			return nil, err
 		}
+
+		// Convert the byte slice (BLOB) to a base64 string
+		photo.ImageData = base64.StdEncoding.EncodeToString(imageData)
+
 		photos = append(photos, photo)
 	}
 	if err := rows.Err(); err != nil {

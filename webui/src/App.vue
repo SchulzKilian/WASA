@@ -115,10 +115,10 @@ async function uploadImage(event) {
     formData.append('image', file);
 
     try {
-      const response = await api.post('/photos/', formData, {
+      const response = await api.post('/photos/', formData, {  
         headers: { Authorization: localStorage.getItem("token") }
       });
-      console.log(response.data);
+
       // Handle the response, e.g., showing a success message
     } catch (error) {
       console.error('Error uploading image:', error);

@@ -1,6 +1,9 @@
 package database
 
-import "errors"
+import (
+	"encoding/base64"
+	"errors"
+)
 
 // GetName is an example that shows you how to query data
 func (db *appdbimpl) GetName() (string, error) {
@@ -39,13 +42,15 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 		return nil, err
 	}
 	defer rows.Close()
-
-	var photos []PhotoDetails
+	userDetails := &UserDetails{}
 	for rows.Next() {
 		var photo PhotoDetails
-		if err := rows.Scan(&photo.PhotoID, &photo.ImageData); err != nil {
+		var imageData []byte
+		if err := rows.Scan(&photo.PhotoID, &imageData); err != nil {
 			return nil, err
 		}
+		photo.ImageData = base64.StdEncoding.EncodeToString(imageData)
+
 		// Query to count likes for the current photo
 		var likesCount int
 		err := db.c.QueryRow("SELECT COUNT(*) FROM likes WHERE photo_id = ?", photo.PhotoID).Scan(&likesCount)
@@ -62,7 +67,7 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 		}
 		photo.CommentsCount = commentsCount
 
-		photos = append(photos, photo)
+		userDetails.Photos = append(userDetails.Photos, photo)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -98,13 +103,9 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 		return nil, err
 	}
 
-	userDetails := &UserDetails{
-		Photos:      photos,
-		PhotosCount: photosCount,
-		Followers:   followersCount,
-		Following:   followingCount,
-		IsFollowing: isFollowing,
-	}
+	userDetails.IsFollowing = isFollowing
+	userDetails.Followers = followersCount
+	userDetails.Following = followingCount
 
 	return userDetails, nil
 }

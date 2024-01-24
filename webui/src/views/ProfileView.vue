@@ -1,5 +1,8 @@
 <template>
   <div>
+    <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
+        {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
+      </button>
     <input v-model="username" placeholder="Search Username" />
     <button @click="fetchUserProfile">Search</button>
     <div v-if="userProfile">
@@ -14,9 +17,7 @@
     />
   </div>
     </div>
-      <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
-        {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
-      </button>
+      
     </div>
 
 </template>
