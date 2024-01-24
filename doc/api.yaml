@@ -49,18 +49,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
                 
-        '400':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "500": { $ref: "#/components/schemas/ServerError" }
                 
 
   /users/:
@@ -84,19 +74,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
                 
                 
@@ -114,26 +94,16 @@ paths:
       description: Ban a user.
       operationId: banUser
       responses:
-        '200':
+        '201':
           description: action successful
           content:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Success'
   
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
                 
     delete:
       tags: [user]
@@ -149,19 +119,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
   
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
                 
   /stream:
     get:
@@ -188,26 +148,9 @@ paths:
                     description: a photo detail object in the users stream
                 description: The entire stream of photos
                 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-        '403':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'  
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
   /users/{username}:
     parameters:
         - name: username
@@ -236,19 +179,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'  
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
   
     get:
       tags: [user]
@@ -263,20 +196,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
 
-        '403':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-    
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
                 
                 
                 
@@ -302,19 +224,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Bad request.  failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
     delete:
       tags: [user]
       summary: Unfollow User
@@ -328,31 +240,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
   /photos/{photoId}/comments/:
-    post:
-      tags: [comment]
-      summary: Comment on Photo
-      description: Comment on a photo.
-      parameters:
+    parameters:
         - name: photoId
           in: path
           required: true
           schema:
             $ref: '#/components/schemas/photo_id'
+    post:
+      tags: [comment]
+      summary: Comment on Photo
+      description: Comment on a photo.
       operationId: commentPhoto
       requestBody:
         content:
@@ -360,27 +262,41 @@ paths:
             schema:
               $ref: '#/components/schemas/Comment'
       responses:
-        '200':
+        '201':
           description: action successful
           content:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
+    get:
+      tags: [comment]
+      summary: Get comments
+      description: Get all comments of photo
+      operationId: getComments
+      responses:
+        '200':
+          description: Successfully getting the comments
           content:
-            text/plain:
+            application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-                
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  stream:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PhotoDetails'
+                    minItems: 0
+                    maxItems: 100
+                    description: a photo comment object for the photo
+                description: The entire comments of the photo
+
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
   /comments/{commentId}:
     delete:
@@ -407,20 +323,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
   /photos/{photoId}/likes/:
     parameters:
@@ -444,20 +349,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
                 
     delete:
       tags: [like]
@@ -472,20 +366,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
 
 
@@ -512,20 +395,9 @@ paths:
                 $ref: '#/components/schemas/Success'
                 
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
   /photos/{photoId}:
     delete:
@@ -547,36 +419,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        '401':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-        '404':
-          description: Unauthorized. User authentication failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
-                
-                
-        '500':
-          description: Server error. Action failed.
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Error'
+        "400": { $ref: "#/components/schemas/BadRequest" }
+        "401": { $ref: "#/components/schemas/Unauthorized" }
+        "500": { $ref: "#/components/schemas/ServerError" }
 
 components:
   schemas:
-    Error:
+    BadRequest:
       type: string
       minLength: 1
       maxLength: 20
       pattern: '^[a-zA-Z0-9]{10,20}$'
-      description: A message saying what didnt work out
+      description: Error code 400
+    ServerError:
+      type: string
+      minLength: 1
+      maxLength: 20
+      pattern: '^[a-zA-Z0-9]{10,20}$'
+      description: Error code 500
+    Unauthorized:
+      type: string
+      minLength: 1
+      maxLength: 20
+      pattern: '^[a-zA-Z0-9]{10,20}$'
+      description: Error code 401
     Success:
       type: string
       minLength: 1

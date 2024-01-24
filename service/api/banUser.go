@@ -23,7 +23,7 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
 	msg := []byte("Successfully banned the user")
 	n, err := w.Write(msg)
