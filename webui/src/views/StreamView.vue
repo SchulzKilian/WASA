@@ -1,17 +1,22 @@
 <template>
   <div v-if="images.length">
-    <div v-for="image in images" :key="image.photoId">
-      <img :src="image.src" />
-      <p>{{ image.username }} - Likes: {{ image.likesCount }}, Comments: {{ image.commentsCount }}</p>
+    <ImageComponent
+      v-for="image in images"
+      :key="image.photoId"
+      :photoDetails="image"
+    />
     </div>
-  </div>
 </template>
 
 <script>
+import ImageComponent from '@/webui/src/components/ImageComponent.vue'; 
 import axios from 'axios';
 import api from "@/services/axios"; 
 
 export default {
+  components: {
+    ImageComponent
+  },
   data() {
     return {
       images: [] // This array will hold the processed photo objects

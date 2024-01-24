@@ -36,8 +36,8 @@ type PhotoDetails struct {
 	PhotoID       string    `json:"photoId"`
 	ImageData     []byte    `json:"imageData"`
 	Timestamp     time.Time `json:"timestamp"`
-	LikesCount    int       `json:"likesCount"`
-	CommentsCount int       `json:"commentsCount"`
+	LikesCount    int       `json:"LikesCount"`
+	CommentsCount int       `json:"CommentsCount"`
 }
 
 type Like struct {
@@ -62,7 +62,7 @@ type Ban struct {
 }
 
 type UserDetails struct {
-	Photos      []Photo
+	Photos      []PhotoDetails
 	PhotosCount int
 	Followers   int
 	Following   int

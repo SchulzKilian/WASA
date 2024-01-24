@@ -40,12 +40,28 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 	}
 	defer rows.Close()
 
-	var photos []Photo
+	var photos []PhotoDetails
 	for rows.Next() {
-		var photo Photo
+		var photo PhotoDetails
 		if err := rows.Scan(&photo.PhotoID, &photo.ImageData); err != nil {
 			return nil, err
 		}
+		// Query to count likes for the current photo
+		var likesCount int
+		err := db.c.QueryRow("SELECT COUNT(*) FROM likes WHERE photo_id = ?", photo.PhotoID).Scan(&likesCount)
+		if err != nil {
+			return nil, err // Handle error appropriately
+		}
+		photo.LikesCount = likesCount
+
+		// Query to count comments for the current photo
+		var commentsCount int
+		err = db.c.QueryRow("SELECT COUNT(*) FROM comments WHERE photo_id = ?", photo.PhotoID).Scan(&commentsCount)
+		if err != nil {
+			return nil, err // Handle error appropriately
+		}
+		photo.CommentsCount = commentsCount
+
 		photos = append(photos, photo)
 	}
 	if err := rows.Err(); err != nil {

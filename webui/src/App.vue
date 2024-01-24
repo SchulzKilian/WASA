@@ -40,7 +40,7 @@
 					</ul>
 
 					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-						<span>Secondary menu</span>
+						<span>Actions menu</span>
 					</h6>
 					<ul class="nav flex-column">
 						<!-- Other menu items -->
@@ -51,6 +51,16 @@
 						</a>
 						</li>
           			</ul>
+					  <ul class="nav flex-column">
+					<!-- Other menu items -->
+					<li class="nav-item">
+						<a class="nav-link" href="#" @click="changeUsername">
+							<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#file-text"/></svg>
+							Change Username
+						</a>
+					</li>
+
+    </ul>
 				</div>
 			</nav>
 
@@ -78,7 +88,24 @@ function triggerFileInput() {
   fileInput.value.click();
 }
 
+async function changeUsername() {
 
+  const newUsername = prompt("Enter your new username:");
+  if (newUsername !== null) {
+    try {
+      const response = await api.patch('/users/'+newUsername,{}, {
+        headers: { Authorization: localStorage.getItem("token") }
+      });
+	  localStorage.setItem("username",newUsername)
+	  location.reload()
+      console.log(response.data);
+
+    } catch (error) {
+      console.error('Error uploading image:', error);
+
+    }
+  }
+}
 
 // Async method to handle image upload
 async function uploadImage(event) {
