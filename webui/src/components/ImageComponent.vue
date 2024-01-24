@@ -14,7 +14,7 @@
   
   <script>
   import api from "@/services/axios"; 
-  import CommentComponent from '@/webui/src/components/CommentComponent.vue';
+  import CommentComponent from '@/components/CommentComponent.vue';
   export default {
     props: {
       photoDetails: {

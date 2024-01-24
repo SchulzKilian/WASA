@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ImageComponent from '@/webui/src/components/ImageComponent.vue'; 
+import ImageComponent from '@/components/ImageComponent.vue'; 
 import axios from 'axios';
 import api from "@/services/axios"; 
 
