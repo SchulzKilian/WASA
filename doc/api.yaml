@@ -49,8 +49,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
                 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "500": { $ref: "#/components/responses/ServerError" }
                 
 
   /users/:
@@ -74,9 +74,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
                 
                 
@@ -101,9 +101,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
   
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
                 
     delete:
       tags: [user]
@@ -119,9 +119,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
   
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
                 
   /stream:
     get:
@@ -148,9 +148,9 @@ paths:
                     description: a photo detail object in the users stream
                 description: The entire stream of photos
                 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /users/{username}:
     parameters:
         - name: username
@@ -179,9 +179,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
   
     get:
       tags: [user]
@@ -196,9 +196,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
                 
                 
                 
@@ -224,9 +224,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
     delete:
       tags: [user]
       summary: Unfollow User
@@ -240,9 +240,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
   /photos/{photoId}/comments/:
     parameters:
@@ -269,9 +269,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
     get:
       tags: [comment]
       summary: Get comments
@@ -294,9 +294,9 @@ paths:
                     description: a photo comment object for the photo
                 description: The entire comments of the photo
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
   /comments/{commentId}:
     delete:
@@ -323,9 +323,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
   /photos/{photoId}/likes/:
     parameters:
@@ -349,9 +349,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
                 
     delete:
       tags: [like]
@@ -366,9 +366,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
 
 
@@ -395,9 +395,9 @@ paths:
                 $ref: '#/components/schemas/Success'
                 
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
   /photos/{photoId}:
     delete:
@@ -419,30 +419,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
 
-        "400": { $ref: "#/components/schemas/BadRequest" }
-        "401": { $ref: "#/components/schemas/Unauthorized" }
-        "500": { $ref: "#/components/schemas/ServerError" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
 components:
-  schemas:
+  responses:
     BadRequest:
-      type: string
-      minLength: 1
-      maxLength: 20
-      pattern: '^[a-zA-Z0-9]{10,20}$'
       description: Error code 400
     ServerError:
-      type: string
-      minLength: 1
-      maxLength: 20
-      pattern: '^[a-zA-Z0-9]{10,20}$'
       description: Error code 500
     Unauthorized:
-      type: string
-      minLength: 1
-      maxLength: 20
-      pattern: '^[a-zA-Z0-9]{10,20}$'
       description: Error code 401
+  schemas:
     Success:
       type: string
       minLength: 1
@@ -490,7 +479,7 @@ components:
         Following:
           type: integer
           minimum: 0
-          maximum: 10000
+          maximum: 100000
           description: The number of followers the user has
         Followers:
           type: integer
@@ -499,7 +488,7 @@ components:
         PhotosCount:
           type: integer
           minimum: 0
-          maximum: 1000
+          maximum: 10000
           description: The number of images the user has posted
         Photos:
           type: array
@@ -535,8 +524,8 @@ components:
           type: string
           description: Base64-encoded image data
           minLength: 50
-          maxLength: 5000
-          pattern: ^[A-Za-z0-9+/]+={0,2}$
+          maxLength: 500000
+          pattern: '^[0-1]+$'
           example: 'p1L8TP6uvt0bCmsSguCwSQ=='
       required:
         - image_data
@@ -563,7 +552,6 @@ components:
           type: string
           description: Username of the user who posted the photo
           minLength: 10
-          pattern: '^[a-zA-Z0-9_]+$'
           maxLength: 20
         photo_id:
           type: string
@@ -573,27 +561,22 @@ components:
           description: A unique photo identifier
         imageData:
           type: string
+          format: byte
           description: Base64-encoded image data
-          pattern: ^[A-Za-z0-9+/]+={0,2}$
           minLength: 10
           maxLength: 20
         timestamp:
           type: string
           format: date-time
           description: Timestamp when the photo was uploaded
-          pattern: '^[a-zA-Z0-9_]+$'
           minLength: 10
           maxLength: 20
         likesCount:
           type: integer
           description: Number of likes on the photo
-          minimum: 0
-          maximum: 1000
         commentsCount:
           type: integer
           description: Number of comments on the photo
-          minimum: 0
-          maximum: 1000
       description: An information schema about a photo which doesnt have to be stored
       
     
