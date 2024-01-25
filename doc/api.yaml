@@ -490,7 +490,7 @@ components:
         Following:
           type: integer
           minimum: 0
-          maximum: 100000
+          maximum: 10000
           description: The number of followers the user has
         Followers:
           type: integer
@@ -499,7 +499,7 @@ components:
         PhotosCount:
           type: integer
           minimum: 0
-          maximum: 10000
+          maximum: 1000
           description: The number of images the user has posted
         Photos:
           type: array
@@ -535,7 +535,7 @@ components:
           type: string
           description: Base64-encoded image data
           minLength: 50
-          maxLength: 500000
+          maxLength: 5000
           pattern: ^[A-Za-z0-9+/]+={0,2}$
           example: 'p1L8TP6uvt0bCmsSguCwSQ=='
       required:
