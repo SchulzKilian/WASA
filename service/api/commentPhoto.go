@@ -51,12 +51,12 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 func getComments(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	photoid := ps.ByName("photoId")
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to get comments", http.StatusUnauthorized)
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
 		return
 	}
 	// Check if ctx.Database is nil
 	if ctx.Database == nil {
-		http.Error(w, "Database connection is not initialized", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
 		return
 	}
 

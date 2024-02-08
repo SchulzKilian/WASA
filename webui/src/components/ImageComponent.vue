@@ -2,7 +2,7 @@
     <div class="image-container">
       <img :src="imageSrc" />
       <div class="image-info">
-        <p>{{ photoDetails.username }} - Likes: {{ photoDetails.LikesCount }}, Comments: {{ photoDetails.CommentsCount }}</p>
+        <p>{{ photoDetails.username }} - Likes: {{ localLikesCount }}, Comments: {{ photoDetails.CommentsCount }}</p>
         <button @click="toggleLike">{{ liked ? 'Unlike' : 'Like' }}</button>
         <button v-if="isCurrentUser" @click="deletePhoto">Delete</button>
         <button @click="toggleComments">Show Comments</button> 
@@ -29,7 +29,8 @@
       return {
         liked: false,
         commented: false,
-        showPopup: false
+        showPopup: false,
+        localLikesCount: 0
       }
     },
     computed: {
@@ -46,8 +47,9 @@
     }
     },
     created() {
-    if (this.photoDetails && this.photoDetails.liked !== undefined) {
-      this.liked = this.photoDetails.liked;
+    if (this.photoDetails) {
+      this.liked = this.photoDetails.liked !== undefined ? this.photoDetails.liked : false;
+      this.localLikesCount = this.photoDetails.LikesCount; // Copy LikesCount into local variable so i dont get the professors mutation error
     }
   },
     methods: {
@@ -76,12 +78,12 @@
             await api.delete(url,{headers: {
                         Authorization: localStorage.getItem("token")}
                     });
-                    this.photoDetails.LikesCount = this.photoDetails.LikesCount -1
+                    this.localLikesCount = this.localLikesCount -1
           } else {
             await api.post(url,{},{headers: {
                         Authorization: localStorage.getItem("token")}
                     });
-                    this.photoDetails.LikesCount = this.photoDetails.LikesCount +1
+                    this.localLikesCount = this.localLikesCount +1
           }
           this.liked = !this.liked;
         } catch (error) {

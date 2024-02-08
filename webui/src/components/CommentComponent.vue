@@ -44,7 +44,9 @@ export default {
   methods: {
     async fetchComments() {
       try {
-        const response = await api.get(`photos/${this.photoId}/comments/`);
+        const response = await api.get(`photos/${this.photoId}/comments/`,{headers: {
+                        Authorization: localStorage.getItem("token")}
+                    });
         this.comments = Array.isArray(response.data) ? response.data : [];
       } catch (error) {
         console.error('Error fetching comments:', error);
