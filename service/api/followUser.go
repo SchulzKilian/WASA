@@ -9,8 +9,8 @@ import (
 func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to follow", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
 	username := ctx.User.Username
@@ -20,9 +20,8 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	ctx.Logger.Info(username)
 	ctx.Logger.Info(tofollow)
 	if err != nil {
-		http.Error(w, "Error following the user", http.StatusBadRequest)
-		ctx.Logger.Info(err)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")

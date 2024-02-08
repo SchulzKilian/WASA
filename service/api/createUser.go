@@ -21,8 +21,8 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	r.Body.Close()
 

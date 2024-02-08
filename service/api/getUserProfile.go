@@ -17,12 +17,12 @@ func getUserProfile(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	db := ctx.Database
 	banned, err := db.AmIBanned(name, ctx.User.Username)
 	if err != nil {
-		http.Error(w, "You have to be logged in to view this", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	if banned {
-		http.Error(w, "The user has banned you", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	ctx.Logger.Info("Right before get User details")
 	details, err := db.GetUserDetails(name, ctx.User.Username)

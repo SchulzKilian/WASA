@@ -12,8 +12,8 @@ import (
 func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Extract username from context
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to upload", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	username := ctx.User.Username
 	ctx.Logger.Info("Called successfully")
@@ -21,23 +21,23 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Parse the multipart form
 	err := r.ParseMultipartForm(10 << 20) // For example, max 10 MB file size
 	if err != nil {
-		http.Error(w, "Error parsing form data", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 
 	// Retrieve the file from form data
 	file, _, err := r.FormFile("image") // "image" should be the name of your file input field
 	if err != nil {
-		http.Error(w, "Error retrieving the file", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	defer file.Close()
 
 	// Read the file data
 	ImageData, err := ioutil.ReadAll(file)
 	if err != nil {
-		http.Error(w, "Error reading image data", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	defer r.Body.Close()
 

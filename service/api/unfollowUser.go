@@ -9,8 +9,8 @@ import (
 func unfollowUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to unfollow", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
 	username := ctx.User.Username
@@ -18,8 +18,8 @@ func unfollowUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	db := ctx.Database
 	err := db.DeleteFollow(username, tofollow)
 	if err != nil {
-		http.Error(w, "Error unfollowing the user", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/plain")

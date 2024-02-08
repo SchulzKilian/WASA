@@ -10,23 +10,21 @@ import (
 func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	photo_id := ps.ByName("photoId")
 	ctx.Logger.Info(photo_id)
 	db := ctx.Database
 	photoid, err := strconv.Atoi(photo_id)
 	if err != nil {
-		// If an error occurs, send a 404 Not Found error
-		http.Error(w, "Type mismatch", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	err = db.DeletePhoto(photoid)
 	if err != nil {
-		// If an error occurs, send a 404 Not Found error
-		http.Error(w, "Photo not found", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 
 	// If no error, send a success response

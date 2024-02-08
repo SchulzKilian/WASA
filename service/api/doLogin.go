@@ -15,15 +15,15 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	// Decode the JSON body into the map
 	err := json.NewDecoder(r.Body).Decode(&requestData)
 	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	defer r.Body.Close()
 
 	username, ok := requestData["name"]
 	if !ok {
-		http.Error(w, "Name field is required", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	ctx.Logger.Info(username)
 	db := ctx.Database

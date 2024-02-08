@@ -9,14 +9,14 @@ import (
 func uncommentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to remove comments", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	id := ps.ByName("commentId")
 	err := ctx.Database.DeleteComment(id, ctx.User.Username)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/plain")

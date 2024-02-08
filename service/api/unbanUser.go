@@ -9,8 +9,8 @@ import (
 func unbanUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	// Placeholder logic
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to like", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
 	username := ctx.User.Username
@@ -18,8 +18,8 @@ func unbanUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx
 	db := ctx.Database
 	err := db.DeleteBan(username, tounban)
 	if err != nil {
-		http.Error(w, "Error unbanning the user", http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/plain")

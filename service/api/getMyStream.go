@@ -11,13 +11,13 @@ import (
 func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	db := ctx.Database
 	if ctx.User == nil {
-		http.Error(w, "You have to be logged in to get a stream", http.StatusUnauthorized)
-		return
+		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
+    	return
 	}
 	tooutput, err := db.GetFollowedUsersPhotos(ctx.User.Username)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+    	return
 	}
 
 	w.Header().Set("Content-Type", "application/json")

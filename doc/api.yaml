@@ -430,7 +430,7 @@ components:
     ServerError:
       description: Error code 500
     Unauthorized:
-      description: Error code 401
+      description: Error code 401 
   schemas:
     Success:
       type: string
@@ -523,10 +523,10 @@ components:
         image_data:
           type: string
           description: Base64-encoded image data
-          minLength: 50
+          minLength: 10
           maxLength: 500000
           pattern: '^[0-1]+$'
-          example: 'p1L8TP6uvt0bCmsSguCwSQ=='
+          example: 'p1L8TP6uvt0bCmksSguCwSQ=='
       required:
         - image_data
       description: the photo object
