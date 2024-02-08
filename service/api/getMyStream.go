@@ -25,8 +25,8 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Serialize the tooutput slice to JSON
 	jsonResponse, err := json.Marshal(tooutput)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 
 	// Write the JSON response
@@ -34,9 +34,8 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 
 	_, err = w.Write(jsonResponse)
 	if err != nil {
-
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 
 }

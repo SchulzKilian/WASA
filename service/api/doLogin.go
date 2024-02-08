@@ -29,9 +29,8 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	db := ctx.Database
 	userexists, err, token := db.DoesUserExist(username)
 	if err != nil {
-		ctx.Logger.WithError(err).Error("Error checking user existence")
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 	ctx.Logger.Info("Logged user in") // Example logging
 	if userexists {
@@ -51,7 +50,7 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 		err, token = db.AddUser(&user)
 
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
 			return
 		}
 		w.WriteHeader(http.StatusCreated)

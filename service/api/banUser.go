@@ -27,12 +27,12 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	msg := []byte("Successfully banned the user")
 	n, err := w.Write(msg)
 	if err != nil {
-
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 
 	if n != len(msg) {
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 }

@@ -32,8 +32,8 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	err, token := db.AddUser(&user)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")

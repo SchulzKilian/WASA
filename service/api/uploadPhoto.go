@@ -55,8 +55,8 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Call AddPhoto method to insert the photo into the database
 	err = ctx.Database.AddPhoto(photo)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 
 	// Respond with success message
@@ -64,7 +64,7 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	w.WriteHeader(http.StatusCreated)
 	_, err = w.Write([]byte("Photo uploaded successfully"))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 }

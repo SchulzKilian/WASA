@@ -22,9 +22,8 @@ func likePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx
 	w.Header().Set("Content-Type", "text/plain")
 	_, err = w.Write([]byte("Successfully liked the image"))
 	if err != nil {
-
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 
 }

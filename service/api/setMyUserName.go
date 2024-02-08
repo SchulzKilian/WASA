@@ -25,8 +25,8 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 	}
 	err := ctx.Database.SetName(name, ctx.User.UserID)
 	if err != nil {
-		http.Error(w, "error changing the name in the database", http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
+    	return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/plain")
