@@ -16,21 +16,21 @@ func doLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	err := json.NewDecoder(r.Body).Decode(&requestData)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	defer r.Body.Close()
 
 	username, ok := requestData["name"]
 	if !ok {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	ctx.Logger.Info(username)
 	db := ctx.Database
 	userexists, err, token := db.DoesUserExist(username)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 	ctx.Logger.Info("Logged user in") // Example logging
 	if userexists {

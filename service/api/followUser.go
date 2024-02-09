@@ -10,7 +10,7 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	// Placeholder logic
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
 	username := ctx.User.Username
@@ -21,7 +21,7 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	ctx.Logger.Info(tofollow)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
@@ -29,11 +29,11 @@ func followUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	n, err := w.Write(msg)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 	if n != len(msg) {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 }

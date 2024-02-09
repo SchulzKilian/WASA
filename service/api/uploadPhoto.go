@@ -13,7 +13,7 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Extract username from context
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	username := ctx.User.Username
 	ctx.Logger.Info("Called successfully")
@@ -22,14 +22,14 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	err := r.ParseMultipartForm(10 << 20) // For example, max 10 MB file size
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	// Retrieve the file from form data
 	file, _, err := r.FormFile("image") // "image" should be the name of your file input field
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	defer file.Close()
 
@@ -37,7 +37,7 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	ImageData, err := ioutil.ReadAll(file)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	defer r.Body.Close()
 
@@ -56,7 +56,7 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	err = ctx.Database.AddPhoto(photo)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 	// Respond with success message
@@ -65,6 +65,6 @@ func uploadPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	_, err = w.Write([]byte("Photo uploaded successfully"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 }

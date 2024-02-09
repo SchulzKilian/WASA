@@ -10,20 +10,20 @@ func uncommentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	// Placeholder logic
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	id := ps.ByName("commentId")
 	err := ctx.Database.DeleteComment(id, ctx.User.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/plain")
 	_, err = w.Write([]byte("Successfully uncommented the image"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 }

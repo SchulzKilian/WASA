@@ -22,7 +22,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	r.Body.Close()
 
@@ -33,7 +33,7 @@ func createUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ct
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")

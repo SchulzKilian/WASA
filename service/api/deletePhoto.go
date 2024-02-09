@@ -11,7 +11,7 @@ func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Placeholder logic
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	photo_id := ps.ByName("photoId")
 	ctx.Logger.Info(photo_id)
@@ -19,12 +19,12 @@ func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	photoid, err := strconv.Atoi(photo_id)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	err = db.DeletePhoto(photoid)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	// If no error, send a success response
@@ -34,12 +34,12 @@ func deletePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	n, err := w.Write(msg)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 	if n != len(msg) {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 }

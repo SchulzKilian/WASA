@@ -11,7 +11,7 @@ import (
 func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	commenter := ctx.User.Username
 	photoid := ps.ByName("photoId")
@@ -19,7 +19,7 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	err := json.NewDecoder(r.Body).Decode(&comment)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	// Assign commenter and photoId to the comment struct
@@ -30,7 +30,7 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	err = ctx.Database.AddComment(comment)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
@@ -38,12 +38,12 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 	n, err := w.Write(msg)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 	if n != len(msg) {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 }
@@ -63,7 +63,7 @@ func getComments(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	comments, err := ctx.Database.GetComments(photoid)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	// If comments is nil, initialize it as an empty slice

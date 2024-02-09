@@ -12,12 +12,12 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	db := ctx.Database
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	tooutput, err := db.GetFollowedUsersPhotos(ctx.User.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -26,7 +26,7 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	jsonResponse, err := json.Marshal(tooutput)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 	// Write the JSON response
@@ -35,7 +35,7 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	_, err = w.Write(jsonResponse)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 }

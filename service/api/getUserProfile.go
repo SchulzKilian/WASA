@@ -18,11 +18,11 @@ func getUserProfile(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	banned, err := db.AmIBanned(name, ctx.User.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 	if banned {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	ctx.Logger.Info("Right before get User details")
 	details, err := db.GetUserDetails(name, ctx.User.Username)
@@ -35,7 +35,7 @@ func getUserProfile(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	jsonResponse, err := json.Marshal(details)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
 
@@ -44,7 +44,7 @@ func getUserProfile(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	_, err = w.Write(jsonResponse)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 }

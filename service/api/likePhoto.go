@@ -9,13 +9,13 @@ import (
 func likePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx reqcontext.RequestContext) {
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	photoid := ps.ByName("photoId")
 	err := ctx.Database.AddLike(ctx.User.Username, photoid)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
@@ -23,7 +23,7 @@ func likePhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx
 	_, err = w.Write([]byte("Successfully liked the image"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 }

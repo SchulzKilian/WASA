@@ -10,7 +10,7 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	// Placeholder logic
 	if ctx.User == nil {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	ctx.Logger.Info("myApiHandler called") // Example logging
 	username := ctx.User.Username
@@ -19,7 +19,7 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	err := db.AddBan(username, toban)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
-    	return
+		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
@@ -28,11 +28,11 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	n, err := w.Write(msg)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 
 	if n != len(msg) {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 }

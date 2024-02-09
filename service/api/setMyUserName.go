@@ -21,12 +21,12 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 
 	} else {
 		w.WriteHeader(http.StatusUnauthorized) // Sets the status code only
-    	return
+		return
 	}
 	err := ctx.Database.SetName(name, ctx.User.UserID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError) // Sets the status code only
-    	return
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/plain")
