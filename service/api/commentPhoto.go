@@ -21,6 +21,7 @@ func commentPhoto(w http.ResponseWriter, r *http.Request, ps httprouter.Params, 
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
 		return
 	}
+	defer r.Body.Close()
 
 	// Assign commenter and photoId to the comment struct
 	comment.Commenter = commenter
