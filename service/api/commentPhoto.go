@@ -74,12 +74,17 @@ func getComments(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	// Marshal the comments slice to JSON
 	jsonResponse, err := json.Marshal(comments)
 	if err != nil {
-		http.Error(w, "Error marshaling comments: "+err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError) 
 		return
 	}
 
 	// Write the JSON response
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(jsonResponse)
+	_,err = w.Write(jsonResponse)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError) 
+		return
+	}
+
 }
