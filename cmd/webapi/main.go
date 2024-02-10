@@ -88,6 +88,7 @@ func run() error {
 			os.Remove(cfg.DB.Filename)
 		}
 	}
+	logger.Infof(cfg.DB.Filename)
 	dbconn, err := sql.Open("sqlite3", cfg.DB.Filename)
 	if err != nil {
 		logger.WithError(err).Error("error opening SQLite DB")
