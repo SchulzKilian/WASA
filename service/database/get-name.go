@@ -1,9 +1,9 @@
 package database
 
 import (
+	"database/sql"
 	"encoding/base64"
 	"errors"
-	"database/sql"
 )
 
 // GetName is an example that shows you how to query data
