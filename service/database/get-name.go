@@ -3,6 +3,7 @@ package database
 import (
 	"encoding/base64"
 	"errors"
+	"database/sql"
 )
 
 // GetName is an example that shows you how to query data
@@ -35,6 +36,17 @@ func (db *appdbimpl) GetUser(userID string) (*User, error) {
 func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDetails, error) {
 	if username == "" {
 		return nil, errors.New("username is empty")
+	}
+	query := "SELECT username FROM users WHERE username = ?"
+	var user User
+	err := db.c.QueryRow(query, username).Scan(&user.Username)
+	if err != nil {
+		if err == sql.ErrNoRows {
+
+			return nil, nil
+		}
+		// Other error occurred, return the error
+		return nil, err
 	}
 	photosQuery := `SELECT photo_id, image_data FROM photos WHERE username = ? ORDER BY timestamp DESC`
 	rows, err := db.c.Query(photosQuery, username)

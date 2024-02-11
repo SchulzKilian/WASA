@@ -118,6 +118,7 @@ async function uploadImage(event) {
       const response = await api.post('/photos/', formData, {  
         headers: { Authorization: localStorage.getItem("token") }
       });
+	  alert('Image uploaded successfully!'); 
 	  location.reload()
 
       // Handle the response, e.g., showing a success message

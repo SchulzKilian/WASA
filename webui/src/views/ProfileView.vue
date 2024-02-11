@@ -20,6 +20,11 @@
       :photoDetails="image"
     />
   </div>
+  <div v-else-if="searched">
+      <p>This user wasn't found.</p>
+    </div>
+
+
     </div>
       
 
@@ -40,7 +45,8 @@ export default {
       username: '', // Username to search
       userProfile: null,
       images: [],
-      banned: false 
+      banned: false,
+      searched: false
     };
   },
   async created() {
@@ -118,7 +124,11 @@ export default {
     const response = await api.get(`/users/${this.username}`, {
       headers: { Authorization: localStorage.getItem("token") }
     });
-
+    if (response.data==null){
+      this.searched= true;
+      return;
+    }
+  
     // Check if the response contains 'photos' and it is an array
     this.images = response.data.Photos && Array.isArray(response.data.Photos)
       ? response.data.Photos.map(photo => ({
