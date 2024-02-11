@@ -13,7 +13,7 @@ func setMyUserName(w http.ResponseWriter, r *http.Request, ps httprouter.Params,
 
 	name := ps.ByName("name")
 	if ctx.User != nil {
-		err := ctx.Database.SetName(name, ctx.User.UserID)
+		err := ctx.Database.SetName(name, ctx.User.UserID, ctx.User.Username)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
