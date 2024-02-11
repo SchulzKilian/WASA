@@ -32,7 +32,7 @@
 							</RouterLink>
 						</li>
 						<li class="nav-item">
-							<RouterLink to="/profile" class="nav-link">
+							<RouterLink to="/user" class="nav-link">
 								<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#key"/></svg>
 								A users profile
 							</RouterLink>

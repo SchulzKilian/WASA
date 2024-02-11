@@ -435,8 +435,8 @@ components:
     Success:
       type: string
       minLength: 1
-      maxLength: 20
-      pattern: '^[a-zA-Z0-9]{10,20}$'
+      maxLength: 50
+      pattern: '^[a-zA-Z0-9]$'
       description: A message saying everything worked out
     Comment:
       type: object

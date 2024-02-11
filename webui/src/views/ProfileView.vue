@@ -2,7 +2,7 @@
   <div>
     <div class="info-container"></div>
     <input v-model="username" placeholder="Search Username" />
-    <button @click="fetchUserProfile">Search</button>
+    <button @click="searchUser">Search</button>
     <div v-if="userProfile">
       <p>Followers: {{ userProfile.Followers }}</p>
       <p>Following: {{ userProfile.Following }}</p>
@@ -43,12 +43,24 @@ export default {
       banned: false 
     };
   },
+  async created() {
+    if (this.$route.params.username){
+    this.username = this.$route.params.username;
+    await this.fetchUserProfile();}
+  },
   computed: {
     isOwnProfile() {
       return this.username === localStorage.getItem("username");
     }
   },
   methods: {
+    searchUser() {
+
+    if (this.username) {
+      this.$router.push({ name: 'UserProfile', params: { username: this.username } });
+    }
+  },
+
     async toggleBan() {
     try {
       const url = `/users/${this.username}/banned/`;
