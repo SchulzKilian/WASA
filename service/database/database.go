@@ -74,7 +74,7 @@ type UserDetails struct {
 type AppDatabase interface {
 	GetName() (string, error)
 	GetUser(userID string) (*User, error)
-	SetName(name string, token string) error
+	SetName(name string, token string, oldname string) error
 	DoesUserExist(username string) (bool, error, string)
 	AddFollow(follower, followed string) error
 	DeleteFollow(follower, followed string) error
