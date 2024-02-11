@@ -54,11 +54,13 @@ export default {
     }
   },
   methods: {
-    searchUser() {
+    async searchUser() {
+      console.log("User searching")
 
     if (this.username) {
       this.$router.push({ name: 'UserProfile', params: { username: this.username } });
     }
+    await this.fetchUserProfile();
   },
 
     async toggleBan() {

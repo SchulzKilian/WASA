@@ -15,12 +15,7 @@ const routes = [
     component: StreamView
   },
   {
-    path: '/user/:username', 
-    name: 'UserProfile',
-    component: ProfileView
-  },
-  {
-    path: '/user', 
+    path: '/user/:username?', 
     name: 'UserProfile',
     component: ProfileView
   }
