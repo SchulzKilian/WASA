@@ -81,7 +81,7 @@ paths:
                 
                 
     
-  /users/{username}/banned/:
+  /users/{username}/bans/:
     parameters:
         - name: username
           in: path
