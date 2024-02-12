@@ -7,12 +7,11 @@
       <p>Followers: {{ userProfile.Followers }}</p>
       <p>Following: {{ userProfile.Following }}</p>
       <p>Posts: {{ userProfile.PhotosCount }}</p>
-      <div v-if="images.length">
         <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
         {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
       </button>
       <button v-if="userProfile && !isOwnProfile" @click="toggleBan">{{ banned ? 'Unban' : 'Ban' }}</button>
-      </div>
+
       
     <ImageComponent
       v-for="image in images"

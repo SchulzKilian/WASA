@@ -12,7 +12,7 @@ export default {
 			</div>
 		</div>
 	</div>
-	<div v-if="!loading"></div>
+	<div v-if="!loading"><slot /></div>
 </template>
 
 <style></style>

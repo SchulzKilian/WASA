@@ -16,6 +16,7 @@ func getMyStream(w http.ResponseWriter, r *http.Request, ps httprouter.Params, c
 	}
 	tooutput, err := db.GetFollowedUsersPhotos(ctx.User.Username)
 	if err != nil {
+		ctx.Logger.Info(err)
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
 		return
 	}

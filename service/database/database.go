@@ -238,10 +238,14 @@ func (db *appdbimpl) GetFollowedUsersPhotos(username string) ([]PhotoDetails, er
               LEFT JOIN likes l ON p.photo_id = l.photo_id
               LEFT JOIN comments c ON p.photo_id = c.photo_id
               JOIN follow f ON p.username = f.followed
-              WHERE f.follower = ?
+              WHERE f.follower = ? AND NOT EXISTS (
+				SELECT 1 
+				FROM bans b
+				WHERE b.banner = p.username AND b.banned = ?
+			)
               GROUP BY p.photo_id`
 
-	rows, err := db.c.Query(query, username)
+	rows, err := db.c.Query(query, username, username)
 	if err != nil {
 		return nil, err
 	}
