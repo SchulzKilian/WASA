@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"time"
+	"errors"
 )
 
 // Error represents the error object in the database
@@ -208,7 +209,7 @@ func (db *appdbimpl) DoesUserExist(username string) (bool, error, string) {
 
 	err := db.c.QueryRow(query, username).Scan(&userID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			return false, nil, ""
 		}
 		return false, err, ""
