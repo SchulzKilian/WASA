@@ -4,8 +4,8 @@ import (
 	"crypto/rand"
 	"database/sql"
 	"encoding/base64"
-	"time"
 	"errors"
+	"time"
 )
 
 // Error represents the error object in the database
