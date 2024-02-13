@@ -19,6 +19,8 @@ func banUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params, ctx r
 	err := db.AddBan(username, toban)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest) // Sets the status code only
+		ctx.Logger.Info("The error is")
+		ctx.Logger.Info(err)
 		return
 	}
 

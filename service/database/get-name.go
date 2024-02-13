@@ -72,6 +72,18 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 		}
 		photo.LikesCount = likesCount
 
+		var Liking bool
+		err = db.c.QueryRow(`SELECT EXISTS (
+			SELECT 1
+			FROM likes
+			WHERE liker = ?
+			AND photo_id = ?
+		)`, currentUsername, photo.PhotoID).Scan(&Liking)
+		if err != nil {
+			return nil, err // Handle error appropriately
+		}
+		photo.Liking = Liking
+
 		// Query to count comments for the current photo
 		var commentsCount int
 		err = db.c.QueryRow("SELECT COUNT(*) FROM comments WHERE photo_id = ?", photo.PhotoID).Scan(&commentsCount)
@@ -109,6 +121,12 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 	if err != nil {
 		return nil, err
 	}
+	var isBanning bool
+	isBanningQuery := `SELECT EXISTS (SELECT 1 FROM bans WHERE banner = ? AND banned = ?)`
+	err = db.c.QueryRow(isBanningQuery, currentUsername, username).Scan(&isBanning)
+	if err != nil {
+		return nil, err
+	}
 	isFollowingQuery := `SELECT EXISTS (SELECT 1 FROM follow WHERE follower = ? AND followed = ?)`
 	var isFollowing bool
 	err = db.c.QueryRow(isFollowingQuery, currentUsername, username).Scan(&isFollowing)
@@ -119,6 +137,7 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 	userDetails.IsFollowing = isFollowing
 	userDetails.Followers = followersCount
 	userDetails.Following = followingCount
+	userDetails.IsBanning = isBanning
 
 	return userDetails, nil
 }

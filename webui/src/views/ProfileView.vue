@@ -10,7 +10,7 @@
         <button v-if="userProfile && !isOwnProfile" @click="toggleFollow">
         {{ userProfile.IsFollowing ? 'Unfollow' : 'Follow' }}
       </button>
-      <button v-if="userProfile && !isOwnProfile" @click="toggleBan">{{ banned ? 'Unban' : 'Ban' }}</button>
+      <button v-if="userProfile && !isOwnProfile" @click="toggleBan">{{ userProfile.IsBanning ? 'Unban' : 'Ban' }}</button>
 
       
     <ImageComponent
@@ -44,7 +44,6 @@ export default {
       username: '', // Username to search
       userProfile: null,
       images: [],
-      banned: false,
       searched: false
     };
   },
@@ -71,12 +70,12 @@ export default {
     async toggleBan() {
     try {
       const url = `/users/${this.username}/bans/`;
-      if (this.banned) {
+      if (this.userProfile.IsBanning) {
         await api.delete(url, { headers: { Authorization: localStorage.getItem("token") } });
       } else {
         await api.post(url, {}, { headers: { Authorization: localStorage.getItem("token") } });
       }
-      this.banned = !this.banned; // Toggle the banned status
+      this.userProfile.IsBanning = !this.userProfile.IsBanning; // Toggle the banned status
     } catch (error) {
       console.error('Error toggling ban:', error);
     }

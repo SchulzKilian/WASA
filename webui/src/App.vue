@@ -26,10 +26,10 @@
 							</RouterLink>
 						</li>
 						<li class="nav-item">
-							<RouterLink :to="'/users/' + localStorage.getItem('username')" class="nav-link">
-    							<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#home"/></svg>
-    							My Profile
-							</RouterLink>
+							<RouterLink :to="'/user/' + usernameComputed" class="nav-link">
+								<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#home"/></svg>
+								My Profile
+        					</RouterLink>
 						</li>
 						<li class="nav-item">
 							<RouterLink to="/stream" class="nav-link">
@@ -93,6 +93,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import api from "@/services/axios";
 
 // Computed property to get the username from local storage
+const usernameComputed = computed(() => localStorage.getItem('username') || '');
 
 
 // Ref for file input
@@ -126,7 +127,7 @@ async function logmeout() {
 
 	localStorage.setItem("username","")
 	localStorage.setItem("token","")
-	alert('Image uploaded successfully!'); 
+	alert('You have logged out successfully! Now you can only search people, not interact with profiles.'); 
 	location.reload()
   } 
 

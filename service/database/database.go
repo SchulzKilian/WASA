@@ -39,6 +39,7 @@ type PhotoDetails struct {
 	Timestamp     time.Time `json:"timestamp"`
 	LikesCount    int       `json:"LikesCount"`
 	CommentsCount int       `json:"CommentsCount"`
+	Liking        bool      `json:"Liking"`
 }
 
 type Like struct {
@@ -69,6 +70,7 @@ type UserDetails struct {
 	Followers   int
 	Following   int
 	IsFollowing bool `json:"IsFollowing"`
+	IsBanning   bool `json:"IsBanning"`
 }
 
 // AppDatabase is the high level interface for the DB
@@ -140,8 +142,9 @@ func New(db *sql.DB) (AppDatabase, error) {
 	}
 	// create the ban table
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS bans (
-        banner TEXT PRIMARY KEY,
-        banned TEXT
+        banner TEXT,
+        banned TEXT,
+		PRIMARY KEY (banner, banned)
     );`)
 
 	if err != nil {
@@ -259,6 +262,17 @@ func (db *appdbimpl) GetFollowedUsersPhotos(username string) ([]PhotoDetails, er
 		if err != nil {
 			return nil, err
 		}
+		var Liking bool
+		err = db.c.QueryRow(`SELECT EXISTS (
+			SELECT 1
+			FROM likes
+			WHERE liker = ?
+			AND photo_id = ?
+		)`, username, photo.PhotoID).Scan(&Liking)
+		if err != nil {
+			return nil, err // Handle error appropriately
+		}
+		photo.Liking = Liking
 
 		// Convert the byte slice (BLOB) to a base64 string
 		photo.ImageData = base64.StdEncoding.EncodeToString(imageData)
