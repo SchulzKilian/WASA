@@ -41,7 +41,7 @@ func (db *appdbimpl) GetUserDetails(username, currentUsername string) (*UserDeta
 	var user User
 	err := db.c.QueryRow(query, username).Scan(&user.Username)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 
 			return nil, nil
 		}
