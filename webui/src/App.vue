@@ -26,6 +26,12 @@
 							</RouterLink>
 						</li>
 						<li class="nav-item">
+							<RouterLink :to="'/users/' + localStorage.getItem('username')" class="nav-link">
+    							<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#home"/></svg>
+    							My Profile
+							</RouterLink>
+						</li>
+						<li class="nav-item">
 							<RouterLink to="/stream" class="nav-link">
 								<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#layout"/></svg>
 								My stream
@@ -48,6 +54,15 @@
 						<a class="nav-link" href="#" @click="triggerFileInput">
 							<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#file-text"/></svg>
 							Upload Photo
+						</a>
+						</li>
+          			</ul>
+					  <ul class="nav flex-column">
+						<!-- Other menu items -->
+						<li class="nav-item">
+						<a class="nav-link" href="#" @click="logmeout">
+							<svg class="feather"><use href="/feather-sprite-v4.29.0.svg#file-text"/></svg>
+							Log out
 						</a>
 						</li>
           			</ul>
@@ -106,6 +121,15 @@ async function changeUsername() {
     }
   }
 }
+
+async function logmeout() {
+
+	localStorage.setItem("username","")
+	localStorage.setItem("token","")
+	alert('Image uploaded successfully!'); 
+	location.reload()
+  } 
+
 
 // Async method to handle image upload
 async function uploadImage(event) {
