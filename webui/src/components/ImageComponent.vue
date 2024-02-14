@@ -3,7 +3,7 @@
       <img :src="imageSrc" />
       <div class="image-info">
         <p>{{ photoDetails.username }} - Likes: {{ localLikesCount }}, Comments: {{ photoDetails.CommentsCount }}</p>
-        <button @click="toggleLike">{{ this.photoDetails.Liking ? 'Unlike' : 'Like' }}</button>
+        <button @click="toggleLike">{{ this.Liking ? 'Unlike' : 'Like' }}</button>
         <button v-if="isCurrentUser" @click="deletePhoto">Delete</button>
         <button @click="toggleComments">Show Comments</button> 
         <CommentComponent :photo-id="photoDetails.photoId" :show-popup="showPopup" />
@@ -48,6 +48,7 @@
     created() {
     if (this.photoDetails) {
       this.localLikesCount = this.photoDetails.LikesCount; // Copy LikesCount into local variable so i dont get the professors mutation error
+      this.Liking = this.photoDetails.Liking; 
     }
   },
     methods: {
@@ -72,7 +73,7 @@
       async toggleLike() {
         try {
           const url = `/photos/${this.photoDetails.photoId}/likes/`;
-          if (this.photoDetails.Liking) {
+          if (this.Liking) {
             await api.delete(url,{headers: {
                         Authorization: localStorage.getItem("token")}
                     });
@@ -83,7 +84,7 @@
                     });
                     this.localLikesCount = this.localLikesCount +1
           }
-          this.photoDetails.Liking = !this.photoDetails.Liking;
+          this.Liking = !this.Liking;
         } catch (error) {
           console.error('Error toggling like:', error);
         }
